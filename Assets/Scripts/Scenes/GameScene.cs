@@ -10,4 +10,9 @@ public class GameScene : BaseScene
 
     [field: SerializeField]
     public float DefaultSpawnYaw { get; private set; }
+
+    private void Start()
+    {
+        Managers.Input.CursorLocked = true;
+    }
 }

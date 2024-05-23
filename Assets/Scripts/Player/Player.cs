@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public static Collider Collider { get; private set; }
     public static Animator Animator { get; private set; }
     public static PlayerMovement Movement { get; private set; }
+    public static PlayerCamera Camera { get; private set; }
 
     private void Awake()
     {
@@ -15,5 +16,6 @@ public class Player : MonoBehaviour
         Collider = GetComponent<Collider>();
         Animator = GetComponent<Animator>();
         Movement = GetComponent<PlayerMovement>();
+        Camera = GetComponent<PlayerCamera>();
     }
 }

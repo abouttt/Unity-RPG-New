@@ -42,6 +42,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "LockOn",
+                    "type": "Button",
+                    "id": "57d227c8-6cd4-4374-850c-af1631587432",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "CursorToggle",
                     "type": "Button",
                     "id": "393c3e80-6fbf-4284-ba71-0b7d8820f316",
@@ -148,6 +157,17 @@
                     "processors": "",
                     "groups": "Keyboard/Mouse",
                     "action": "CursorToggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3652dcbd-86e2-4a25-951b-b4075603346d",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard/Mouse",
+                    "action": "LockOn",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

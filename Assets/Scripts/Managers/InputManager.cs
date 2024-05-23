@@ -7,6 +7,7 @@ public class InputManager : GameControls.IPlayerActions
     public Vector2 Look { get; private set; }
     public bool Sprint { get; private set; }
     public bool Jump { get; private set; }
+    public bool LockOn { get; private set; }
 
     public bool CursorLocked
     {
@@ -76,6 +77,11 @@ public class InputManager : GameControls.IPlayerActions
     public void OnJump(InputAction.CallbackContext context)
     {
         Jump = context.ReadValueAsButton();
+    }
+
+    public void OnLockOn(InputAction.CallbackContext context)
+    {
+        LockOn = context.ReadValueAsButton();
     }
 
     public void OnCursorToggle(InputAction.CallbackContext context)

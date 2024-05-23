@@ -88,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
     private float _sprintInputTime;
     private bool _isJumpLand;
     private bool _isJumpWithSprint;
+    private bool _isRollMoving;
     private bool _enabled;
 
     // animation IDs
@@ -145,6 +146,7 @@ public class PlayerMovement : MonoBehaviour
         IsRolling = false;
         _isJumpLand = false;
         _isJumpWithSprint = false;
+        _isRollMoving = false;
     }
 
     private void CheckGrounded()
@@ -202,7 +204,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float targetSpeed = _runSpeed;
 
-        if (IsRolling)
+        if (_isRollMoving)
         {
             targetSpeed = _rollSpeed;
         }
@@ -228,7 +230,7 @@ public class PlayerMovement : MonoBehaviour
         var move = Managers.Input.Move;
         bool isZeroMoveInput = move == Vector2.zero;
 
-        if (!CanMove || isZeroMoveInput)
+        if (!_isRollMoving && (!CanMove || isZeroMoveInput))
         {
             targetSpeed = 0f;
         }
@@ -268,6 +270,29 @@ public class PlayerMovement : MonoBehaviour
             _targetMove = _targetRotation;
         }
 
+        bool isLockOn = Player.Camera.IsLockOn;
+        bool isOnlyRun = !IsSprinting && !IsJumping && !IsRolling;
+
+        if (isLockOn)
+        {
+            // 이동키를 안누르면 캐릭터가 바라보고 있는 방향으로 회전량 설정
+            if (isZeroMoveInput)
+            {
+                _targetMove = _targetRotation;
+            }
+            else
+            {
+                _targetRotation = _targetMove;
+
+                // 질주, 점프, 구르기는 락 온시에 인풋 방향으로 회전한다 아니면 타겟 방향으로 향하도록 회전.
+                if (isOnlyRun)
+                {
+                    var targetDirection = (Player.Camera.LockedTarget.position - transform.position).normalized;
+                    _targetRotation = Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg;
+                }
+            }
+        }
+
         // 회전
         float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, _rotationSmoothTime);
         transform.rotation = Quaternion.Euler(0f, rotation, 0f);
@@ -277,9 +302,10 @@ public class PlayerMovement : MonoBehaviour
         _controller.Move(moveDirection.normalized * (_speed * deltaTime) + new Vector3(0f, _verticalVelocity, 0f) * deltaTime);
 
         // 애니메이터 업데이트
+        bool isLockMoving = isLockOn && isOnlyRun;
         Player.Animator.SetFloat(_animIDSpeed, _animationBlend);
-        Player.Animator.SetFloat(_animIDPosX, 0f);
-        Player.Animator.SetFloat(_animIDPosY, 1f);
+        Player.Animator.SetFloat(_animIDPosX, isLockMoving ? _posXBlend : 0f);
+        Player.Animator.SetFloat(_animIDPosY, isLockMoving ? _posYBlend : 1f);
     }
 
     private void Jump(InputAction.CallbackContext context)
@@ -298,6 +324,7 @@ public class PlayerMovement : MonoBehaviour
         if (CanRoll && _sprintInputTime <= _rollTimeout)
         {
             IsRolling = true;
+            CanRotation = true;
             Player.Animator.SetBool(_animIDRoll, true);
         }
     }
@@ -314,7 +341,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnBeginRoll()
     {
+        _isRollMoving = true;
         Player.Animator.SetBool(_animIDRoll, false);
+    }
+
+    private void OnEndRoll()
+    {
+        IsRolling = false;
+        CanRotation = true;
+        CanSprint = true;
     }
 
     private void OnDrawGizmosSelected()

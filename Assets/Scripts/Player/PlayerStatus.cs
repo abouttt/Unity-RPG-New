@@ -78,6 +78,30 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
+    public PlayerStats FixedStats
+    {
+        get => _fixedStats;
+        set
+        {
+            _fixedStats = value;
+            RefreshAllStats();
+            FillMeleeStats();
+            StatChanged?.Invoke();
+        }
+    }
+
+    public PlayerStats PercentageStats
+    {
+        get => _percentageStats;
+        set
+        {
+            _percentageStats = value;
+            RefreshAllStats();
+            FillMeleeStats();
+            StatChanged?.Invoke();
+        }
+    }
+
     public int Gold
     {
         get => _gold;
@@ -120,8 +144,8 @@ public class PlayerStatus : MonoBehaviour
 
     private readonly PlayerStats _maxStats = new();
     private readonly PlayerStats _currentStats = new();
-    private readonly PlayerStats _fixedStats = new();
-    private readonly PlayerStats _percentageStats = new();
+    private PlayerStats _fixedStats = new();
+    private PlayerStats _percentageStats = new();
 
     private int _gold;
     private int _skillPoint;

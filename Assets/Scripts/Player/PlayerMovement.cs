@@ -73,6 +73,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private LayerMask _groundLayers;
 
+    [Space(10)]
+    [SerializeField]
+    private float _sprintRequiredSP;
+
+    [SerializeField]
+    private float _jumpRequiredSP;
+
+    [SerializeField]
+    private float _rollRequiredSP;
+
     private float _speed;
     private float _animationBlend;
     private float _posXBlend;
@@ -133,6 +143,12 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             _sprintInputTime = 0f;
+
+            // 질주로 인해 기력을 다 소비한 후 질주가 불가능 할 때 키를 때면 다시 가능하도록.
+            if (!CanSprint)
+            {
+                CanSprint = true;
+            }
         }
 
         Gravity(deltaTime);
@@ -203,6 +219,7 @@ public class PlayerMovement : MonoBehaviour
     private void Move(float deltaTime)
     {
         float targetSpeed = _runSpeed;
+        float requiredSP = 0f;
 
         if (_isRollMoving)
         {
@@ -219,8 +236,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (CanSprint && !IsJumping && !IsRolling && _sprintInputTime > _rollTimeout)
         {
-            IsSprinting = true;
-            targetSpeed = _sprintSpeed;
+            if (Player.Status.SP > 0f)
+            {
+                IsSprinting = true;
+                targetSpeed = _sprintSpeed;
+                requiredSP = _sprintRequiredSP * deltaTime;
+            }
+            else
+            {
+                CanSprint = false;
+            }
         }
         else
         {
@@ -233,6 +258,7 @@ public class PlayerMovement : MonoBehaviour
         if (!_isRollMoving && (!CanMove || isZeroMoveInput))
         {
             targetSpeed = 0f;
+            requiredSP = 0f;
         }
 
         float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0f, _controller.velocity.z).magnitude;
@@ -300,6 +326,7 @@ public class PlayerMovement : MonoBehaviour
         // 이동
         var moveDirection = Quaternion.Euler(0f, _targetMove, 0f) * Vector3.forward;
         _controller.Move(moveDirection.normalized * (_speed * deltaTime) + new Vector3(0f, _verticalVelocity, 0f) * deltaTime);
+        Player.Status.SP -= requiredSP;
 
         // 애니메이터 업데이트
         bool isLockMoving = isLockOn && isOnlyRun;
@@ -310,7 +337,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext context)
     {
-        if (CanJump && _jumpTimeoutDelta <= 0f)
+        if (CanJump && _jumpTimeoutDelta <= 0f && Player.Status.SP > 0f)
         {
             IsJumping = true;
             _verticalVelocity = Mathf.Sqrt(_jumpHeight * -2f * _gravity);
@@ -321,7 +348,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Roll(InputAction.CallbackContext context)
     {
-        if (CanRoll && _sprintInputTime <= _rollTimeout)
+        if (CanRoll && _sprintInputTime <= _rollTimeout && Player.Status.SP > 0f)
         {
             IsRolling = true;
             CanRotation = true;
@@ -331,6 +358,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnBeginJump()
     {
+        Player.Status.SP -= _jumpRequiredSP;
         Player.Animator.SetBool(_animIDJump, false);
     }
 
@@ -342,6 +370,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnBeginRoll()
     {
         _isRollMoving = true;
+        Player.Status.SP -= _rollRequiredSP;
         Player.Animator.SetBool(_animIDRoll, false);
     }
 

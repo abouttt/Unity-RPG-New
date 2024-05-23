@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
     public static Transform Transform { get; private set; }
     public static Collider Collider { get; private set; }
     public static Animator Animator { get; private set; }
+    public static PlayerStatus Status { get; private set; }
     public static PlayerMovement Movement { get; private set; }
     public static PlayerCamera Camera { get; private set; }
 
@@ -15,6 +16,7 @@ public class Player : MonoBehaviour
         Transform = transform;
         Collider = GetComponent<Collider>();
         Animator = GetComponent<Animator>();
+        Status = GetComponent<PlayerStatus>();
         Movement = GetComponent<PlayerMovement>();
         Camera = GetComponent<PlayerCamera>();
     }

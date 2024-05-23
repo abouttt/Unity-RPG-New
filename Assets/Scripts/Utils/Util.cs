@@ -91,4 +91,9 @@ public static class Util
 
         return Mathf.Clamp(lfAngle, lfMin, lfMax);
     }
+
+    public static int CalcIncreasePercentage(int value, int percentage)
+    {
+        return Mathf.CeilToInt((value * (1f + percentage / 100f)));
+    }
 }

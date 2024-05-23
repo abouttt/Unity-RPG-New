@@ -1159,6 +1159,7 @@ GameObject:
   - component: {fileID: 2069433133}
   - component: {fileID: 2069433136}
   - component: {fileID: 2069433135}
+  - component: {fileID: 2069433138}
   - component: {fileID: 2069433134}
   - component: {fileID: 2069433137}
   m_Layer: 3
@@ -1234,6 +1235,9 @@ MonoBehaviour:
   _groundLayers:
     serializedVersion: 2
     m_Bits: 64
+  _sprintRequiredSP: 15
+  _jumpRequiredSP: 10
+  _rollRequiredSP: 10
 --- !u!114 &2069433135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1297,6 +1301,21 @@ MonoBehaviour:
   _obstacleMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &2069433138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069433131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f842a7c1200ff468416229867d64d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerStatsTable: {fileID: 11400000, guid: 6c41452e0ab6dde4886a14189723519c, type: 2}
+  _recoverySPDelay: 1
+  _recoverySPAmount: 80
 --- !u!1 &2091231657
 GameObject:
   m_ObjectHideFlags: 0

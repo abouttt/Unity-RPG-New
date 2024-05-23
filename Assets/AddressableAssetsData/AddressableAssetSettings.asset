@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: acecbcddfe0e8e74fbeb9c9f15848639
   m_currentHash:
     serializedVersion: 2
-    Hash: 1945dd4c72148200465646e1e7ffea1e
+    Hash: 966c30d3e487cdcceb89a4a94ea15ca6
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -46,6 +46,8 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: 23a59d890b4c2fe4784af092e721056a, type: 2}
   - {fileID: 11400000, guid: 0bd45493fa8610f4ba561249f07fc2c8, type: 2}
+  - {fileID: 11400000, guid: 4ab07e92d1e7a0740bd29a9f03d424bf, type: 2}
+  - {fileID: 11400000, guid: 6568eb92a506adb4b985789693536550, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -87,6 +89,8 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - Default
+    - Game_Prefab
+    - Game_UI
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 7bb203ce33a18eb4e869e5cbc5b9c9d9, type: 2}

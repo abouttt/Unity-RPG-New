@@ -17,6 +17,7 @@ public class PlayerCamera : MonoBehaviour
             IsLockOn = value != null;
             _stateDrivenCamera.LookAt = value;
             _cameraAnimator.SetBool(_animIDLockOn, IsLockOn);
+            _lockOnTargetImage.Target = value;
 
             if (IsLockOn)
             {
@@ -66,6 +67,7 @@ public class PlayerCamera : MonoBehaviour
     private GameObject _mainCamera;
     private Animator _cameraAnimator;
     private CinemachineComposer _targetComposer;
+    private UI_LockOnTarget _lockOnTargetImage;
 
     private void Awake()
     {
@@ -83,6 +85,9 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
+        var go = Managers.Resource.Instantiate("UI_LockOnTarget.prefab");
+        _lockOnTargetImage = go.GetComponent<UI_LockOnTarget>();
+
         _cinemachineTargetPitch = _cinemachineCameraTarget.transform.rotation.eulerAngles.x;
         _cinemachineTargetYaw = _cinemachineCameraTarget.transform.rotation.eulerAngles.y;
 

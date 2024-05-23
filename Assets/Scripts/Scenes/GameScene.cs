@@ -11,6 +11,14 @@ public class GameScene : BaseScene
     [field: SerializeField]
     public float DefaultSpawnYaw { get; private set; }
 
+    protected override void Init()
+    {
+        base.Init();
+        var package = Managers.Resource.Instantiate("GameUIPackage.prefab");
+        package.transform.DetachChildren();
+        Destroy(package);
+    }
+
     private void Start()
     {
         Managers.Input.CursorLocked = true;

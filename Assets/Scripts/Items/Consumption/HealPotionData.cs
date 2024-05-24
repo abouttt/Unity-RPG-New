@@ -8,6 +8,6 @@ public class HealPotionData : ConsumptionItemData
 
     public override void Use()
     {
-        Debug.Log($"Heal Potion : {_healAmount}");
+        Player.Status.HP += _healAmount;
     }
 }

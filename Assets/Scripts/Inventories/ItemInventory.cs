@@ -37,7 +37,7 @@ public class ItemInventory : MonoBehaviour
 
         while (count > 0)
         {
-            if (itemData is IStackable stackable)
+            if (itemData is IStackableItemData stackableData)
             {
                 int sameItemIndex = items.FindIndex(item =>
                 {
@@ -51,12 +51,12 @@ public class ItemInventory : MonoBehaviour
                         return false;
                     }
 
-                    return !(item as StackableItem).IsMax;
+                    return !(item as IStackableItem).IsMax;
                 });
 
                 if (sameItemIndex != -1)
                 {
-                    var otherStackableItem = items[sameItemIndex] as StackableItem;
+                    var otherStackableItem = items[sameItemIndex] as IStackableItem;
                     count = otherStackableItem.AddCountAndGetExcess(count);
                 }
                 else
@@ -64,7 +64,7 @@ public class ItemInventory : MonoBehaviour
                     if (TryGetEmptyIndex(itemData.ItemType, out var emptyIndex))
                     {
                         SetItem(itemData, emptyIndex, count);
-                        count = Mathf.Max(0, count - stackable.MaxCount);
+                        count = Mathf.Max(0, count - stackableData.MaxCount);
                     }
                     else
                     {
@@ -120,9 +120,9 @@ public class ItemInventory : MonoBehaviour
             DestroyItem(itemData.ItemType, index);
         }
 
-        if (itemData is IStackable stackable)
+        if (itemData is IStackableItemData stackableData)
         {
-            inventory.Items[index] = stackable.CreateItem(count);
+            inventory.Items[index] = stackableData.CreateItem(count);
         }
         else
         {
@@ -161,7 +161,7 @@ public class ItemInventory : MonoBehaviour
 
         var inventory = _inventories[itemType];
 
-        if (inventory.Items[fromIndex] is not StackableItem fromItem)
+        if (inventory.Items[fromIndex] is not IStackableItem fromItem)
         {
             return;
         }
@@ -215,13 +215,13 @@ public class ItemInventory : MonoBehaviour
     {
         var inventory = _inventories[itemType];
 
-        if (inventory.Items[fromIndex] is not StackableItem fromItem ||
-            inventory.Items[toIndex] is not StackableItem toItem)
+        if (inventory.Items[fromIndex] is not IStackableItem fromItem ||
+            inventory.Items[toIndex] is not IStackableItem toItem)
         {
             return false;
         }
 
-        if (!fromItem.Data.Equals(toItem.Data))
+        if (!fromItem.StackableData.Equals(toItem.StackableData))
         {
             return false;
         }

@@ -1,41 +1,61 @@
+using System;
 using UnityEngine;
 
-public class ConsumptionItem : StackableItem
+public class ConsumptionItem : Item, IStackableItem, IUsableItem
 {
+    public event Action StackChanged;
+
     public ConsumptionItemData ConsumptionData { get; private set; }
+    public IStackableItemData StackableData => ConsumptionData;
+    public IUsableItemData UsableData => ConsumptionData;
+    public int MaxCount => ConsumptionData.MaxCount;
+    public int Count { get; private set; }
+    public bool IsMax => Count >= MaxCount;
+    public bool IsEmpty => Count <= 0;
 
     public ConsumptionItem(ConsumptionItemData data, int count = 1)
-        : base(data, count)
+        : base(data)
     {
         ConsumptionData = data;
+        SetCount(count);
     }
 
     public void Use()
     {
-        if (Player.Status.HP <= 0)
+        if (!CanUse())
         {
             return;
+        }
+
+        ConsumptionData.Use();
+    }
+
+    public bool CanUse()
+    {
+        if (Player.Status.HP <= 0)
+        {
+            return false;
         }
 
         if (Player.Status.Level < ConsumptionData.LimitLevel)
         {
-            return;
+            return false;
         }
 
         if (ConsumptionData.Cooldown.Time > 0f)
         {
-            return;
+            return false;
         }
 
         if (Count < ConsumptionData.RequiredCount)
         {
-            return;
+            return false;
         }
 
         int remainingCount = Count - ConsumptionData.RequiredCount;
         if (remainingCount < 0)
         {
-            return;
+            return false;
         }
 
         SetCount(remainingCount);
@@ -48,6 +68,23 @@ public class ConsumptionItem : StackableItem
         ConsumptionData.Cooldown.OnCooldowned();
         Managers.Cooldown.AddCooldown(ConsumptionData.Cooldown);
 
-        ConsumptionData.Use();
+        return true;
+    }
+
+    public void SetCount(int count)
+    {
+        int prevCount = Count;
+        Count = Mathf.Clamp(count, 0, MaxCount);
+        if (prevCount != Count)
+        {
+            StackChanged?.Invoke();
+        }
+    }
+
+    public int AddCountAndGetExcess(int count)
+    {
+        int nextCount = Count + count;
+        SetCount(nextCount);
+        return nextCount > MaxCount ? nextCount - MaxCount : 0;
     }
 }

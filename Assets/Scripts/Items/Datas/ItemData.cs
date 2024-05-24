@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class ItemData : ScriptableObject, IItem
+public abstract class ItemData : ScriptableObject, IItemData
 {
     [field: SerializeField]
     public string ItemId { get; private set; }

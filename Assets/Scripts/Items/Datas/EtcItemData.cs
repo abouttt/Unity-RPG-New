@@ -1,8 +1,11 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Item/Etc", fileName = "Item_Etc_")]
-public class EtcItemData : StackableItemData
+public class EtcItemData : ItemData, IStackableItemData
 {
+    [field: SerializeField]
+    public int MaxCount { get; private set; } = 99;
+
     public EtcItemData()
     {
         ItemType = ItemType.Etc;
@@ -13,7 +16,7 @@ public class EtcItemData : StackableItemData
         return new EtcItem(this);
     }
 
-    public override StackableItem CreateItem(int count)
+    public Item CreateItem(int count)
     {
         return new EtcItem(this, count);
     }

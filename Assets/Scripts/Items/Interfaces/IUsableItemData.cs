@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IUsable
+public interface IUsableItemData
 {
     public int LimitLevel { get; }
 

@@ -12,13 +12,13 @@ public class Cooldown
 
     public void OnCooldowned()
     {
-        MaxTime = Time;
+        Time = MaxTime;
         Cooldowned?.Invoke();
     }
 
     public void Clear()
     {
-        Time = 0;
+        Time = 0f;
         Cooldowned = null;
     }
 }

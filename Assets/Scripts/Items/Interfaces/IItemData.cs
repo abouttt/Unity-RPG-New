@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IItem
+public interface IItemData
 {
     public string ItemId { get; }
     public string ItemName { get; }

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Item/Equipment", fileName = "Item_Equipment_")]
-public class EquipmentItemData : ItemData, IUsable
+public class EquipmentItemData : ItemData, IUsableItemData
 {
     [field: SerializeField]
     public EquipmentType EquipmentType { get; private set; }

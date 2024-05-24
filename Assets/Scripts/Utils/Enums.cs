@@ -1,3 +1,28 @@
+
+public enum EquipmentType
+{
+    Helmet,
+    Chest,
+    Pants,
+    Boots,
+    Weapon,
+    Shield,
+}
+
+public enum ItemType
+{
+    Equipment,
+    Consumption,
+    Etc
+}
+
+public enum ItemQuality
+{
+    Low,
+    Middle,
+    High,
+}
+
 public enum UIType
 {
     Subitem,

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public abstract class Item
+public abstract class Item : IItem
 {
-    public ItemData Data { get; private set; }
+    public IItemData Data { get; private set; }
 
     public Item(ItemData itemData)
     {

@@ -10,4 +10,5 @@ public interface IItemData
     public string Description { get; }
 
     public Item CreateItem();
+    public bool Equals(IItemData other);
 }

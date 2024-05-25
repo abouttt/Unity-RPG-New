@@ -23,6 +23,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Game_UI
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8540317d7320edc4b8098a5d4cdbdaed
+    m_Address: UI_ItemSlot.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game_UI
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1a3acc2b854879f4a93375b096ee8843, type: 2}
   m_SchemaSet:

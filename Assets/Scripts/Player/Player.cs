@@ -22,4 +22,16 @@ public class Player : MonoBehaviour
         Camera = GetComponent<PlayerCamera>();
         ItemInventory = GetComponent<ItemInventory>();
     }
+
+    public void Init()
+    {
+        GameObject = gameObject;
+        Transform = transform;
+        Collider = GetComponent<Collider>();
+        Animator = GetComponent<Animator>();
+        Status = GetComponent<PlayerStatus>();
+        Movement = GetComponent<PlayerMovement>();
+        Camera = GetComponent<PlayerCamera>();
+        ItemInventory = GetComponent<ItemInventory>();
+    }
 }

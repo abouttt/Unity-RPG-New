@@ -21,17 +21,17 @@ public class UI_StatusFixed : UI_Base
 
         BindImage(typeof(Images));
         BindText(typeof(Texts));
-    }
 
-    private void Start()
-    {
         Player.Status.LevelChanged += RefreshLevelText;
         Player.Status.HPChanged += RefreshHPImage;
         Player.Status.MPChanged += RefreshMPImage;
         Player.Status.SPChanged += RefreshSPImage;
         Player.Status.XPChanged += RefreshXPImage;
         Player.Status.StatChanged += RefreshAll;
+    }
 
+    private void Start()
+    {
         RefreshAll();
     }
 

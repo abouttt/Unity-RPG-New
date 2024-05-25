@@ -14,6 +14,7 @@ public class GameScene : BaseScene
     protected override void Init()
     {
         base.Init();
+        FindAnyObjectByType<Player>().Init();
         var package = Managers.Resource.Instantiate("GameUIPackage.prefab");
         package.transform.DetachChildren();
         Destroy(package);
@@ -22,5 +23,6 @@ public class GameScene : BaseScene
     private void Start()
     {
         Managers.Input.CursorLocked = true;
+        Managers.UI.Get<UI_TopCanvas>().FadeInitBG();
     }
 }

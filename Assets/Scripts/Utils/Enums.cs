@@ -1,4 +1,9 @@
 
+public enum SlotType
+{
+    Item,
+}
+
 public enum EquipmentType
 {
     Helmet,

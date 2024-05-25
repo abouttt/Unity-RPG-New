@@ -92,8 +92,37 @@ public class InputManager : GameControls.IPlayerActions
         }
     }
 
+    public void OnItemInventory(InputAction.CallbackContext context)
+    {
+        ShowOrClosePopup<UI_ItemInventoryPopup>(context);
+    }
+
+    public void OnCancel(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (Managers.UI.ActivePopupCount > 0)
+            {
+                Managers.UI.CloseTopPopup();
+            }
+        }
+    }
+
     private void SetCursorState(bool newState)
     {
         Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+    }
+
+    private void ShowOrClosePopup<T>(InputAction.CallbackContext context) where T : UI_Popup
+    {
+        if (context.performed)
+        {
+            if (Managers.UI.IsShowedHelperPopup)
+            {
+                return;
+            }
+
+            Managers.UI.ShowOrClose<T>();
+        }
     }
 }

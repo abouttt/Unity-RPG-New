@@ -109,12 +109,12 @@ public class UI_ItemSlot : UI_BaseSlot, IDropHandler
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
-
+        Managers.UI.Get<UI_TooltipTop>().ItemTooltip.SetSlot(this);
     }
 
     public override void OnPointerExit(PointerEventData eventData)
     {
-
+        Managers.UI.Get<UI_TooltipTop>().ItemTooltip.SetSlot(null);
     }
 
     public override void OnPointerUp(PointerEventData eventData)

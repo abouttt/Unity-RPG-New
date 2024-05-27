@@ -153,6 +153,16 @@ public class PlayerStatus : MonoBehaviour
 
     private void Awake()
     {
+        Player.EquipmentInventory.InventoryChanged += equipmentType =>
+        {
+            RefreshAllStats();
+            FillMeleeStats();
+            _currentStats.HP = Mathf.Clamp(_currentStats.HP, _currentStats.HP, _maxStats.HP);
+            _currentStats.MP = Mathf.Clamp(_currentStats.MP, _currentStats.MP, _maxStats.MP);
+            _currentStats.SP = Mathf.Clamp(_currentStats.SP, _currentStats.SP, _maxStats.SP);
+            StatChanged?.Invoke();
+        };
+
         RefreshAllStats();
         FillAllStats();
     }
@@ -176,6 +186,22 @@ public class PlayerStatus : MonoBehaviour
         _maxStats.XP = _playerStatsTable.StatsTable[level].XP;
         _maxStats.Damage = _playerStatsTable.StatsTable[level].Damage + _fixedStats.Damage;
         _maxStats.Defense = _playerStatsTable.StatsTable[level].Defense + _fixedStats.Defense;
+
+        var types = Enum.GetValues(typeof(EquipmentType));
+        foreach (EquipmentType equipmentType in types)
+        {
+            var equipment = Player.EquipmentInventory.GetItem(equipmentType);
+            if (equipment == null)
+            {
+                continue;
+            }
+
+            _maxStats.HP += equipment.EquipmentData.HP;
+            _maxStats.MP += equipment.EquipmentData.MP;
+            _maxStats.SP += equipment.EquipmentData.SP;
+            _maxStats.Damage += equipment.EquipmentData.Damage;
+            _maxStats.Defense += equipment.EquipmentData.Defense;
+        }
 
         _maxStats.HP = Util.CalcIncreasePercentage(_maxStats.HP, _percentageStats.HP);
         _maxStats.MP = Util.CalcIncreasePercentage(_maxStats.MP, _percentageStats.MP);

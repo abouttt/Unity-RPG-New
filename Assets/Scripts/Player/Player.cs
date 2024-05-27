@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public static PlayerMovement Movement { get; private set; }
     public static PlayerCamera Camera { get; private set; }
     public static ItemInventory ItemInventory { get; private set; }
+    public static EquipmentInventory EquipmentInventory { get; private set; }
 
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour
         Movement = GetComponent<PlayerMovement>();
         Camera = GetComponent<PlayerCamera>();
         ItemInventory = GetComponent<ItemInventory>();
+        EquipmentInventory = GetComponent<EquipmentInventory>();
     }
 
     public void Init()
@@ -33,5 +35,6 @@ public class Player : MonoBehaviour
         Movement = GetComponent<PlayerMovement>();
         Camera = GetComponent<PlayerCamera>();
         ItemInventory = GetComponent<ItemInventory>();
+        EquipmentInventory = GetComponent<EquipmentInventory>();
     }
 }

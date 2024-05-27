@@ -4,6 +4,9 @@ using UnityEngine;
 public class EquipmentItemData : ItemData, IUsableItemData
 {
     [field: SerializeField]
+    public int LimitLevel { get; private set; } = 1;
+
+    [field: SerializeField]
     public EquipmentType EquipmentType { get; private set; }
 
     [field: SerializeField]
@@ -23,9 +26,6 @@ public class EquipmentItemData : ItemData, IUsableItemData
 
     [field: SerializeField]
     public int Defense { get; private set; }
-
-    [field: SerializeField]
-    public int LimitLevel { get; private set; } = 1;
 
     public EquipmentItemData()
     {

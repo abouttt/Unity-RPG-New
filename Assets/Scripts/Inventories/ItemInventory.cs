@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using AYellowpaper.SerializedCollections;
 
-public class ItemInventory : MonoBehaviour
+public class ItemInventory : MonoBehaviour, IInventory
 {
     [Serializable]
     public class Inventory
@@ -25,9 +25,9 @@ public class ItemInventory : MonoBehaviour
 
     private void Awake()
     {
-        foreach (var element in _inventories)
+        foreach (var kvp in _inventories)
         {
-            element.Value.Items = Enumerable.Repeat<Item>(null, element.Value.Capacity).ToList();
+            kvp.Value.Items = Enumerable.Repeat<Item>(null, kvp.Value.Capacity).ToList();
         }
     }
 

@@ -29,17 +29,17 @@ public class UI_ItemTooltip : UI_BaseTooltip
 
     protected override void SetData()
     {
-        if (SlotRef.ObjectRef is IItem item)
+        if (SlotRef.ObjectRef is Item item)
         {
             SetItemData(item.Data);
         }
-        else if (SlotRef.ObjectRef is IItemData itemData)
+        else if (SlotRef.ObjectRef is ItemData itemData)
         {
             SetItemData(itemData);
         }
     }
 
-    private void SetItemData(IItemData itemData)
+    private void SetItemData(ItemData itemData)
     {
         GetObject((int)GameObjects.Tooltip).SetActive(true);
 
@@ -78,27 +78,27 @@ public class UI_ItemTooltip : UI_BaseTooltip
         };
     }
 
-    private void SetDescription(IItemData itemData)
+    private void SetDescription(ItemData itemData)
     {
         SB.Clear();
 
-        if (itemData is IUsableItemData usableItemData)
+        if (itemData is IUsableItemData usableData)
         {
-            SB.Append($"제한 레벨 : {usableItemData.LimitLevel} \n");
+            SB.Append($"제한 레벨 : {usableData.LimitLevel} \n");
         }
 
-        if (itemData is EquipmentItemData equipmentItemData)
+        if (itemData is EquipmentItemData equipmentData)
         {
             SB.Append("\n");
-            AppendValueIfGreaterThan0("공격력", equipmentItemData.Damage);
-            AppendValueIfGreaterThan0("방어력", equipmentItemData.Defense);
-            AppendValueIfGreaterThan0("체력", equipmentItemData.HP);
-            AppendValueIfGreaterThan0("마나", equipmentItemData.MP);
-            AppendValueIfGreaterThan0("기력", equipmentItemData.SP);
+            AppendValueIfGreaterThan0("공격력", equipmentData.Damage);
+            AppendValueIfGreaterThan0("방어력", equipmentData.Defense);
+            AppendValueIfGreaterThan0("체력", equipmentData.HP);
+            AppendValueIfGreaterThan0("마나", equipmentData.MP);
+            AppendValueIfGreaterThan0("기력", equipmentData.SP);
         }
-        else if (itemData is ConsumptionItemData consumptionItemData)
+        else if (itemData is ConsumptionItemData consumptionData)
         {
-            SB.Append($"소비 개수 : {consumptionItemData.RequiredCount}\n");
+            SB.Append($"소비 개수 : {consumptionData.RequiredCount}\n");
         }
 
         if (SB.Length > 0)

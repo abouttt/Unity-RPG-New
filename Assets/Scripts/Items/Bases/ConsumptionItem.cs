@@ -3,24 +3,12 @@ using UnityEngine;
 public class ConsumptionItem : StackableItem, IUsableItem
 {
     public ConsumptionItemData ConsumptionData { get; private set; }
-    public override IStackableItemData StackableData => ConsumptionData;
     public IUsableItemData UsableData => ConsumptionData;
 
     public ConsumptionItem(ConsumptionItemData data, int count = 1)
-        : base(data)
+        : base(data, count)
     {
         ConsumptionData = data;
-        SetCount(count);
-    }
-
-    public void Use(int index)
-    {
-        if (!CanUse())
-        {
-            return;
-        }
-
-        ConsumptionData.Use(index);
     }
 
     public bool CanUse()
@@ -35,12 +23,12 @@ public class ConsumptionItem : StackableItem, IUsableItem
             return false;
         }
 
-        if (ConsumptionData.Cooldown.Time > 0f)
+        if (Count < ConsumptionData.RequiredCount)
         {
             return false;
         }
 
-        if (Count < ConsumptionData.RequiredCount)
+        if (ConsumptionData.Cooldown.Time > 0f)
         {
             return false;
         }

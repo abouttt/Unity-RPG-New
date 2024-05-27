@@ -10,7 +10,7 @@ public abstract class UI_BaseTooltip : UI_Base
     }
 
     protected UI_BaseSlot SlotRef;
-    protected IItemData DataRef;
+    protected ScriptableObject DataRef;
     protected RectTransform RT;
     protected readonly StringBuilder SB = new(50);
 

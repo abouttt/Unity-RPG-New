@@ -5,15 +5,18 @@ public abstract class StackableItem : Item, IStackableItem
 {
     public event Action StackChanged;
 
-    public abstract IStackableItemData StackableData { get; }
+    public IStackableItemData StackableData { get; private set; }
     public int MaxCount => StackableData.MaxCount;
     public int Count { get; private set; }
     public bool IsMax => Count >= MaxCount;
     public bool IsEmpty => Count <= 0;
 
-    public StackableItem(ItemData data)
-        : base(data)
-    { }
+    public StackableItem(StackableItemData itemData, int count)
+        : base(itemData)
+    {
+        StackableData = itemData;
+        SetCount(count);
+    }
 
     public void SetCount(int count)
     {

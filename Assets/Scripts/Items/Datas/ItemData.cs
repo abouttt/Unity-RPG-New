@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class ItemData : ScriptableObject, IItemData
+public abstract class ItemData : ScriptableObject
 {
     [field: SerializeField]
     public string ItemId { get; private set; }
@@ -22,7 +22,7 @@ public abstract class ItemData : ScriptableObject, IItemData
 
     public abstract Item CreateItem();
 
-    public bool Equals(IItemData other)
+    public bool Equals(ItemData other)
     {
         if (other == null)
         {

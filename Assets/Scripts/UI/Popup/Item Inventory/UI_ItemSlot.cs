@@ -124,9 +124,10 @@ public class UI_ItemSlot : UI_BaseSlot, IDropHandler
             return;
         }
 
-        if (ObjectRef is IUsableItem usable)
+        var item = ObjectRef as Item;
+        if (item is IUsableItem usable)
         {
-            usable.Use(Index);
+            usable.Use(Player.ItemInventory, item);
         }
     }
 

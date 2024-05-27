@@ -1,10 +1,7 @@
 using UnityEngine;
 
-public abstract class ConsumptionItemData : ItemData, IStackableItemData, IUsableItemData, ICooldownable
+public abstract class ConsumptionItemData : StackableItemData, IUsableItemData, ICooldownable
 {
-    [field: SerializeField]
-    public int MaxCount { get; private set; } = 99;
-
     [field: SerializeField]
     public int LimitLevel { get; private set; } = 1;
 
@@ -24,10 +21,10 @@ public abstract class ConsumptionItemData : ItemData, IStackableItemData, IUsabl
         return new ConsumptionItem(this);
     }
 
-    public Item CreateItem(int count)
+    public override Item CreateItem(int count)
     {
         return new ConsumptionItem(this, count);
     }
 
-    public abstract void Use(int index);
+    public abstract void Use<T>(T inventory, Item item) where T : IInventory;
 }

@@ -11,16 +11,6 @@ public class EquipmentItem : Item, IUsableItem
         EquipmentData = data;
     }
 
-    public void Use(int index)
-    {
-        if (!CanUse())
-        {
-            return;
-        }
-
-        EquipmentData.Use(index);
-    }
-
     public bool CanUse()
     {
         if (Player.Status.HP <= 0)

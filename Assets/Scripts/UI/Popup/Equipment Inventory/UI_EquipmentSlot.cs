@@ -48,8 +48,8 @@ public class UI_EquipmentSlot : UI_BaseSlot, IDropHandler
             return;
         }
 
-        Player.ItemInventory.AddItem((ObjectRef as EquipmentItem).EquipmentData);
-        Player.EquipmentInventory.Unequip(EquipmentType);
+        var equipmentItem = ObjectRef as EquipmentItem;
+        equipmentItem.EquipmentData.Use(Player.EquipmentInventory, equipmentItem);
     }
 
     public void OnDrop(PointerEventData eventData)

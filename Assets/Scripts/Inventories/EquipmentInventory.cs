@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EquipmentInventory : MonoBehaviour
+public class EquipmentInventory : MonoBehaviour, IInventory
 {
     public event Action<EquipmentType> InventoryChanged;
 

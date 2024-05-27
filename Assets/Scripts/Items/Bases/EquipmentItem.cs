@@ -11,14 +11,14 @@ public class EquipmentItem : Item, IUsableItem
         EquipmentData = data;
     }
 
-    public void Use()
+    public void Use(int index)
     {
         if (!CanUse())
         {
             return;
         }
 
-        EquipmentData.Use();
+        EquipmentData.Use(index);
     }
 
     public bool CanUse()

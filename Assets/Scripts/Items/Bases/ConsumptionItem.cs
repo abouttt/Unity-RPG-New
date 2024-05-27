@@ -13,14 +13,14 @@ public class ConsumptionItem : StackableItem, IUsableItem
         SetCount(count);
     }
 
-    public void Use()
+    public void Use(int index)
     {
         if (!CanUse())
         {
             return;
         }
 
-        ConsumptionData.Use();
+        ConsumptionData.Use(index);
     }
 
     public bool CanUse()

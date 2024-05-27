@@ -37,8 +37,18 @@ public class EquipmentItemData : ItemData, IUsableItemData
         return new EquipmentItem(this);
     }
 
-    public void Use()
+    public void Use(int index)
     {
-        
+        var equippedItem = Player.EquipmentInventory.GetItem(EquipmentType);
+        if (equippedItem != null)
+        {
+            Player.ItemInventory.SetItem(equippedItem.EquipmentData, index);
+        }
+        else
+        {
+            Player.ItemInventory.RemoveItem(ItemType, index);
+        }
+
+        Player.EquipmentInventory.Equip(this);
     }
 }

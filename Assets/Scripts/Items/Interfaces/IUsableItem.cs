@@ -4,6 +4,6 @@ public interface IUsableItem
 {
     public IUsableItemData UsableData { get; }
 
-    public void Use();
+    public void Use(int index);
     public bool CanUse();
 }

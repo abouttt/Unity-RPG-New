@@ -29,5 +29,5 @@ public abstract class ConsumptionItemData : ItemData, IStackableItemData, IUsabl
         return new ConsumptionItem(this, count);
     }
 
-    public abstract void Use();
+    public abstract void Use(int index);
 }

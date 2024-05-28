@@ -90,11 +90,11 @@ public class UI_ItemTooltip : UI_BaseTooltip
         if (itemData is EquipmentItemData equipmentData)
         {
             SB.Append("\n");
-            AppendValueIfGreaterThan0("공격력", equipmentData.Damage);
-            AppendValueIfGreaterThan0("방어력", equipmentData.Defense);
-            AppendValueIfGreaterThan0("체력", equipmentData.HP);
-            AppendValueIfGreaterThan0("마나", equipmentData.MP);
-            AppendValueIfGreaterThan0("기력", equipmentData.SP);
+            AppendValueIfGreaterThan0("체력", equipmentData.Stats.HP);
+            AppendValueIfGreaterThan0("마나", equipmentData.Stats.MP);
+            AppendValueIfGreaterThan0("기력", (int)equipmentData.Stats.SP);
+            AppendValueIfGreaterThan0("공격력", equipmentData.Stats.Damage);
+            AppendValueIfGreaterThan0("방어력", equipmentData.Stats.Defense);
         }
         else if (itemData is ConsumptionItemData consumptionData)
         {

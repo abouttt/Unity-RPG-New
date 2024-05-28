@@ -17,12 +17,13 @@ MonoBehaviour:
   <ItemImage>k__BackingField: {fileID: 21300000, guid: 172774604c1bee84185a69041576525b, type: 3}
   <ItemType>k__BackingField: 0
   <ItemQuality>k__BackingField: 1
-  <Description>k__BackingField: "\uD3C9\uBC94\uD55C \uB3C4\uB07C\uB2E4"
+  <Description>k__BackingField: "\uD3C9\uBC94\uD55C \uB3C4\uB07C\uB2E4."
   <LimitLevel>k__BackingField: 1
   <EquipmentType>k__BackingField: 4
   <EquipmentPrefab>k__BackingField: {fileID: 0}
-  <HP>k__BackingField: 0
-  <MP>k__BackingField: 0
-  <SP>k__BackingField: 0
-  <Damage>k__BackingField: 10
-  <Defense>k__BackingField: 0
+  <Stats>k__BackingField:
+    HP: 0
+    MP: 0
+    SP: 0
+    Damage: 10
+    Defense: 0

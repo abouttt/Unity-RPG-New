@@ -6,6 +6,8 @@ public class EquipmentInventory : MonoBehaviour, IInventory
 {
     public event Action<EquipmentType> InventoryChanged;
 
+    public readonly BasicStats Stats = new();
+
     private readonly Dictionary<EquipmentType, EquipmentItem> _items = new();
 
     private void Awake()
@@ -19,14 +21,26 @@ public class EquipmentInventory : MonoBehaviour, IInventory
 
     public void Equip(EquipmentItemData equipmentItemData)
     {
-        var equipmentItem = equipmentItemData.CreateItem() as EquipmentItem;
         var equipmentType = equipmentItemData.EquipmentType;
+        if (IsEquipped(equipmentType))
+        {
+            Unequip(equipmentType);
+        }
+
+        var equipmentItem = equipmentItemData.CreateItem() as EquipmentItem;
         _items[equipmentType] = equipmentItem;
+        Stats.Add(equipmentItemData.Stats);
         InventoryChanged?.Invoke(equipmentType);
     }
 
     public void Unequip(EquipmentType equipmentType)
     {
+        if (!IsEquipped(equipmentType))
+        {
+            return;
+        }
+
+        Stats.Sub(_items[equipmentType].EquipmentData.Stats);
         _items[equipmentType] = null;
         InventoryChanged?.Invoke(equipmentType);
     }

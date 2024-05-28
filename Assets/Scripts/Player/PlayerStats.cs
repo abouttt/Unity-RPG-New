@@ -4,36 +4,49 @@ using UnityEngine;
 [Serializable]
 public class PlayerStats
 {
-    public int HP;
-    public int MP;
-    public float SP;
+    [field: SerializeField]
+    public BasicStats BasicStats { get; private set; } = new();
     public int XP;
-    public int Damage;
-    public int Defense;
 
-    public static PlayerStats operator +(PlayerStats a, PlayerStats b)
+    public int HP
     {
-        return new PlayerStats
-        {
-            HP = a.HP + b.HP,
-            MP = a.MP + b.MP,
-            SP = a.SP + b.SP,
-            XP = a.XP + b.XP,
-            Damage = a.Damage + b.Damage,
-            Defense = a.Defense + b.Defense,
-        };
+        get => BasicStats.HP;
+        set => BasicStats.HP = value;
     }
 
-    public static PlayerStats operator -(PlayerStats a, PlayerStats b)
+    public int MP
     {
-        return new PlayerStats
-        {
-            HP = a.HP - b.HP,
-            MP = a.MP - b.MP,
-            SP = a.SP - b.SP,
-            XP = a.XP - b.XP,
-            Damage = a.Damage - b.Damage,
-            Defense = a.Defense - b.Defense,
-        };
+        get => BasicStats.MP;
+        set => BasicStats.MP = value;
+    }
+
+    public float SP
+    {
+        get => BasicStats.SP;
+        set => BasicStats.SP = value;
+    }
+
+    public int Damage
+    {
+        get => BasicStats.Damage;
+        set => BasicStats.Damage = value;
+    }
+
+    public int Defense
+    {
+        get => BasicStats.Defense;
+        set => BasicStats.Defense = value;
+    }
+
+    public void Add(PlayerStats other)
+    {
+        BasicStats.Add(other.BasicStats);
+        XP += other.XP;
+    }
+
+    public void Sub(PlayerStats other)
+    {
+        BasicStats.Sub(other.BasicStats);
+        XP -= other.XP;
     }
 }

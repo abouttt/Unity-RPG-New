@@ -78,7 +78,7 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    public PlayerStats FixedStats
+    public BasicStats FixedStats
     {
         get => _fixedStats;
         set
@@ -90,7 +90,7 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    public PlayerStats PercentageStats
+    public BasicStats PercentageStats
     {
         get => _percentageStats;
         set
@@ -144,8 +144,8 @@ public class PlayerStatus : MonoBehaviour
 
     private readonly PlayerStats _maxStats = new();
     private readonly PlayerStats _currentStats = new();
-    private PlayerStats _fixedStats = new();
-    private PlayerStats _percentageStats = new();
+    private BasicStats _fixedStats = new();
+    private BasicStats _percentageStats = new();
 
     private int _gold;
     private int _skillPoint;
@@ -180,28 +180,16 @@ public class PlayerStatus : MonoBehaviour
     private void RefreshAllStats()
     {
         int level = (IsMaxLevel ? _playerStatsTable.StatsTable.Count : Level) - 1;
-        _maxStats.HP = _playerStatsTable.StatsTable[level].HP + _fixedStats.HP;
-        _maxStats.MP = _playerStatsTable.StatsTable[level].MP + _fixedStats.MP;
-        _maxStats.SP = _playerStatsTable.StatsTable[level].SP + _fixedStats.SP;
+
+        _maxStats.HP = _playerStatsTable.StatsTable[level].HP;
+        _maxStats.MP = _playerStatsTable.StatsTable[level].MP;
+        _maxStats.SP = _playerStatsTable.StatsTable[level].SP;
         _maxStats.XP = _playerStatsTable.StatsTable[level].XP;
-        _maxStats.Damage = _playerStatsTable.StatsTable[level].Damage + _fixedStats.Damage;
-        _maxStats.Defense = _playerStatsTable.StatsTable[level].Defense + _fixedStats.Defense;
+        _maxStats.Damage = _playerStatsTable.StatsTable[level].Damage;
+        _maxStats.Defense = _playerStatsTable.StatsTable[level].Defense;
 
-        var types = Enum.GetValues(typeof(EquipmentType));
-        foreach (EquipmentType equipmentType in types)
-        {
-            var equipment = Player.EquipmentInventory.GetItem(equipmentType);
-            if (equipment == null)
-            {
-                continue;
-            }
-
-            _maxStats.HP += equipment.EquipmentData.HP;
-            _maxStats.MP += equipment.EquipmentData.MP;
-            _maxStats.SP += equipment.EquipmentData.SP;
-            _maxStats.Damage += equipment.EquipmentData.Damage;
-            _maxStats.Defense += equipment.EquipmentData.Defense;
-        }
+        _maxStats.BasicStats.Add(_fixedStats);
+        _maxStats.BasicStats.Add(Player.EquipmentInventory.Stats);
 
         _maxStats.HP = Util.CalcIncreasePercentage(_maxStats.HP, _percentageStats.HP);
         _maxStats.MP = Util.CalcIncreasePercentage(_maxStats.MP, _percentageStats.MP);

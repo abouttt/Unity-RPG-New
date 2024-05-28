@@ -13,63 +13,73 @@ MonoBehaviour:
   m_Name: Player Stats Table
   m_EditorClassIdentifier: 
   <StatsTable>k__BackingField:
-  - HP: 100
-    MP: 100
-    SP: 100
+  - <BasicStats>k__BackingField:
+      HP: 100
+      MP: 100
+      SP: 100
+      Damage: 10
+      Defense: 10
     XP: 100
-    Damage: 10
-    Defense: 10
-  - HP: 120
-    MP: 120
-    SP: 120
+  - <BasicStats>k__BackingField:
+      HP: 120
+      MP: 120
+      SP: 120
+      Damage: 12
+      Defense: 12
     XP: 300
-    Damage: 12
-    Defense: 12
-  - HP: 140
-    MP: 140
-    SP: 140
+  - <BasicStats>k__BackingField:
+      HP: 140
+      MP: 140
+      SP: 140
+      Damage: 14
+      Defense: 14
     XP: 500
-    Damage: 14
-    Defense: 14
-  - HP: 160
-    MP: 160
-    SP: 160
+  - <BasicStats>k__BackingField:
+      HP: 160
+      MP: 160
+      SP: 160
+      Damage: 16
+      Defense: 16
     XP: 700
-    Damage: 16
-    Defense: 16
-  - HP: 180
-    MP: 180
-    SP: 180
+  - <BasicStats>k__BackingField:
+      HP: 180
+      MP: 180
+      SP: 180
+      Damage: 18
+      Defense: 18
     XP: 900
-    Damage: 18
-    Defense: 18
-  - HP: 200
-    MP: 200
-    SP: 200
+  - <BasicStats>k__BackingField:
+      HP: 200
+      MP: 200
+      SP: 200
+      Damage: 20
+      Defense: 20
     XP: 1100
-    Damage: 20
-    Defense: 20
-  - HP: 220
-    MP: 220
-    SP: 220
+  - <BasicStats>k__BackingField:
+      HP: 220
+      MP: 220
+      SP: 220
+      Damage: 22
+      Defense: 22
     XP: 1300
-    Damage: 22
-    Defense: 22
-  - HP: 240
-    MP: 240
-    SP: 240
+  - <BasicStats>k__BackingField:
+      HP: 240
+      MP: 240
+      SP: 240
+      Damage: 24
+      Defense: 24
     XP: 1500
-    Damage: 24
-    Defense: 24
-  - HP: 260
-    MP: 260
-    SP: 260
+  - <BasicStats>k__BackingField:
+      HP: 260
+      MP: 260
+      SP: 260
+      Damage: 26
+      Defense: 26
     XP: 1700
-    Damage: 26
-    Defense: 26
-  - HP: 280
-    MP: 280
-    SP: 280
+  - <BasicStats>k__BackingField:
+      HP: 280
+      MP: 280
+      SP: 280
+      Damage: 28
+      Defense: 28
     XP: 1900
-    Damage: 28
-    Defense: 28

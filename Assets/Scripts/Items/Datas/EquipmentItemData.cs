@@ -13,19 +13,7 @@ public class EquipmentItemData : ItemData, IUsableItemData
     public GameObject EquipmentPrefab { get; private set; }
 
     [field: SerializeField]
-    public int HP { get; private set; }
-
-    [field: SerializeField]
-    public int MP { get; private set; }
-
-    [field: SerializeField]
-    public int SP { get; private set; }
-
-    [field: SerializeField]
-    public int Damage { get; private set; }
-
-    [field: SerializeField]
-    public int Defense { get; private set; }
+    public BasicStats Stats { get; private set; }
 
     public EquipmentItemData()
     {
@@ -51,7 +39,7 @@ public class EquipmentItemData : ItemData, IUsableItemData
                 var index = Player.ItemInventory.GetItemIndex(item);
                 if (equippedItem != null)
                 {
-                    Player.ItemInventory.SetItem(equippedItem.Data, index);
+                    Player.ItemInventory.SetItem(equippedItem.EquipmentData, index);
                 }
                 else
                 {

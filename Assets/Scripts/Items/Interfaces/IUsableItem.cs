@@ -12,6 +12,7 @@ public interface IUsableItem
         }
 
         UsableData.Use(inventory, item);
+
         return true;
     }
 

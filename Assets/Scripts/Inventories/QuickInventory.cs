@@ -19,14 +19,14 @@ public class QuickInventory : MonoBehaviour, IInventory
         }
     }
 
-    public void SetQuickable(IQuickableItem usable, int index)
+    public void SetQuickable(IQuickableItem quickable, int index)
     {
-        if (usable == null)
+        if (quickable == null)
         {
             return;
         }
 
-        _quickables[index] = usable;
+        _quickables[index] = quickable;
         InventoryChanged?.Invoke(index);
     }
 

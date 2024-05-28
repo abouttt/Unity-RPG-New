@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ConsumptionItem : StackableItem, IUsableItem
+public class ConsumptionItem : StackableItem, IUsableItem, IQuickableItem
 {
     public ConsumptionItemData ConsumptionData { get; private set; }
     public IUsableItemData UsableData => ConsumptionData;
@@ -48,6 +48,18 @@ public class ConsumptionItem : StackableItem, IUsableItem
 
         ConsumptionData.Cooldown.OnCooldowned();
         Managers.Cooldown.AddCooldown(ConsumptionData.Cooldown);
+
+        return true;
+    }
+
+    public bool UseQuick()
+    {
+        if (!CanUse())
+        {
+            return false;
+        }
+
+        ConsumptionData.Use(Player.QuickInventory, this);
 
         return true;
     }

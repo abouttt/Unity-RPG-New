@@ -427,10 +427,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bce7b41e3bb42b842ac022fcf3278cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items:
-  - {fileID: 11400000, guid: d3b29920ce3e7f344aeb151e788334a2, type: 2}
-  - {fileID: 11400000, guid: e2814b4fddac54e43873e9a17194690b, type: 2}
-  - {fileID: 11400000, guid: c2f5562b009a84b4f88b307c323f54eb, type: 2}
+  data:
+    _serializedList:
+    - Key: {fileID: 11400000, guid: e2814b4fddac54e43873e9a17194690b, type: 2}
+      Value: 1
+    - Key: {fileID: 11400000, guid: d3b29920ce3e7f344aeb151e788334a2, type: 2}
+      Value: 1
+    - Key: {fileID: 11400000, guid: c2f5562b009a84b4f88b307c323f54eb, type: 2}
+      Value: 1
+    - Key: {fileID: 11400000, guid: 46033adbba8005a4eaeade75c6ee4373, type: 2}
+      Value: 100
 --- !u!4 &745317464
 Transform:
   m_ObjectHideFlags: 0

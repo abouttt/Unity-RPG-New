@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public static PlayerCamera Camera { get; private set; }
     public static ItemInventory ItemInventory { get; private set; }
     public static EquipmentInventory EquipmentInventory { get; private set; }
+    public static QuickInventory QuickInventory { get; private set; }
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class Player : MonoBehaviour
         Camera = GetComponent<PlayerCamera>();
         ItemInventory = GetComponent<ItemInventory>();
         EquipmentInventory = GetComponent<EquipmentInventory>();
+        QuickInventory = GetComponent<QuickInventory>();
     }
 
     public void Init()
@@ -36,5 +38,6 @@ public class Player : MonoBehaviour
         Camera = GetComponent<PlayerCamera>();
         ItemInventory = GetComponent<ItemInventory>();
         EquipmentInventory = GetComponent<EquipmentInventory>();
+        QuickInventory = GetComponent<QuickInventory>();
     }
 }

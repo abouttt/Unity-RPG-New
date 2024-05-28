@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class ConsumptionItemData : StackableItemData, IUsableItemData, ICooldownable
+public abstract class ConsumptionItemData : StackableItemData, IUsableItemData, ICooldownable, IQuickable
 {
     [field: SerializeField]
     public int LimitLevel { get; private set; } = 1;
@@ -27,4 +27,6 @@ public abstract class ConsumptionItemData : StackableItemData, IUsableItemData, 
     }
 
     public abstract void Use<T>(T inventory, Item item) where T : IInventory;
+
+    public abstract void UseQuick();
 }

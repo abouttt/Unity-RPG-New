@@ -6,6 +6,11 @@ public class HealPotionData : ConsumptionItemData
     [SerializeField]
     private int _healAmount;
 
+    public override void UseQuick()
+    {
+        Player.Status.HP += _healAmount;
+    }
+
     public override void Use<T>(T inventory, Item item)
     {
         Player.Status.HP += _healAmount;

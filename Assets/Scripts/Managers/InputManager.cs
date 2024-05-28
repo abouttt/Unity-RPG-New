@@ -102,6 +102,21 @@ public class InputManager : GameControls.IPlayerActions
         ShowOrClosePopup<UI_EquipmentInventoryPopup>(context);
     }
 
+    public void OnQuick(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (Managers.UI.IsShowed<UI_ItemSplitPopup>())
+            {
+                return;
+            }
+
+            int index = (int)context.ReadValue<float>();
+            var usable = Player.QuickInventory.GetUsable(index);
+            usable?.UseQuick();
+        }
+    }
+
     public void OnCancel(InputAction.CallbackContext context)
     {
         if (context.performed)

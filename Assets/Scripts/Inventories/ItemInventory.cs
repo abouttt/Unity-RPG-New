@@ -96,6 +96,11 @@ public class ItemInventory : MonoBehaviour, IInventory
             return;
         }
 
+        if (item.IsDestroyed)
+        {
+            return;
+        }
+
         int index = _itemIndexes[item];
         DestroyItem(item.Data.ItemType, index);
         InventoryChanged?.Invoke(item.Data.ItemType, index);
@@ -268,6 +273,7 @@ public class ItemInventory : MonoBehaviour, IInventory
         var item = inventory.Items[index];
         inventory.Items[index] = null;
         inventory.Count--;
+        item.Destroy();
         _itemIndexes.Remove(item);
     }
 }

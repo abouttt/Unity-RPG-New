@@ -9,7 +9,7 @@ public class QuickInventory : MonoBehaviour, IInventory
     [field: SerializeField]
     public int Capacity { get; private set; }
 
-    private readonly Dictionary<int, IQuickableItem> _quickables = new();
+    private readonly Dictionary<int, IQuickable> _quickables = new();
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class QuickInventory : MonoBehaviour, IInventory
         }
     }
 
-    public void SetQuickable(IQuickableItem quickable, int index)
+    public void SetQuickable(IQuickable quickable, int index)
     {
         if (quickable == null)
         {
@@ -41,7 +41,7 @@ public class QuickInventory : MonoBehaviour, IInventory
         InventoryChanged?.Invoke(index);
     }
 
-    public IQuickableItem GetQuickable(int index)
+    public IQuickable GetQuickable(int index)
     {
         return _quickables[index];
     }

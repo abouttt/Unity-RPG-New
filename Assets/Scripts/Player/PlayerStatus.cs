@@ -153,6 +153,9 @@ public class PlayerStatus : MonoBehaviour
 
     private void Awake()
     {
+        RefreshAllStats();
+        FillAllStats();
+
         Player.EquipmentInventory.InventoryChanged += equipmentType =>
         {
             RefreshAllStats();
@@ -162,9 +165,6 @@ public class PlayerStatus : MonoBehaviour
             _currentStats.SP = Mathf.Clamp(_currentStats.SP, _currentStats.SP, _maxStats.SP);
             StatChanged?.Invoke();
         };
-
-        RefreshAllStats();
-        FillAllStats();
     }
 
     private void Start()

@@ -130,7 +130,7 @@ public class UI_QuickSlot : UI_BaseSlot, IDropHandler
             return;
         }
 
-        (ObjectRef as IQuickableItem).UseQuick();
+        (ObjectRef as IQuickable).UseQuick();
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -145,7 +145,7 @@ public class UI_QuickSlot : UI_BaseSlot, IDropHandler
             switch (otherSlot.SlotType)
             {
                 case SlotType.Item:
-                    if (otherSlot.ObjectRef is not IQuickableItem quickable)
+                    if (otherSlot.ObjectRef is not IQuickable quickable)
                     {
                         return;
                     }

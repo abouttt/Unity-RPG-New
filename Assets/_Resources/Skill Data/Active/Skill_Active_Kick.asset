@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38b19515a1228d04e9629dfe56bc75e2, type: 3}
+  m_Name: Skill_Active_Kick
+  m_EditorClassIdentifier: 
+  <SkillID>k__BackingField: ACTIVE_KICK
+  <SkillName>k__BackingField: "\uBC1C\uCC28\uAE30"
+  <SkillImage>k__BackingField: {fileID: 21300000, guid: 2be67e765ab292d4c9c5e4950106de84, type: 3}
+  <SkillType>k__BackingField: 0
+  <Description>k__BackingField: "\uC804\uBC29\uC5D0 \uBC1C\uB85C \uCC28 \uACF5\uACA9\uD55C\uB2E4."
+  <MaxLevel>k__BackingField: 3
+  <LimitLevel>k__BackingField: 1
+  <RequiredSkillPoint>k__BackingField: 1
+  <FixedStats>k__BackingField:
+  - HP: 0
+    MP: 0
+    SP: 0
+    Damage: 10
+    Defense: 0
+  - HP: 0
+    MP: 0
+    SP: 0
+    Damage: 20
+    Defense: 0
+  - HP: 0
+    MP: 0
+    SP: 0
+    Damage: 30
+    Defense: 0
+  <PercentageStats>k__BackingField: []
+  <Root>k__BackingField: 1
+  <Children>k__BackingField:
+    _serializedList:
+    - Key: {fileID: 11400000, guid: 399580c38a5c3fb44852187b06782164, type: 2}
+      Value: 1
+  <RequiredHP>k__BackingField: 0
+  <RequiredMP>k__BackingField: 10
+  <RequiredSP>k__BackingField: 10
+  <Cooldown>k__BackingField:
+    <MaxTime>k__BackingField: 1
+    Time: 0

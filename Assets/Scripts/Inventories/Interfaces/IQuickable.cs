@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IQuickableItem
+public interface IQuickable
 {
     public bool UseQuick();
 }

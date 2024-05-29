@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 953218ab8364f6e4eaf9331e845be8ce, type: 3}
+  m_Name: Skill_Passive_BodyStrengthening
+  m_EditorClassIdentifier: 
+  <SkillID>k__BackingField: PASSIVE_BODY_STRENGTHENING
+  <SkillName>k__BackingField: "\uC2E0\uCCB4 \uAC15\uD654"
+  <SkillImage>k__BackingField: {fileID: 21300000, guid: 3317e2a1c825f7a43a6cddd0c6db125f, type: 3}
+  <SkillType>k__BackingField: 1
+  <Description>k__BackingField: "\uC2E0\uCCB4\uB97C \uAC15\uD654\uD55C\uB2E4."
+  <MaxLevel>k__BackingField: 3
+  <LimitLevel>k__BackingField: 1
+  <RequiredSkillPoint>k__BackingField: 1
+  <FixedStats>k__BackingField: []
+  <PercentageStats>k__BackingField:
+  - HP: 100
+    MP: 100
+    SP: 0
+    Damage: 0
+    Defense: 0
+  - HP: 200
+    MP: 200
+    SP: 0
+    Damage: 0
+    Defense: 0
+  - HP: 300
+    MP: 300
+    SP: 0
+    Damage: 0
+    Defense: 0
+  <Root>k__BackingField: 1
+  <Children>k__BackingField:
+    _serializedList: []

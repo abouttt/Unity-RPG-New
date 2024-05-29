@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ConsumptionItem : StackableItem, IUsableItem, IQuickableItem
+public class ConsumptionItem : StackableItem, IUsableItem, IQuickable
 {
     public ConsumptionItemData ConsumptionData { get; private set; }
     public IUsableItemData UsableData => ConsumptionData;

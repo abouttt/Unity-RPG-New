@@ -10,7 +10,7 @@ public abstract class Skill
     public SkillData Data { get; private set; }
     public bool IsAcquirable { get; private set; }
     public bool IsUnlocked { get; private set; }
-    public int CurrentLevel { get; private set; }
+    public int Level { get; private set; }
     public IReadOnlyList<Skill> Parents => _parents;
     public IReadOnlyDictionary<Skill, int> Children => _children;
 
@@ -22,7 +22,7 @@ public abstract class Skill
     public Skill(SkillData data, int level)
     {
         Data = data;
-        CurrentLevel = level;
+        Level = level;
         if (level > 0)
         {
             IsAcquirable = true;
@@ -40,7 +40,7 @@ public abstract class Skill
             }
         }
 
-        if (CurrentLevel == Data.MaxLevel)
+        if (Level == Data.MaxLevel)
         {
             return;
         }
@@ -66,7 +66,7 @@ public abstract class Skill
 
     public virtual void LevelUp()
     {
-        if (CurrentLevel == Data.MaxLevel)
+        if (Level == Data.MaxLevel)
         {
             return;
         }
@@ -81,14 +81,14 @@ public abstract class Skill
             IsUnlocked = true;
         }
 
-        CurrentLevel++;
+        Level++;
         Player.Status.SkillPoint -= Data.RequiredSkillPoint;
         SkillChanged?.Invoke();
     }
 
     public virtual int ResetSkill()
     {
-        int skillPoint = CurrentLevel;
+        int skillPoint = Level;
 
         if (IsUnlocked)
         {
@@ -101,7 +101,7 @@ public abstract class Skill
         var prevAcquirable = IsAcquirable;
         var prevUnlocked = IsUnlocked;
 
-        CurrentLevel = 0;
+        Level = 0;
         IsAcquirable = false;
         IsUnlocked = false;
 
@@ -133,7 +133,7 @@ public abstract class Skill
     {
         foreach (var parents in _parents)
         {
-            if (parents.CurrentLevel < parents._children[this])
+            if (parents.Level < parents._children[this])
             {
                 return false;
             }

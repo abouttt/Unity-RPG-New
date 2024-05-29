@@ -64,7 +64,7 @@ public class UI_SkillSlot : UI_BaseSlot
 
     private void Refresh()
     {
-        if (SkillRef.CurrentLevel == SkillData.MaxLevel)
+        if (SkillRef.Level == SkillData.MaxLevel)
         {
             GetImage((int)Imagess.SkillDisabledImage).gameObject.SetActive(false);
             GetImage((int)Imagess.LevelUpDisabledImage).gameObject.SetActive(false);
@@ -87,7 +87,7 @@ public class UI_SkillSlot : UI_BaseSlot
 
     private void RefreshLevelText()
     {
-        GetText((int)Texts.LevelText).text = $"{SkillRef.CurrentLevel} / {SkillData.MaxLevel}";
+        GetText((int)Texts.LevelText).text = $"{SkillRef.Level} / {SkillData.MaxLevel}";
     }
 
     private bool IsOnPointerSameGameObject(PointerEventData eventData, GameObject gameObject)
@@ -114,12 +114,12 @@ public class UI_SkillSlot : UI_BaseSlot
             return;
         }
 
-
+        Managers.UI.Get<UI_TooltipTop>().SkillTooltip.SetSlot(this);
     }
 
     public override void OnPointerExit(PointerEventData eventData)
     {
-
+        Managers.UI.Get<UI_TooltipTop>().SkillTooltip.SetSlot(null);
     }
 
     public override void OnPointerDown(PointerEventData eventData)

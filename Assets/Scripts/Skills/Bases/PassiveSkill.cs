@@ -13,12 +13,12 @@ public class PassiveSkill : Skill
         {
             if (Data.PercentageStats.Length > 0)
             {
-                Player.Status.PercentageStats += Data.PercentageStats[CurrentLevel - 1];
+                Player.Status.PercentageStats += Data.PercentageStats[Level - 1];
             }
 
             if (Data.FixedStats.Length > 0)
             {
-                Player.Status.FixedStats += Data.FixedStats[CurrentLevel - 1];
+                Player.Status.FixedStats += Data.FixedStats[Level - 1];
             }
         }
     }
@@ -27,28 +27,28 @@ public class PassiveSkill : Skill
     {
         base.LevelUp();
 
-        if (CurrentLevel > 1)
+        if (Level > 1)
         {
             if (Data.PercentageStats.Length > 0)
             {
-                Player.Status.PercentageStats += Data.PercentageStats[CurrentLevel - 1] - Data.PercentageStats[CurrentLevel - 2];
+                Player.Status.PercentageStats += Data.PercentageStats[Level - 1] - Data.PercentageStats[Level - 2];
             }
 
             if (Data.FixedStats.Length > 0)
             {
-                Player.Status.FixedStats += Data.FixedStats[CurrentLevel - 1] - Data.FixedStats[CurrentLevel - 2];
+                Player.Status.FixedStats += Data.FixedStats[Level - 1] - Data.FixedStats[Level - 2];
             }
         }
         else
         {
             if (Data.PercentageStats.Length > 0)
             {
-                Player.Status.PercentageStats += Data.PercentageStats[CurrentLevel - 1];
+                Player.Status.PercentageStats += Data.PercentageStats[Level - 1];
             }
 
             if (Data.FixedStats.Length > 0)
             {
-                Player.Status.FixedStats += Data.FixedStats[CurrentLevel - 1];
+                Player.Status.FixedStats += Data.FixedStats[Level - 1];
             }
         }
     }
@@ -59,12 +59,12 @@ public class PassiveSkill : Skill
         {
             if (Data.PercentageStats.Length > 0)
             {
-                Player.Status.PercentageStats -= Data.PercentageStats[CurrentLevel - 1];
+                Player.Status.PercentageStats -= Data.PercentageStats[Level - 1];
             }
 
             if (Data.FixedStats.Length > 0)
             {
-                Player.Status.FixedStats -= Data.FixedStats[CurrentLevel - 1];
+                Player.Status.FixedStats -= Data.FixedStats[Level - 1];
             }
         }
 

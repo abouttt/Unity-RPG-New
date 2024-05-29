@@ -9,9 +9,26 @@ using UnityEditor;
 public class CooldownDatabase : SingletonScriptableObject<CooldownDatabase>
 {
     public IReadOnlyList<ItemData> CooldownItems => _cooldownItems;
+    public IReadOnlyList<SkillData> CooldownSkills => _cooldownSkills;
 
     [SerializeField]
     private List<ItemData> _cooldownItems;
+
+    [SerializeField]
+    private List<SkillData> _cooldownSkills;
+
+    public void ClearCooldown()
+    {
+        foreach (var itemData in _cooldownItems)
+        {
+            (itemData as ICooldownable).Cooldown.Clear();
+        }
+
+        foreach (var skillData in _cooldownSkills)
+        {
+            (skillData as ICooldownable).Cooldown.Clear();
+        }
+    }
 
 #if UNITY_EDITOR
     [ContextMenu("Find Cooldown")]
@@ -28,6 +45,15 @@ public class CooldownDatabase : SingletonScriptableObject<CooldownDatabase>
             if (itemData is ICooldownable)
             {
                 _cooldownItems.Add(itemData);
+            }
+        }
+
+        _cooldownSkills = new();
+        foreach (var skillData in SkillDatabase.Instance.Skills)
+        {
+            if (skillData is ICooldownable)
+            {
+                _cooldownSkills.Add(skillData);
             }
         }
 

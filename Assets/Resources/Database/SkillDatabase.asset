@@ -2,18 +2,17 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 32
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: debd5a5a6e633b44294657420ab51ce7, type: 3}
-  m_Name: CooldownDatabase
+  m_Script: {fileID: 11500000, guid: 885f5f9037550e3478d8054dc44db309, type: 3}
+  m_Name: SkillDatabase
   m_EditorClassIdentifier: 
-  _cooldownItems:
-  - {fileID: 11400000, guid: 46033adbba8005a4eaeade75c6ee4373, type: 2}
-  _cooldownSkills:
+  _skills:
   - {fileID: 11400000, guid: de29db63af3e78445b783adc7ea0e8af, type: 2}
   - {fileID: 11400000, guid: 399580c38a5c3fb44852187b06782164, type: 2}
+  - {fileID: 11400000, guid: b1d0de1063b924d448623af7ef05d5ef, type: 2}

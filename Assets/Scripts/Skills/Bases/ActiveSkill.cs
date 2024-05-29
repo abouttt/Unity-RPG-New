@@ -35,6 +35,8 @@ public class ActiveSkill : Skill, IUsableSkill, IQuickable
             return false;
         }
 
+        SubRequired();
+
         return true;
     }
 

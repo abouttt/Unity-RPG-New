@@ -37,9 +37,11 @@ MonoBehaviour:
     Damage: 15
     Defense: 0
   <PercentageStats>k__BackingField: []
-  <Root>k__BackingField: 0
+  <Root>k__BackingField: 1
   <Children>k__BackingField:
-    _serializedList: []
+    _serializedList:
+    - Key: {fileID: 11400000, guid: de29db63af3e78445b783adc7ea0e8af, type: 2}
+      Value: 1
   <RequiredHP>k__BackingField: 0
   <RequiredMP>k__BackingField: 10
   <RequiredSP>k__BackingField: 10

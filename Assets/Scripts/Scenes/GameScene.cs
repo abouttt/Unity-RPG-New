@@ -15,14 +15,17 @@ public class GameScene : BaseScene
     {
         base.Init();
         FindAnyObjectByType<Player>().Init();
-        var package = Managers.Resource.Instantiate("GameUIPackage.prefab");
-        package.transform.DetachChildren();
-        Destroy(package);
     }
 
     private void Start()
     {
+        var package = Managers.Resource.Instantiate("GameUIPackage.prefab");
+        package.transform.DetachChildren();
+        Destroy(package);
+
         Managers.Input.CursorLocked = true;
+        Player.Status.Gold += 10000;
+        Player.Status.SkillPoint += 3;
         Managers.UI.Get<UI_TopCanvas>().FadeInitBG();
     }
 }

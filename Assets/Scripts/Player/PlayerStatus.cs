@@ -188,8 +188,8 @@ public class PlayerStatus : MonoBehaviour
         _maxStats.Damage = _playerStatsTable.StatsTable[level].Damage;
         _maxStats.Defense = _playerStatsTable.StatsTable[level].Defense;
 
-        _maxStats.BasicStats.Add(_fixedStats);
-        _maxStats.BasicStats.Add(Player.EquipmentInventory.Stats);
+        _maxStats.BasicStats += _fixedStats;
+        _maxStats.BasicStats += Player.EquipmentInventory.Stats;
 
         _maxStats.HP = Util.CalcIncreasePercentage(_maxStats.HP, _percentageStats.HP);
         _maxStats.MP = Util.CalcIncreasePercentage(_maxStats.MP, _percentageStats.MP);

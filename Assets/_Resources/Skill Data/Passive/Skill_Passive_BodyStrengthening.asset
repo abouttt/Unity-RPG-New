@@ -22,19 +22,19 @@ MonoBehaviour:
   <RequiredSkillPoint>k__BackingField: 1
   <FixedStats>k__BackingField: []
   <PercentageStats>k__BackingField:
-  - HP: 100
-    MP: 100
-    SP: 0
+  - HP: 10
+    MP: 10
+    SP: 10
     Damage: 0
     Defense: 0
-  - HP: 200
-    MP: 200
-    SP: 0
+  - HP: 20
+    MP: 20
+    SP: 20
     Damage: 0
     Defense: 0
-  - HP: 300
-    MP: 300
-    SP: 0
+  - HP: 30
+    MP: 30
+    SP: 30
     Damage: 0
     Defense: 0
   <Root>k__BackingField: 1

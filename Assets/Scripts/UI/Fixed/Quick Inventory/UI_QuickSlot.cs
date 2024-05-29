@@ -64,6 +64,17 @@ public class UI_QuickSlot : UI_BaseSlot, IDropHandler
                         Get<UI_CooldownImage>((int)CooldownImages.CooldownImage).SetCooldown(cooldownable.Cooldown);
                     }
                 }
+                else if (quickable is Skill skill)
+                {
+                    SetObject(quickable, skill.Data.SkillImage);
+
+                    skill.SkillChanged += OnSkillLocked;
+
+                    if (skill.Data is ICooldownable cooldownable)
+                    {
+                        Get<UI_CooldownImage>((int)CooldownImages.CooldownImage).SetCooldown(cooldownable.Cooldown);
+                    }
+                }
             }
 
             RefreshCountText();
@@ -90,6 +101,15 @@ public class UI_QuickSlot : UI_BaseSlot, IDropHandler
                 Get<UI_CooldownImage>((int)CooldownImages.CooldownImage).Clear();
             }
         }
+        else if (ObjectRef is Skill skill)
+        {
+            skill.SkillChanged -= OnSkillLocked;
+
+            if (skill.Data is ICooldownable cooldownable)
+            {
+                Get<UI_CooldownImage>((int)CooldownImages.CooldownImage).Clear();
+            }
+        }
 
         base.Clear();
         GetText((int)Texts.CountText).gameObject.SetActive(false);
@@ -111,6 +131,14 @@ public class UI_QuickSlot : UI_BaseSlot, IDropHandler
     private void OnItemDestroyed()
     {
         Player.QuickInventory.RemoveQuickable(Index);
+    }
+
+    private void OnSkillLocked()
+    {
+        if (ObjectRef is Skill skill && !skill.IsUnlocked)
+        {
+            Player.QuickInventory.RemoveQuickable(Index);
+        }
     }
 
     public override void OnPointerEnter(PointerEventData eventData)
@@ -145,6 +173,7 @@ public class UI_QuickSlot : UI_BaseSlot, IDropHandler
             switch (otherSlot.SlotType)
             {
                 case SlotType.Item:
+                case SlotType.Skill:
                     if (otherSlot.ObjectRef is not IQuickable quickable)
                     {
                         return;

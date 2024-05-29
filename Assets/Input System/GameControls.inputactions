@@ -87,6 +87,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "SkillTree",
+                    "type": "Button",
+                    "id": "3ceddfa4-b4d7-4908-b6e9-15ce9d4610cb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Cancel",
                     "type": "Button",
                     "id": "41b87a42-c71d-4cf9-b5cb-569767b1dcb7",
@@ -347,6 +356,17 @@
                     "processors": "Scale(factor=9)",
                     "groups": "Keyboard/Mouse",
                     "action": "Quick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8e4b576f-d606-433b-9daa-0622b296d246",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard/Mouse",
+                    "action": "SkillTree",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

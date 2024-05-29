@@ -10,6 +10,7 @@ public enum SlotType
     Item,
     Equipment,
     Quick,
+    Skill,
 }
 
 public enum EquipmentType

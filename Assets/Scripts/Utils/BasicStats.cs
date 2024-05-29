@@ -10,21 +10,27 @@ public class BasicStats
     public int Damage;
     public int Defense;
 
-    public void Add(BasicStats other)
+    public static BasicStats operator +(BasicStats a, BasicStats b)
     {
-        HP += other.HP;
-        MP += other.MP;
-        SP += other.SP;
-        Damage += other.Damage;
-        Defense += other.Defense;
+        return new BasicStats
+        {
+            HP = a.HP + b.HP,
+            MP = a.MP + b.MP,
+            SP = a.SP + b.SP,
+            Damage = a.Damage + b.Damage,
+            Defense = a.Defense + b.Defense,
+        };
     }
 
-    public void Sub(BasicStats other)
+    public static BasicStats operator -(BasicStats a, BasicStats b)
     {
-        HP -= other.HP;
-        MP -= other.MP;
-        SP -= other.SP;
-        Damage -= other.Damage;
-        Defense -= other.Defense;
+        return new BasicStats
+        {
+            HP = a.HP - b.HP,
+            MP = a.MP - b.MP,
+            SP = a.SP - b.SP,
+            Damage = a.Damage - b.Damage,
+            Defense = a.Defense - b.Defense,
+        };
     }
 }

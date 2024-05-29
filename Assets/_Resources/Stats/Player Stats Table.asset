@@ -13,70 +13,70 @@ MonoBehaviour:
   m_Name: Player Stats Table
   m_EditorClassIdentifier: 
   <StatsTable>k__BackingField:
-  - <BasicStats>k__BackingField:
+  - BasicStats:
       HP: 100
       MP: 100
       SP: 100
       Damage: 10
       Defense: 10
     XP: 100
-  - <BasicStats>k__BackingField:
+  - BasicStats:
       HP: 120
       MP: 120
       SP: 120
       Damage: 12
       Defense: 12
     XP: 300
-  - <BasicStats>k__BackingField:
+  - BasicStats:
       HP: 140
       MP: 140
       SP: 140
       Damage: 14
       Defense: 14
     XP: 500
-  - <BasicStats>k__BackingField:
+  - BasicStats:
       HP: 160
       MP: 160
       SP: 160
       Damage: 16
       Defense: 16
     XP: 700
-  - <BasicStats>k__BackingField:
+  - BasicStats:
       HP: 180
       MP: 180
       SP: 180
       Damage: 18
       Defense: 18
     XP: 900
-  - <BasicStats>k__BackingField:
+  - BasicStats:
       HP: 200
       MP: 200
       SP: 200
       Damage: 20
       Defense: 20
     XP: 1100
-  - <BasicStats>k__BackingField:
+  - BasicStats:
       HP: 220
       MP: 220
       SP: 220
       Damage: 22
       Defense: 22
     XP: 1300
-  - <BasicStats>k__BackingField:
+  - BasicStats:
       HP: 240
       MP: 240
       SP: 240
       Damage: 24
       Defense: 24
     XP: 1500
-  - <BasicStats>k__BackingField:
+  - BasicStats:
       HP: 260
       MP: 260
       SP: 260
       Damage: 26
       Defense: 26
     XP: 1700
-  - <BasicStats>k__BackingField:
+  - BasicStats:
       HP: 280
       MP: 280
       SP: 280

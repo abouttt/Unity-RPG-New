@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerStats
 {
     [field: SerializeField]
-    public BasicStats BasicStats { get; private set; } = new();
+    public BasicStats BasicStats = new();
     public int XP;
 
     public int HP
@@ -36,17 +36,5 @@ public class PlayerStats
     {
         get => BasicStats.Defense;
         set => BasicStats.Defense = value;
-    }
-
-    public void Add(PlayerStats other)
-    {
-        BasicStats.Add(other.BasicStats);
-        XP += other.XP;
-    }
-
-    public void Sub(PlayerStats other)
-    {
-        BasicStats.Sub(other.BasicStats);
-        XP -= other.XP;
     }
 }

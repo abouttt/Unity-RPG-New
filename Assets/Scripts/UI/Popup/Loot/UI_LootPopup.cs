@@ -155,7 +155,7 @@ public class UI_LootPopup : UI_Popup
 
         if (_fieldItemRef != null)
         {
-            _fieldItemRef.IsInteracted = false;
+            _fieldItemRef.Deinteraction();
             _fieldItemRef = null;
         }
     }

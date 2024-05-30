@@ -55,7 +55,6 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     InputTime = 0f;
                     _keyGuide.gameObject.SetActive(false);
-                    _target.IsInteracted = true;
                     _target.Interaction();
                 }
             }

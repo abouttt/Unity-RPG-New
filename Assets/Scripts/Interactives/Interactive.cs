@@ -2,8 +2,8 @@ using UnityEngine;
 
 public abstract class Interactive : MonoBehaviour
 {
-    public bool IsDetected { get; set; }      // 감지 되었는지
-    public bool IsInteracted { get; set; }  // 상호작용 중인지
+    public bool IsDetected { get; set; }            // 감지 되었는지
+    public bool IsInteracted { get; private set; }  // 상호작용 중인지
 
     [field: SerializeField]
     public string InteractionMessage { get; protected set; }
@@ -22,9 +22,15 @@ public abstract class Interactive : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Interactive");
     }
 
-    public abstract void Interaction();
+    public virtual void Interaction()
+    {
+        IsInteracted = true;
+    }
 
-    public abstract void Deinteraction();
+    public virtual void Deinteraction()
+    {
+        IsInteracted = false;
+    }
 
     private void OnDrawGizmosSelected()
     {

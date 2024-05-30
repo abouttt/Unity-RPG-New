@@ -22,12 +22,8 @@ public class FieldItem : Interactive
 
     public override void Interaction()
     {
+        base.Interaction();
         Managers.UI.Show<UI_LootPopup>().SetFieldItem(this);
-    }
-
-    public override void Deinteraction()
-    {
-        throw new System.NotImplementedException();
     }
 
     public void AddItem(ItemData itemData, int count)

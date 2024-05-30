@@ -14,9 +14,9 @@ public class SkillDatabase : SingletonScriptableObject<SkillDatabase>
     [SerializeField]
     private List<SkillData> _skills;
 
-    public SkillData FindSkillByID(string id)
+    public SkillData FindSkillById(string id)
     {
-        return _skills.FirstOrDefault(skill => skill.SkillID.Equals(id));
+        return _skills.FirstOrDefault(skill => skill.SkillId.Equals(id));
     }
 
 #if UNITY_EDITOR

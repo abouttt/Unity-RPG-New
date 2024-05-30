@@ -14,7 +14,7 @@ public class ItemDatabase : SingletonScriptableObject<ItemDatabase>
     [SerializeField]
     private List<ItemData> _items;
 
-    public ItemData FindItemByID(string id)
+    public ItemData FindItemById(string id)
     {
         return _items.FirstOrDefault(item => item.ItemId.Equals(id));
     }

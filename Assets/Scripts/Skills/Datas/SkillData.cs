@@ -4,7 +4,7 @@ using AYellowpaper.SerializedCollections;
 public abstract class SkillData : ScriptableObject
 {
     [field: SerializeField]
-    public string SkillID { get; private set; }
+    public string SkillId { get; private set; }
 
     [field: SerializeField]
     public string SkillName { get; private set; }
@@ -58,6 +58,6 @@ public abstract class SkillData : ScriptableObject
             return true;
         }
 
-        return SkillID.Equals(other.SkillID);
+        return SkillId.Equals(other.SkillId);
     }
 }

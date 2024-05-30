@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc5b8b69d6ad604ea8c0e6c030e51c8, type: 3}
   m_Name: Skill_Active_Punch
   m_EditorClassIdentifier: 
-  <SkillID>k__BackingField: ACTIVE_PUNCH
+  <SkillId>k__BackingField: ACTIVE_PUNCH
   <SkillName>k__BackingField: "\uC8FC\uBA39\uCE58\uAE30"
   <SkillImage>k__BackingField: {fileID: 21300000, guid: 8b3a30b86c0bda44ba6d101f45b2664c, type: 3}
   <SkillType>k__BackingField: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953218ab8364f6e4eaf9331e845be8ce, type: 3}
   m_Name: Skill_Passive_BodyStrengthening
   m_EditorClassIdentifier: 
-  <SkillID>k__BackingField: PASSIVE_BODY_STRENGTHENING
+  <SkillId>k__BackingField: PASSIVE_BODY_STRENGTHENING
   <SkillName>k__BackingField: "\uC2E0\uCCB4 \uAC15\uD654"
   <SkillImage>k__BackingField: {fileID: 21300000, guid: 3317e2a1c825f7a43a6cddd0c6db125f, type: 3}
   <SkillType>k__BackingField: 1

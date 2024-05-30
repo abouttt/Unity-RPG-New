@@ -73,6 +73,15 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Interaction"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ce8963f-0c0e-4563-b7bf-eae62af0638e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""CursorToggle"",
                     ""type"": ""Button"",
                     ""id"": ""393c3e80-6fbf-4284-ba71-0b7d8820f316"",
@@ -391,6 +400,17 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""action"": ""SkillTree"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""04ea9575-1d31-4d7d-95bf-799b3a95adcc"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard/Mouse"",
+                    ""action"": ""Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -421,6 +441,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_LockOn = m_Player.FindAction("LockOn", throwIfNotFound: true);
+        m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
         m_Player_CursorToggle = m_Player.FindAction("CursorToggle", throwIfNotFound: true);
         m_Player_ItemInventory = m_Player.FindAction("ItemInventory", throwIfNotFound: true);
         m_Player_EquipmentInventory = m_Player.FindAction("EquipmentInventory", throwIfNotFound: true);
@@ -493,6 +514,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_LockOn;
+    private readonly InputAction m_Player_Interaction;
     private readonly InputAction m_Player_CursorToggle;
     private readonly InputAction m_Player_ItemInventory;
     private readonly InputAction m_Player_EquipmentInventory;
@@ -508,6 +530,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @LockOn => m_Wrapper.m_Player_LockOn;
+        public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
         public InputAction @CursorToggle => m_Wrapper.m_Player_CursorToggle;
         public InputAction @ItemInventory => m_Wrapper.m_Player_ItemInventory;
         public InputAction @EquipmentInventory => m_Wrapper.m_Player_EquipmentInventory;
@@ -538,6 +561,9 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @LockOn.started += instance.OnLockOn;
             @LockOn.performed += instance.OnLockOn;
             @LockOn.canceled += instance.OnLockOn;
+            @Interaction.started += instance.OnInteraction;
+            @Interaction.performed += instance.OnInteraction;
+            @Interaction.canceled += instance.OnInteraction;
             @CursorToggle.started += instance.OnCursorToggle;
             @CursorToggle.performed += instance.OnCursorToggle;
             @CursorToggle.canceled += instance.OnCursorToggle;
@@ -575,6 +601,9 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @LockOn.started -= instance.OnLockOn;
             @LockOn.performed -= instance.OnLockOn;
             @LockOn.canceled -= instance.OnLockOn;
+            @Interaction.started -= instance.OnInteraction;
+            @Interaction.performed -= instance.OnInteraction;
+            @Interaction.canceled -= instance.OnInteraction;
             @CursorToggle.started -= instance.OnCursorToggle;
             @CursorToggle.performed -= instance.OnCursorToggle;
             @CursorToggle.canceled -= instance.OnCursorToggle;
@@ -626,6 +655,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnLockOn(InputAction.CallbackContext context);
+        void OnInteraction(InputAction.CallbackContext context);
         void OnCursorToggle(InputAction.CallbackContext context);
         void OnItemInventory(InputAction.CallbackContext context);
         void OnEquipmentInventory(InputAction.CallbackContext context);

@@ -51,6 +51,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Interaction",
+                    "type": "Button",
+                    "id": "7ce8963f-0c0e-4563-b7bf-eae62af0638e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "CursorToggle",
                     "type": "Button",
                     "id": "393c3e80-6fbf-4284-ba71-0b7d8820f316",
@@ -367,6 +376,17 @@
                     "processors": "",
                     "groups": "Keyboard/Mouse",
                     "action": "SkillTree",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "04ea9575-1d31-4d7d-95bf-799b3a95adcc",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard/Mouse",
+                    "action": "Interaction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -8,6 +8,7 @@ public class InputManager : GameControls.IPlayerActions
     public bool Sprint { get; private set; }
     public bool Jump { get; private set; }
     public bool LockOn { get; private set; }
+    public bool Interaction { get; private set; }
 
     public bool CursorLocked
     {
@@ -82,6 +83,11 @@ public class InputManager : GameControls.IPlayerActions
     public void OnLockOn(InputAction.CallbackContext context)
     {
         LockOn = context.ReadValueAsButton();
+    }
+
+    public void OnInteraction(InputAction.CallbackContext context)
+    {
+        Interaction = context.ReadValueAsButton();
     }
 
     public void OnCursorToggle(InputAction.CallbackContext context)

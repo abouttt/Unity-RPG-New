@@ -1281,6 +1281,10 @@ PrefabInstance:
       propertyPath: _target
       value: 
       objectReference: {fileID: 7600312145288224741}
+    - target: {fileID: 1691721347927511748, guid: 99c93ec1a79d9304daf689d0fe65cacb, type: 3}
+      propertyPath: m_text
+      value: LOOT
+      objectReference: {fileID: 0}
     - target: {fileID: 3993680314102498703, guid: 99c93ec1a79d9304daf689d0fe65cacb, type: 3}
       propertyPath: m_Name
       value: UI_Header

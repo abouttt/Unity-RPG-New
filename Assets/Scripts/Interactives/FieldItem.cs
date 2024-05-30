@@ -7,7 +7,7 @@ public class FieldItem : Interactive
     public IReadOnlyDictionary<ItemData, int> Items => _items;
 
     [SerializeField]
-    private bool _destroyWhenEmptyItems;
+    private bool _destroyWhenEmptyItems = true;
 
     [SerializeField]
     private SerializedDictionary<ItemData, int> _items;

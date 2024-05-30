@@ -13,6 +13,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Awake()
     {
+        gameObject.layer = LayerMask.NameToLayer("PlayerInteraction");
         _mainCamera = Camera.main.gameObject;
     }
 

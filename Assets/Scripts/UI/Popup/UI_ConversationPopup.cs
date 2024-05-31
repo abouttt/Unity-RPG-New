@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 
-public class UI_NPCConversationPopup : UI_Popup, IPointerClickHandler
+public class UI_ConversationPopup : UI_Popup, IPointerClickHandler
 {
     enum Texts
     {
@@ -28,12 +28,12 @@ public class UI_NPCConversationPopup : UI_Popup, IPointerClickHandler
         BindText(typeof(Texts));
         BindButton(typeof(Buttons));
 
-        GetButton((int)Buttons.CloseButton).onClick.AddListener(Managers.UI.Close<UI_NPCConversationPopup>);
+        GetButton((int)Buttons.CloseButton).onClick.AddListener(Managers.UI.Close<UI_ConversationPopup>);
     }
 
     private void Start()
     {
-        Managers.UI.Register<UI_NPCConversationPopup>(this);
+        Managers.UI.Register<UI_ConversationPopup>(this);
 
         Showed += () =>
         {
@@ -66,7 +66,7 @@ public class UI_NPCConversationPopup : UI_Popup, IPointerClickHandler
             _index++;
             if (_index >= _npcConversationRef.ConversationScripts.Count)
             {
-                Managers.UI.Close<UI_NPCConversationPopup>();
+                Managers.UI.Close<UI_ConversationPopup>();
                 return;
             }
 

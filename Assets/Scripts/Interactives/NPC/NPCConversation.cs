@@ -17,6 +17,6 @@ public class NPCConversation : BaseNPCMenu
 
     public override void Execution()
     {
-        Managers.UI.Show<UI_NPCConversationPopup>().SetNPCConversation(this);
+        Managers.UI.Show<UI_ConversationPopup>().SetNPCConversation(this);
     }
 }

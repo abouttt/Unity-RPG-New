@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 5285575473876310474}
   - component: {fileID: 5440218492952804719}
   m_Layer: 5
-  m_Name: UI_NPCConversationPopup
+  m_Name: UI_ConversationPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

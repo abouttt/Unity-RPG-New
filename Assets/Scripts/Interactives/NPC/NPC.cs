@@ -26,6 +26,7 @@ public class NPC : Interactive
     public override void Interaction()
     {
         base.Interaction();
+
         Managers.UI.Show<UI_NPCMenuPopup>().SetNPC(this);
     }
 

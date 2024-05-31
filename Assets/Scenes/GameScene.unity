@@ -2566,6 +2566,7 @@ GameObject:
   - component: {fileID: 3662320685335113886}
   - component: {fileID: 3715627958009451042}
   - component: {fileID: 3715627958009451041}
+  - component: {fileID: 3715627958009451043}
   m_Layer: 0
   m_Name: Feddler
   m_TagString: Untagged
@@ -4206,6 +4207,21 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &3715627958009451043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3712127742081782636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cdda63620d561c47a38cd127adf497f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _conversationScripts:
+  - "\uC5B4\uC11C\uC624\uC138\uC694~"
+  - "\uB2E4\uC591\uD55C \uC544\uC774\uD15C \uD31D\uB2C8\uB2E4~ \uB458\uB7EC\uBCF4\uC138\uC694~"
 --- !u!4 &3715647637381814272
 Transform:
   m_ObjectHideFlags: 0

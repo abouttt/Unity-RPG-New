@@ -124,10 +124,17 @@ public class UI_ItemSlot : UI_BaseSlot, IDropHandler
             return;
         }
 
-        var item = ObjectRef as Item;
-        if (item is IUsableItem usable)
+        if (Managers.UI.IsShowed<UI_ShopPopup>())
         {
-            usable.Use(Player.ItemInventory, item);
+            Managers.UI.Get<UI_ShopPopup>().SellItem(ItemType, Index);
+        }
+        else
+        {
+            var item = ObjectRef as Item;
+            if (item is IUsableItem usable)
+            {
+                usable.Use(Player.ItemInventory, item);
+            }
         }
     }
 

@@ -18,6 +18,7 @@ MonoBehaviour:
   <ItemType>k__BackingField: 0
   <ItemQuality>k__BackingField: 1
   <Description>k__BackingField: "\uD3C9\uBC94\uD55C \uBC29\uD328\uB2E4."
+  <Price>k__BackingField: 1000
   <LimitLevel>k__BackingField: 1
   <EquipmentType>k__BackingField: 5
   <EquipmentPrefab>k__BackingField: {fileID: 0}

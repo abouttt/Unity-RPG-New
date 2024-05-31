@@ -20,6 +20,9 @@ public abstract class ItemData : ScriptableObject
     [field: SerializeField, TextArea]
     public string Description { get; private set; }
 
+    [field: SerializeField]
+    public int Price { get; private set; }
+
     public abstract Item CreateItem();
 
     public bool Equals(ItemData other)

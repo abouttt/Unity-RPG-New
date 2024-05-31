@@ -1558,7 +1558,7 @@ MonoBehaviour:
   <CanFocus>k__BackingField: 1
   <IsHelper>k__BackingField: 1
   <IsSelfish>k__BackingField: 0
-  <IgnoreSelfish>k__BackingField: 0
+  <IgnoreSelfish>k__BackingField: 1
   <PopupRT>k__BackingField: {fileID: 8760971996871308952}
   <DefaultPosition>k__BackingField: {x: 0, y: 0, z: 0}
 --- !u!1 &5862372358013629465

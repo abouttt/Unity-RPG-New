@@ -91,7 +91,7 @@ public class UI_ItemTooltip : UI_BaseTooltip
 
         if (itemData is IUsableItemData usableData)
         {
-            SB.Append($"제한 레벨 : {usableData.LimitLevel} \n");
+            SB.Append($"제한 레벨 : {usableData.LimitLevel}\n");
         }
 
         if (itemData is EquipmentItemData equipmentData)
@@ -116,6 +116,11 @@ public class UI_ItemTooltip : UI_BaseTooltip
         if (!string.IsNullOrEmpty(itemData.Description))
         {
             SB.Append($"{itemData.Description}\n\n");
+        }
+
+        if (Managers.UI.IsShowed<UI_ShopPopup>() && SlotRef is UI_ItemSlot)
+        {
+            SB.Append($"가격 : {Mathf.RoundToInt(itemData.Price * Managers.UI.Get<UI_ShopPopup>().ItemSellPercentage)}\n\n");
         }
 
         GetText((int)Texts.ItemDescText).text = SB.ToString();

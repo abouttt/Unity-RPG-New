@@ -10,13 +10,18 @@ public class UI_SkillTooltip : UI_BaseTooltip
         SkillDescText,
     }
 
-    private int _prevSkillLevel;
+    private SkillData _skillDataRef;
 
     protected override void Init()
     {
         base.Init();
 
         BindText(typeof(Texts));
+    }
+
+    private void OnDisable()
+    {
+        _skillDataRef = null;
     }
 
     protected override void SetData()
@@ -35,17 +40,12 @@ public class UI_SkillTooltip : UI_BaseTooltip
     {
         GetObject((int)GameObjects.Tooltip).SetActive(true);
 
-        if (DataRef != null)
+        if (_skillDataRef != null && _skillDataRef.Equals(skillData))
         {
-            SetDescription(skillData);
-
-            if (DataRef.Equals(skillData))
-            {
-                return;
-            }
+            return;
         }
 
-        DataRef = skillData;
+        _skillDataRef = skillData;
         GetText((int)Texts.SkillNameText).text = skillData.SkillName;
         GetText((int)Texts.SkillTypeText).text = $"[{skillData.SkillType}]";
         SetDescription(skillData);

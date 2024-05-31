@@ -20,11 +20,18 @@ public class UI_ItemTooltip : UI_BaseTooltip
     [SerializeField]
     private Color _highColor = Color.white;
 
+    private ItemData _itemDataRef;
+
     protected override void Init()
     {
         base.Init();
 
         BindText(typeof(Texts));
+    }
+
+    private void OnDisable()
+    {
+        _itemDataRef = null;
     }
 
     protected override void SetData()
@@ -43,12 +50,12 @@ public class UI_ItemTooltip : UI_BaseTooltip
     {
         GetObject((int)GameObjects.Tooltip).SetActive(true);
 
-        if (DataRef != null && DataRef.Equals(itemData))
+        if (_itemDataRef != null && _itemDataRef.Equals(itemData))
         {
             return;
         }
 
-        DataRef = itemData;
+        _itemDataRef = itemData;
         GetText((int)Texts.ItemNameText).text = itemData.ItemName;
         SetItemQualityColor(itemData.ItemQuality);
         SetType(itemData.ItemType);

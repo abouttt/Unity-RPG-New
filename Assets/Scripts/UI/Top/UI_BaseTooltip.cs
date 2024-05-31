@@ -10,7 +10,6 @@ public abstract class UI_BaseTooltip : UI_Base
     }
 
     protected UI_BaseSlot SlotRef;
-    protected ScriptableObject DataRef;
     protected RectTransform RT;
     protected readonly StringBuilder SB = new(50);
 
@@ -18,11 +17,6 @@ public abstract class UI_BaseTooltip : UI_Base
     {
         BindObject(typeof(GameObjects));
         RT = GetObject((int)GameObjects.Tooltip).GetComponent<RectTransform>();
-    }
-
-    private void OnEnable()
-    {
-        GetObject((int)GameObjects.Tooltip).SetActive(false);
     }
 
     private void Update()
@@ -61,6 +55,7 @@ public abstract class UI_BaseTooltip : UI_Base
     {
         SlotRef = slot;
         gameObject.SetActive(slot != null);
+        GetObject((int)GameObjects.Tooltip).SetActive(false);
     }
 
     protected abstract void SetData();

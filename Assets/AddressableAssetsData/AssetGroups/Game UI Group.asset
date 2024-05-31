@@ -47,6 +47,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Game_UI
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59e736a7ccd3fa346958bb9e03622e33
+    m_Address: UI_NPCMenuSubitem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game_UI
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1a3acc2b854879f4a93375b096ee8843, type: 2}
   m_SchemaSet:

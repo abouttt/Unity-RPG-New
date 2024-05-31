@@ -112,7 +112,7 @@ public class InputManager : GameControls.IPlayerActions
     {
         if (context.performed)
         {
-            if (Managers.UI.IsShowed<UI_ItemSplitPopup>())
+            if (Managers.UI.IsShowedHelperPopup || Managers.UI.IsShowedSelfishPopup)
             {
                 return;
             }

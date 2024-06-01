@@ -13,6 +13,7 @@ public class Cooldown
     public void OnCooldowned()
     {
         Time = MaxTime;
+        Managers.Cooldown.AddCooldown(this);
         Cooldowned?.Invoke();
     }
 

@@ -33,13 +33,7 @@ public class ConsumptionItem : StackableItem, IUsableItem, IQuickable
             return false;
         }
 
-        int remainingCount = Count - ConsumptionData.RequiredCount;
-        if (remainingCount < 0)
-        {
-            return false;
-        }
-
-        SetCount(remainingCount);
+        SetCount(Count - ConsumptionData.RequiredCount);
 
         if (IsEmpty)
         {
@@ -47,7 +41,6 @@ public class ConsumptionItem : StackableItem, IUsableItem, IQuickable
         }
 
         ConsumptionData.Cooldown.OnCooldowned();
-        Managers.Cooldown.AddCooldown(ConsumptionData.Cooldown);
 
         return true;
     }

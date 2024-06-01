@@ -56,8 +56,8 @@ public class ItemInventory : MonoBehaviour, IInventory
 
                 if (sameItemIndex != -1)
                 {
-                    var otherStackableItem = items[sameItemIndex] as IStackableItem;
-                    count = otherStackableItem.AddCountAndGetExcess(count);
+                    var otherStackable = items[sameItemIndex] as IStackableItem;
+                    count = otherStackable.AddCountAndGetExcess(count);
                 }
                 else
                 {

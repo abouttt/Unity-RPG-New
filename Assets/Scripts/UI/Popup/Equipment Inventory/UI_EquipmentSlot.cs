@@ -71,21 +71,12 @@ public class UI_EquipmentSlot : UI_BaseSlot, IDropHandler
                 return;
             }
 
-            if (Player.Status.Level < otherItem.EquipmentData.LimitLevel)
+            if (otherItem is not IUsableItem otherUsable)
             {
                 return;
             }
 
-            if (HasObject)
-            {
-                Player.ItemInventory.SetItem((ObjectRef as EquipmentItem).EquipmentData, otherItemSlot.Index);
-            }
-            else
-            {
-                Player.ItemInventory.RemoveItem(otherItemSlot.ItemType, otherItemSlot.Index);
-            }
-
-            Player.EquipmentInventory.Equip(otherItem.EquipmentData);
+            otherUsable.Use(Player.ItemInventory, otherItem);
         }
     }
 }

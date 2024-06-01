@@ -41,12 +41,12 @@ public class UI_ItemSplitPopup : UI_Popup
     {
         base.Init();
 
+        _dotween = PopupRT.GetComponent<DOTweenAnimation>();
+
         BindObject(typeof(GameObjects));
         BindText(typeof(Texts));
         BindButton(typeof(Buttons));
         Bind<TMP_InputField>(typeof(InputFields));
-
-        _dotween = PopupRT.GetComponent<DOTweenAnimation>();
 
         Get<TMP_InputField>((int)InputFields.InputField).onValueChanged.AddListener(value => OnValueChanged(value));
         Get<TMP_InputField>((int)InputFields.InputField).onEndEdit.AddListener(value => OnEndEdit(value));

@@ -88,7 +88,7 @@ public class UI_ShopPopup : UI_Popup, IDropHandler
             count = stackable.Count;
         }
 
-        Player.Status.Gold += Mathf.RoundToInt((item.Data.Price * count) * ItemSellPercentage);
+        Player.Status.Gold += Mathf.RoundToInt(item.Data.Price * count * ItemSellPercentage);
         Player.ItemInventory.RemoveItem(itemType, index);
     }
 

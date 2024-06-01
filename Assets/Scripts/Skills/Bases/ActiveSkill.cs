@@ -18,7 +18,6 @@ public class ActiveSkill : Skill, IUsableSkill, IQuickable
         Player.Status.SP -= ActiveData.RequiredSP;
 
         ActiveData.Cooldown.OnCooldowned();
-        Managers.Cooldown.AddCooldown(ActiveData.Cooldown);
     }
 
     public bool CanUse()

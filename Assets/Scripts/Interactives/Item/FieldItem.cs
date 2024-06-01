@@ -14,7 +14,7 @@ public class FieldItem : Interactive
 
     private void Start()
     {
-        if (_items == null || _items.Count == 0)
+        if ((_items == null || _items.Count == 0) && _destroyWhenEmptyItems)
         {
             Managers.Resource.Destroy(gameObject);
         }

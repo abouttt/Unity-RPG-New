@@ -6,9 +6,8 @@ public class EquipmentInventory : MonoBehaviour, IInventory
 {
     public event Action<EquipmentType> InventoryChanged;
 
-    public BasicStats Stats { get; private set; } = new();
-
     private readonly Dictionary<EquipmentType, EquipmentItem> _items = new();
+    private BasicStats _stats = new();
 
     private void Awake()
     {
@@ -29,7 +28,7 @@ public class EquipmentInventory : MonoBehaviour, IInventory
 
         var equipmentItem = equipmentItemData.CreateItem() as EquipmentItem;
         _items[equipmentType] = equipmentItem;
-        Stats += equipmentItemData.Stats;
+        _stats += equipmentItemData.Stats;
         InventoryChanged?.Invoke(equipmentType);
     }
 
@@ -40,7 +39,7 @@ public class EquipmentInventory : MonoBehaviour, IInventory
             return;
         }
 
-        Stats -= _items[equipmentType].EquipmentData.Stats;
+        _stats -= _items[equipmentType].EquipmentData.Stats;
         _items[equipmentType] = null;
         InventoryChanged?.Invoke(equipmentType);
     }
@@ -53,5 +52,17 @@ public class EquipmentInventory : MonoBehaviour, IInventory
     public bool IsEquipped(EquipmentType equipmentType)
     {
         return _items[equipmentType] != null;
+    }
+
+    public BasicStats GetStats()
+    {
+        return new BasicStats
+        {
+            HP = _stats.HP,
+            MP = _stats.MP,
+            SP = _stats.SP,
+            Damage = _stats.Damage,
+            Defense = _stats.Defense,
+        };
     }
 }

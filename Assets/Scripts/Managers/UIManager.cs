@@ -143,9 +143,9 @@ public class UIManager
 
                 _activePopups.AddFirst(popup);
                 RefreshAllPopupDepth();
-
-                ui.gameObject.SetActive(true);
             }
+
+            ui.gameObject.SetActive(true);
 
             return ui as T;
         }

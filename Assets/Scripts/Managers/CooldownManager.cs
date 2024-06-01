@@ -4,7 +4,7 @@ using UnityEngine;
 public class CooldownManager
 {
     private readonly HashSet<Cooldown> _cooldowns = new();
-    private readonly Queue<Cooldown> _cooldownCompleteQueue = new();
+    private readonly Queue<Cooldown> _completedCooldownQueue = new();
 
     public void Cooling()
     {
@@ -14,14 +14,14 @@ public class CooldownManager
             if (cooldown.Time <= 0f)
             {
                 cooldown.Time = 0f;
-                _cooldownCompleteQueue.Enqueue(cooldown);
+                _completedCooldownQueue.Enqueue(cooldown);
             }
         }
 
-        while (_cooldownCompleteQueue.Count > 0)
+        while (_completedCooldownQueue.Count > 0)
         {
-            _cooldowns.Remove(_cooldownCompleteQueue.Peek());
-            _cooldownCompleteQueue.Dequeue();
+            _cooldowns.Remove(_completedCooldownQueue.Peek());
+            _completedCooldownQueue.Dequeue();
         }
     }
 
@@ -34,6 +34,6 @@ public class CooldownManager
     {
         CooldownDatabase.Instance.ClearCooldown();
         _cooldowns.Clear();
-        _cooldownCompleteQueue.Clear();
+        _completedCooldownQueue.Clear();
     }
 }

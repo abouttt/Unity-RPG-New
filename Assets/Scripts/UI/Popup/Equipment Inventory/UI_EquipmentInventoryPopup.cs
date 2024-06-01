@@ -38,13 +38,13 @@ public class UI_EquipmentInventoryPopup : UI_Popup
         BindButton(typeof(Buttons));
         Bind<UI_EquipmentSlot>(typeof(EquipmentSlots));
 
+        GetButton((int)Buttons.CloseButton).onClick.AddListener(Managers.UI.Close<UI_EquipmentInventoryPopup>);
+
         Player.Status.HPChanged += RefreshHPText;
         Player.Status.MPChanged += RefreshMPText;
         Player.Status.SPChanged += RefreshSPText;
         Player.Status.StatChanged += RefreshAllStatusText;
         Player.EquipmentInventory.InventoryChanged += equipmentType => _equipmentSlots[equipmentType].Refresh();
-
-        GetButton((int)Buttons.CloseButton).onClick.AddListener(Managers.UI.Close<UI_EquipmentInventoryPopup>);
 
         InitSlots();
     }

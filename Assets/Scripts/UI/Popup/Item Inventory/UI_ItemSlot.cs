@@ -50,9 +50,9 @@ public class UI_ItemSlot : UI_BaseSlot, IDropHandler
 
                 SetObject(item, item.Data.ItemImage);
 
-                if (item is IStackableItem stackableItem)
+                if (item is IStackableItem stackable)
                 {
-                    stackableItem.StackChanged += RefreshCountText;
+                    stackable.StackChanged += RefreshCountText;
                 }
 
                 if (item.Data is ICooldownable cooldownable)
@@ -73,9 +73,9 @@ public class UI_ItemSlot : UI_BaseSlot, IDropHandler
     {
         if (ObjectRef is Item item)
         {
-            if (item is IStackableItem stackableItem)
+            if (item is IStackableItem stackable)
             {
-                stackableItem.StackChanged -= RefreshCountText;
+                stackable.StackChanged -= RefreshCountText;
             }
 
             if (item.Data is ICooldownable)
@@ -90,10 +90,10 @@ public class UI_ItemSlot : UI_BaseSlot, IDropHandler
 
     private void RefreshCountText()
     {
-        if (ObjectRef is IStackableItem stackableItem && stackableItem.Count > 1)
+        if (ObjectRef is IStackableItem stackable && stackable.Count > 1)
         {
             GetText((int)Texts.CountText).gameObject.SetActive(true);
-            GetText((int)Texts.CountText).text = stackableItem.Count.ToString();
+            GetText((int)Texts.CountText).text = stackable.Count.ToString();
         }
         else
         {
@@ -165,12 +165,12 @@ public class UI_ItemSlot : UI_BaseSlot, IDropHandler
     {
         var otherItem = otherItemSlot.ObjectRef as Item;
 
-        if (!HasObject && otherItem is IStackableItem otherStackableItem && otherStackableItem.Count > 1)
+        if (!HasObject && otherItem is IStackableItem otherStackable && otherStackable.Count > 1)
         {
             var splitPopup = Managers.UI.Show<UI_ItemSplitPopup>();
             splitPopup.SetEvent(() =>
                 Player.ItemInventory.SplitItem(ItemType, otherItemSlot.Index, Index, splitPopup.Count),
-                $"[{otherItem.Data.ItemName}] 아이템 나누기", 1, otherStackableItem.Count);
+                $"[{otherItem.Data.ItemName}] 아이템 나누기", 1, otherStackable.Count);
         }
         else
         {
@@ -180,29 +180,28 @@ public class UI_ItemSlot : UI_BaseSlot, IDropHandler
 
     private void OnDropEquipmentSlot(UI_EquipmentSlot otherEquipmentSlot)
     {
-        var otherEquipmentData = (otherEquipmentSlot.ObjectRef as EquipmentItem).EquipmentData;
+        var otherEquipmentItem = otherEquipmentSlot.ObjectRef as EquipmentItem;
 
         if (HasObject)
         {
-            var equipmentData = (ObjectRef as EquipmentItem).EquipmentData;
+            var equipmentItem = ObjectRef as EquipmentItem;
 
-            if (equipmentData.EquipmentType != otherEquipmentData.EquipmentType)
+            if (equipmentItem.EquipmentData.EquipmentType != otherEquipmentItem.EquipmentData.EquipmentType)
             {
                 return;
             }
 
-            if (Player.Status.Level < equipmentData.LimitLevel)
+            if (equipmentItem is not IUsableItem usable)
             {
                 return;
             }
 
-            Player.EquipmentInventory.Equip(equipmentData);
+            usable.Use(Player.ItemInventory, equipmentItem);
         }
         else
         {
+            Player.ItemInventory.SetItem(otherEquipmentItem.Data, Index);
             Player.EquipmentInventory.Unequip(otherEquipmentSlot.EquipmentType);
         }
-
-        Player.ItemInventory.SetItem(otherEquipmentData, Index);
     }
 }

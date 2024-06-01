@@ -52,10 +52,10 @@ public class UI_ItemInventoryPopup : UI_Popup
         Bind<ScrollRect>(typeof(ScrollRects));
         Bind<UI_ItemInventoryTab>(typeof(Tabs));
 
+        GetButton((int)Buttons.CloseButton).onClick.AddListener(Managers.UI.Close<UI_ItemInventoryPopup>);
+
         Player.Status.GoldChanged += RefreshGoldText;
         Player.ItemInventory.InventoryChanged += (itemType, index) => _slots[itemType][index].Refresh();
-
-        GetButton((int)Buttons.CloseButton).onClick.AddListener(Managers.UI.Close<UI_ItemInventoryPopup>);
 
         InitSlots();
         InitTabs();

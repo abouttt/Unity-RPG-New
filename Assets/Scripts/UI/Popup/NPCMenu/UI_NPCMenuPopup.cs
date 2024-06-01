@@ -79,8 +79,8 @@ public class UI_NPCMenuPopup : UI_Popup
             Managers.Resource.Destroy(subitem.gameObject);
         }
 
+        _subitems.Clear();
         _npcRef.Deinteraction();
         _npcRef = null;
-        _subitems.Clear();
     }
 }

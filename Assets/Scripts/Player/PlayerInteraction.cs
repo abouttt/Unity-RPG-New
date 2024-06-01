@@ -38,7 +38,6 @@ public class PlayerInteraction : MonoBehaviour
 
         if (_target.IsInteracted)
         {
-            _canInteraction = false;
             return;
         }
         else if (_isRangeOutTarget)

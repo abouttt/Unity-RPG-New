@@ -111,6 +111,50 @@ public class ItemInventory : MonoBehaviour, IInventory
         RemoveItem(_inventories[itemType].Items[index]);
     }
 
+    public void RemoveItem(string id, int count)
+    {
+        var itemType = GetItemTypeById(id);
+
+        for (int index = 0; index < _inventories[itemType].Capacity; index++)
+        {
+            var item = _inventories[itemType].Items[index];
+
+            if (item == null)
+            {
+                continue;
+            }
+
+            if (!item.Data.ItemId.Equals(id))
+            {
+                continue;
+            }
+
+            if (item is IStackableItem stackable)
+            {
+                if (count >= stackable.Count)
+                {
+                    count -= stackable.Count;
+                }
+                else
+                {
+                    stackable.SetCount(stackable.Count - count);
+                    break;
+                }
+            }
+            else
+            {
+                count--;
+            }
+
+            RemoveItem(_inventories[itemType].Items[index]);
+
+            if (count <= 0)
+            {
+                break;
+            }
+        }
+    }
+
     public void SetItem(ItemData itemData, int index, int count = 1)
     {
         if (itemData == null)
@@ -205,6 +249,36 @@ public class ItemInventory : MonoBehaviour, IInventory
         return -1;
     }
 
+    public int GetSameItemCountById(string id)
+    {
+        var itemType = GetItemTypeById(id);
+        int count = 0;
+
+        foreach (var item in _inventories[itemType].Items)
+        {
+            if (item == null)
+            {
+                continue;
+            }
+
+            if (!item.Data.ItemId.Equals(id))
+            {
+                continue;
+            }
+
+            if (item is IStackableItem stackable)
+            {
+                count += stackable.Count;
+            }
+            else
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
     public bool IsEmpty(ItemType itemType, int index)
     {
         return _inventories[itemType].Items[index] == null;
@@ -265,6 +339,17 @@ public class ItemInventory : MonoBehaviour, IInventory
 
         InventoryChanged?.Invoke(itemType, fromIndex);
         InventoryChanged?.Invoke(itemType, toIndex);
+    }
+
+    private ItemType GetItemTypeById(string id)
+    {
+        return id[..id.IndexOf('_')] switch
+        {
+            "EQUIPMENT" => ItemType.Equipment,
+            "CONSUMPTION" => ItemType.Consumption,
+            "ETC" => ItemType.Etc,
+            _ => throw new NotImplementedException(),
+        };
     }
 
     private void DestroyItem(ItemType itemType, int index)

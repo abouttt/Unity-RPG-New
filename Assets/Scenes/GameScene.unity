@@ -4180,11 +4180,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <InteractionMessage>k__BackingField: "\uB300\uD654"
-  <InteractionKeyGuidePos>k__BackingField: {x: 0, y: 2.3, z: 0}
+  <InteractionKeyGuidePos>k__BackingField: {x: 0, y: 2.2, z: 0}
   <InteractionInputTime>k__BackingField: 0
   <CanInteraction>k__BackingField: 1
   <NPCId>k__BackingField: FEDDLER
   <NPCName>k__BackingField: "\uC7A1\uC0C1\uC778"
+  _quests: []
+  _questNotifierPosition: {x: 0, y: 2.2, z: 0}
+  _questNotifierInteractionPosition: {x: 0, y: 2.6, z: 0}
 --- !u!136 &3715627958009451042
 CapsuleCollider:
   m_ObjectHideFlags: 0

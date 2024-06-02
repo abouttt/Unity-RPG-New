@@ -1,4 +1,22 @@
 
+public enum Category
+{
+    Scene,
+    Item,
+    Skill,
+    Quest,
+    NPC,
+    Monster,
+}
+
+public enum QuestState
+{
+    Inactive,
+    Active,
+    Completable,
+    Complete,
+}
+
 public enum SkillType
 {
     Active,

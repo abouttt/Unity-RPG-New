@@ -57,6 +57,15 @@ public class UI_NPCMenuPopup : UI_Popup
             AddSubitem(menu.MenuName, menu.Execution);
         }
 
+        if (npc.Quests.Count > 0)
+        {
+            AddSubitem("퀘스트", () =>
+            {
+                PopupRT.gameObject.SetActive(false);
+                //Managers.UI.Show<UI_NPCQuestPopup>().SetNPC(npc);
+            });
+        }
+
         AddSubitem("떠난다", () =>
         {
             Managers.UI.Close<UI_NPCMenuPopup>();

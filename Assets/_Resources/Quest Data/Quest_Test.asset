@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b210f15c0b0e35e409f3959521a22cd5, type: 3}
+  m_Name: Quest_Test
+  m_EditorClassIdentifier: 
+  <QuestId>k__BackingField: TEST
+  <QuestName>k__BackingField: "\uD14C\uC2A4\uD2B8"
+  <Description>k__BackingField: "\uD14C\uC2A4\uD2B8 \uD018\uC2A4\uD2B8\uC785\uB2C8\uB2E4."
+  <LimitLevel>k__BackingField: 1
+  <OwnerId>k__BackingField: FEDDLER
+  <CompleteOwnerId>k__BackingField: FEDDLER
+  <CanRemoteComplete>k__BackingField: 0
+  <Targets>k__BackingField:
+  - <Category>k__BackingField: 1
+    <TargetId>k__BackingField: EQUIPMENT_AXE
+    <Description>k__BackingField: "\uB3C4\uB07C"
+    <CompleteCount>k__BackingField: 1
+    <RemoveAfterCompletion>k__BackingField: 1
+  <PrerequisiteQuests>k__BackingField: []
+  RewardGold: 999
+  RewardXP: 50
+  RewardItems:
+    _serializedList:
+    - Key: {fileID: 11400000, guid: 46033adbba8005a4eaeade75c6ee4373, type: 2}
+      Value: 50

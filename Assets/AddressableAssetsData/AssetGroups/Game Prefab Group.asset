@@ -29,6 +29,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - Game_Prefab
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 53d02d774efc5af429e6f2962012442b
+    m_Address: QuestCompletableNotifier.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game_Prefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7563caf37a2c2b4ca79b846bb6a09fb
+    m_Address: QuestPresenceNotifier.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game_Prefab
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1a3acc2b854879f4a93375b096ee8843, type: 2}
   m_SchemaSet:

@@ -41,6 +41,7 @@ public class ConsumableItem : StackableItem, IUsableItem, IQuickable
         }
 
         ConsumableData.Cooldown.OnCooldowned();
+        Managers.Quest.ReceiveReport(Category.Item, Data.ItemId, -ConsumableData.RequiredCount);
 
         return true;
     }

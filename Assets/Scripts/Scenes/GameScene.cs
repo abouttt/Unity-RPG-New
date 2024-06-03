@@ -23,6 +23,7 @@ public class GameScene : BaseScene
         package.transform.DetachChildren();
         Destroy(package);
 
+        Managers.Quest.ReceiveReport(Category.Scene, SceneID, 1);
         Managers.Input.CursorLocked = true;
         Player.Status.Gold += 10000;
         Player.Status.SkillPoint += 3;

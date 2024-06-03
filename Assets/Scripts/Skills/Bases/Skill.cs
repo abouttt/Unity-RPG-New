@@ -83,6 +83,7 @@ public abstract class Skill
 
         Level++;
         Player.Status.SkillPoint -= Data.RequiredSkillPoint;
+        Managers.Quest.ReceiveReport(Category.Skill, Data.SkillId, 1);
         SkillChanged?.Invoke();
     }
 
@@ -96,6 +97,8 @@ public abstract class Skill
             {
                 skillPoint += kvp.Key.ResetSkill();
             }
+
+            Managers.Quest.ReceiveReport(Category.Skill, Data.SkillId, -Level);
         }
 
         var prevAcquirable = IsAcquirable;

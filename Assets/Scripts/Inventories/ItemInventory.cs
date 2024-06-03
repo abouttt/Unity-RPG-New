@@ -57,7 +57,9 @@ public class ItemInventory : MonoBehaviour, IInventory
                 if (sameItemIndex != -1)
                 {
                     var otherStackable = items[sameItemIndex] as IStackableItem;
+                    int prevCount = count;
                     count = otherStackable.AddCountAndGetExcess(count);
+                    Managers.Quest.ReceiveReport(Category.Item, itemData.ItemId, prevCount - count);
                 }
                 else
                 {
@@ -180,6 +182,7 @@ public class ItemInventory : MonoBehaviour, IInventory
 
         inventory.Count++;
         _itemIndexes.Add(inventory.Items[index], index);
+        Managers.Quest.ReceiveReport(Category.Item, itemData.ItemId, count);
         InventoryChanged?.Invoke(itemData.ItemType, index);
     }
 
@@ -356,9 +359,15 @@ public class ItemInventory : MonoBehaviour, IInventory
     {
         var inventory = _inventories[itemType];
         var item = inventory.Items[index];
+        int count = 1;
+        if (item is IStackableItem stackable)
+        {
+            count = stackable.Count;
+        }
         inventory.Items[index] = null;
         inventory.Count--;
         item.Destroy();
         _itemIndexes.Remove(item);
+        Managers.Quest.ReceiveReport(Category.Item, item.Data.ItemId, -count);
     }
 }

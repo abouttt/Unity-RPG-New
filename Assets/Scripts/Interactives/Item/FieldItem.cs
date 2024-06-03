@@ -14,6 +14,8 @@ public class FieldItem : Interactive
 
     private void Start()
     {
+        Util.InstantiateMinimapIcon("FieldItemMinimapIcon.sprite", "æ∆¿Ã≈€", transform);
+
         if ((_items == null || _items.Count == 0) && _destroyWhenEmptyItems)
         {
             Managers.Resource.Destroy(gameObject);

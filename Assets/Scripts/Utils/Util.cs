@@ -96,4 +96,10 @@ public static class Util
     {
         return Mathf.CeilToInt((value * (1f + percentage / 100f)));
     }
+
+    public static void InstantiateMinimapIcon(string spriteName, string iconName, Transform transform, float scale = 1f)
+    {
+        var go = Managers.Resource.Instantiate("MinimapIcon.prefab", transform);
+        go.GetComponent<MinimapIcon>().Setup(spriteName, iconName, scale);
+    }
 }

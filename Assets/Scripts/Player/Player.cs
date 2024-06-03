@@ -31,6 +31,11 @@ public class Player : MonoBehaviour
         Interaction = GetComponentInChildren<PlayerInteraction>();
     }
 
+    private void Start()
+    {
+        Util.InstantiateMinimapIcon("PlayerMinimapIcon.sprite", "플레이어", transform, 1.2f);
+    }
+
     public void Init()
     {
         GameObject = gameObject;

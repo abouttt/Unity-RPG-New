@@ -10,46 +10,46 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Game Prefab Group
+  m_Name: Sprite Group
   m_EditorClassIdentifier: 
-  m_GroupName: Game Prefab Group
+  m_GroupName: Sprite Group
   m_Data:
     m_SerializedData: []
-  m_GUID: 73b3c8292532a3042afdb1874835e176
+  m_GUID: c0b151ea86fd2c54592d9a1c24c873ab
   m_SerializeEntries:
-  - m_GUID: e4438b2e45216ef488307e0aa6d4ae4b
-    m_Address: GameUIPackage.prefab
+  - m_GUID: e1ba53a145b69fd47aaa4d8ed5083503
+    m_Address: MonsterMinimapIcon.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Game_Prefab
+    - Game_UI
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d67f347d9f130e345bae40bb9fd8591c
-    m_Address: FieldItem.prefab
+  - m_GUID: 9aeb72b2cdef1d942849805cba315699
+    m_Address: PortalMinimapIcon.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Game_Prefab
+    - Game_UI
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 53d02d774efc5af429e6f2962012442b
-    m_Address: QuestCompletableNotifier.prefab
+  - m_GUID: a5b6bb9d2ee595d4995f7bac5ce1089f
+    m_Address: FieldItemMinimapIcon.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Game_Prefab
+    - Game_UI
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c7563caf37a2c2b4ca79b846bb6a09fb
-    m_Address: QuestPresenceNotifier.prefab
+  - m_GUID: af30af87ed90e2e4fa7a6b4f20c008a4
+    m_Address: PlayerMinimapIcon.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Game_Prefab
+    - Game_UI
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fe1042624a7733f49ad58562945e9705
-    m_Address: MinimapIcon.prefab
+  - m_GUID: 3e92ade733bdacb43ae3224b816136f8
+    m_Address: NPCMinimapIcon.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Game_Prefab
+    - Game_UI
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1a3acc2b854879f4a93375b096ee8843, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 32d2bbfe4c5320740964381977407aeb, type: 2}
-    - {fileID: 11400000, guid: 3849a399ac894574f929d82530ea53d6, type: 2}
+    - {fileID: 11400000, guid: 01a6495f5da376c41b243333108f05c1, type: 2}
+    - {fileID: 11400000, guid: 90470f7184aab7846a79b74fd21f6dca, type: 2}

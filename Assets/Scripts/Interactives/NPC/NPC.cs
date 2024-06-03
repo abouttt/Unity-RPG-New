@@ -40,6 +40,7 @@ public class NPC : Interactive
 
     private void Start()
     {
+        Util.InstantiateMinimapIcon("NPCMinimapIcon.sprite", NPCName, transform);
         CheckQuests();
     }
 

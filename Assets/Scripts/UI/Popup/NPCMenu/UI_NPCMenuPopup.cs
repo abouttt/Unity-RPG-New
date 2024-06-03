@@ -62,7 +62,7 @@ public class UI_NPCMenuPopup : UI_Popup
             AddSubitem("Äù½ºÆ®", () =>
             {
                 PopupRT.gameObject.SetActive(false);
-                //Managers.UI.Show<UI_NPCQuestPopup>().SetNPC(npc);
+                Managers.UI.Show<UI_NPCQuestPopup>().SetNPC(npc);
             });
         }
 

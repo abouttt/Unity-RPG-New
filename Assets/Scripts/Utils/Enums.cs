@@ -30,6 +30,7 @@ public enum SlotType
     Quick,
     Skill,
     Shop,
+    Reward,
 }
 
 public enum EquipmentType

@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Item/Consumption/HealPotion", fileName = "Item_Consumption_HealPotion")]
-public class HealPotionData : ConsumptionItemData
+[CreateAssetMenu(menuName = "Item/Consumable/HealPotion", fileName = "Item_Consumable_HealPotion")]
+public class HealPotionData : ConsumableItemData
 {
     [SerializeField]
     private int _healAmount;

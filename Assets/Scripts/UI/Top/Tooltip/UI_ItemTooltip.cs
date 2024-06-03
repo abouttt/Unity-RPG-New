@@ -79,7 +79,7 @@ public class UI_ItemTooltip : UI_BaseTooltip
         GetText((int)Texts.ItemTypeText).text = itemType switch
         {
             ItemType.Equipment => "[장비 아이템]",
-            ItemType.Consumption => "[소비 아이템]",
+            ItemType.Consumable => "[소비 아이템]",
             ItemType.Etc => "[기타 아이템]",
             _ => "[NULL]"
         };
@@ -103,9 +103,9 @@ public class UI_ItemTooltip : UI_BaseTooltip
             AppendValueIfGreaterThan0("공격력", equipmentData.Stats.Damage);
             AppendValueIfGreaterThan0("방어력", equipmentData.Stats.Defense);
         }
-        else if (itemData is ConsumptionItemData consumptionData)
+        else if (itemData is ConsumableItemData consumableData)
         {
-            SB.Append($"소비 개수 : {consumptionData.RequiredCount}\n");
+            SB.Append($"소비 개수 : {consumableData.RequiredCount}\n");
         }
 
         if (SB.Length > 0)

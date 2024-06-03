@@ -45,7 +45,7 @@ public enum EquipmentType
 public enum ItemType
 {
     Equipment,
-    Consumption,
+    Consumable,
     Etc
 }
 

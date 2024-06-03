@@ -7,7 +7,7 @@ public class UI_ItemInventoryPopup : UI_Popup
     enum RectTransforms
     {
         EquipmentSlots,
-        ConsumptionSlots,
+        ConsumableSlots,
         EtcSlots
     }
 
@@ -29,7 +29,7 @@ public class UI_ItemInventoryPopup : UI_Popup
     enum Tabs
     {
         EquipmentTabButton,
-        ConsumptionTabButton,
+        ConsumableTabButton,
         EtcTabButton,
     }
 
@@ -115,18 +115,18 @@ public class UI_ItemInventoryPopup : UI_Popup
     {
         var itemInventory = Player.ItemInventory;
         CreateSlots(itemInventory.Inventories[ItemType.Equipment].Capacity, ItemType.Equipment, GetRT((int)RectTransforms.EquipmentSlots));
-        CreateSlots(itemInventory.Inventories[ItemType.Consumption].Capacity, ItemType.Consumption, GetRT((int)RectTransforms.ConsumptionSlots));
+        CreateSlots(itemInventory.Inventories[ItemType.Consumable].Capacity, ItemType.Consumable, GetRT((int)RectTransforms.ConsumableSlots));
         CreateSlots(itemInventory.Inventories[ItemType.Etc].Capacity, ItemType.Etc, GetRT((int)RectTransforms.EtcSlots));
 
         _slots.Add(ItemType.Equipment, GetRT((int)RectTransforms.EquipmentSlots).GetComponentsInChildren<UI_ItemSlot>());
-        _slots.Add(ItemType.Consumption, GetRT((int)RectTransforms.ConsumptionSlots).GetComponentsInChildren<UI_ItemSlot>());
+        _slots.Add(ItemType.Consumable, GetRT((int)RectTransforms.ConsumableSlots).GetComponentsInChildren<UI_ItemSlot>());
         _slots.Add(ItemType.Etc, GetRT((int)RectTransforms.EtcSlots).GetComponentsInChildren<UI_ItemSlot>());
     }
 
     private void InitTabs()
     {
         _tabs.Add(Get<UI_ItemInventoryTab>((int)Tabs.EquipmentTabButton), GetRT((int)RectTransforms.EquipmentSlots));
-        _tabs.Add(Get<UI_ItemInventoryTab>((int)Tabs.ConsumptionTabButton), GetRT((int)RectTransforms.ConsumptionSlots));
+        _tabs.Add(Get<UI_ItemInventoryTab>((int)Tabs.ConsumableTabButton), GetRT((int)RectTransforms.ConsumableSlots));
         _tabs.Add(Get<UI_ItemInventoryTab>((int)Tabs.EtcTabButton), GetRT((int)RectTransforms.EtcSlots));
 
         foreach (var kvp in _tabs)

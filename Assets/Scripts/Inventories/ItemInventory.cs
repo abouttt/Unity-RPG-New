@@ -346,7 +346,7 @@ public class ItemInventory : MonoBehaviour, IInventory
         return id[..id.IndexOf('_')] switch
         {
             "EQUIPMENT" => ItemType.Equipment,
-            "CONSUMPTION" => ItemType.Consumption,
+            "CONSUMABLE" => ItemType.Consumable,
             "ETC" => ItemType.Etc,
             _ => throw new NotImplementedException(),
         };

@@ -1532,7 +1532,7 @@ GameObject:
   - component: {fileID: 4175877087362346070}
   - component: {fileID: 7316210400114126146}
   m_Layer: 5
-  m_Name: ConsumptionSlots
+  m_Name: ConsumableSlots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1684,7 +1684,7 @@ GameObject:
   - component: {fileID: 3667666486742205101}
   - component: {fileID: 134751569391154452}
   m_Layer: 5
-  m_Name: ConsumptionTabButton
+  m_Name: ConsumableTabButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

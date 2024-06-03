@@ -38,6 +38,11 @@ public class UIManager
         return null;
     }
 
+    public Transform GetRoot(UIType type)
+    {
+        return _uiRoots[type];
+    }
+
     public void Register<T>(UI_Base ui) where T : UI_Base
     {
         if (ui == null)

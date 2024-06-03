@@ -141,6 +141,10 @@ public class InputManager : GameControls.IPlayerActions
             {
                 Managers.UI.CloseTopPopup();
             }
+            else
+            {
+                Managers.UI.Show<UI_GameMenuPopup>();
+            }
         }
     }
 

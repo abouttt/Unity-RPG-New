@@ -78,6 +78,7 @@ public enum SceneType
     Unknown,
     LoadingScene,
     MainMenuScene,
+    VillageScene,
     GameScene,
 }
 

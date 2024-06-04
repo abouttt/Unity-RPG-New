@@ -77,12 +77,14 @@ public enum SceneType
 {
     Unknown,
     LoadingScene,
+    MainMenuScene,
     GameScene,
 }
 
 public enum AddressableLabel
 {
     Default,
+    MainMenu_UI,
     Game_Prefab,
     Game_UI,
 }

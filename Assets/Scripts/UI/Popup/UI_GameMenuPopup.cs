@@ -62,7 +62,7 @@ public class UI_GameMenuPopup : UI_Popup
 
         GetButton((int)Buttons.MainMenuButton).onClick.AddListener(() =>
         {
-            //Managers.Scene.LoadScene(SceneType.MainMenuScene);
+            Managers.Scene.LoadScene(SceneType.MainMenuScene);
         });
 
         GetButton((int)Buttons.ExitButton).onClick.AddListener(() =>

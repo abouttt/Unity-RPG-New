@@ -19,9 +19,7 @@ public class GameScene : BaseScene
 
     private void Start()
     {
-        var package = Managers.Resource.Instantiate("GameUIPackage.prefab");
-        package.transform.DetachChildren();
-        Destroy(package);
+        InstantiatePackage("GameUIPackage.prefab");
 
         Managers.Quest.ReceiveReport(Category.Scene, SceneID, 1);
         Managers.Input.CursorLocked = true;

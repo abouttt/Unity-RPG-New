@@ -33,6 +33,13 @@ public abstract class BaseScene : MonoBehaviour
         }
     }
 
+    protected void InstantiatePackage(string packageName)
+    {
+        var package = Managers.Resource.Instantiate(packageName);
+        package.transform.DetachChildren();
+        Destroy(package);
+    }
+
     protected void OnDestroy()
     {
         Managers.Clear();

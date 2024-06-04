@@ -123,8 +123,8 @@ public class InputManager : GameControls.IPlayerActions
             }
 
             int index = (int)context.ReadValue<float>();
-            var usable = Player.QuickInventory.GetQuickable(index);
-            usable?.UseQuick();
+            var quickable = Player.QuickInventory.GetQuickable(index);
+            quickable?.UseQuick();
         }
     }
 

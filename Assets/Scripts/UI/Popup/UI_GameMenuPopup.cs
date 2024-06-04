@@ -56,7 +56,7 @@ public class UI_GameMenuPopup : UI_Popup
 
         GetButton((int)Buttons.GameOptionButton).onClick.AddListener(() =>
         {
-            //Managers.UI.Show<UI_GameOptionPopup>();
+            Managers.UI.Show<UI_GameOptionPopup>();
             Managers.UI.Close<UI_GameMenuPopup>();
         });
 

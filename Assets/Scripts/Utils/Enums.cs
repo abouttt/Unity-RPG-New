@@ -70,7 +70,7 @@ public enum UIType
 public enum SoundType
 {
     BGM,
-    UI,
+    Effect
 }
 
 public enum SceneType

@@ -94,6 +94,11 @@ public class InputManager : GameControls.IPlayerActions
     {
         if (context.performed)
         {
+            if (Managers.UI.IsShowedSelfishPopup)
+            {
+                return;
+            }
+
             CursorLocked = !_cursorLocked;
         }
     }

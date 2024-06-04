@@ -476,7 +476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6decfe72295ea440a068c6f8d70372b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SceneType>k__BackingField: 2
+  <SceneType>k__BackingField: 3
   _sceneBGM: {fileID: 0}
   _sceneReload: 1
   <SceneID>k__BackingField: 

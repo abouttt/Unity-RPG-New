@@ -20,6 +20,8 @@ MonoBehaviour:
       Value: 0000000001000000
     - Key: 3
       Value: 000000000200000003000000
+    - Key: 4
+      Value: 000000000200000003000000
   <BackgroundImages>k__BackingField:
     _serializedList:
     - Key: 1
@@ -27,4 +29,6 @@ MonoBehaviour:
     - Key: 3
       Value: {fileID: 0}
     - Key: 2
+      Value: {fileID: 0}
+    - Key: 4
       Value: {fileID: 0}

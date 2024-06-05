@@ -79,7 +79,7 @@ public enum SceneType
     LoadingScene,
     MainMenuScene,
     VillageScene,
-    GameScene,
+    DungeonScene,
 }
 
 public enum AddressableLabel

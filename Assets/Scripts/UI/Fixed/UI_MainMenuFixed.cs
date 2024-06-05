@@ -24,7 +24,7 @@ public class UI_MainMenuFixed : UI_Base
 
         GetButton((int)Buttons.NewGameButton).onClick.AddListener(() =>
         {
-            Managers.Scene.LoadScene(SceneType.GameScene);
+            Managers.Scene.LoadScene(SceneType.VillageScene);
         });
 
         GetButton((int)Buttons.OptionButton).onClick.AddListener(() => SetActiveOptionMenu(true));

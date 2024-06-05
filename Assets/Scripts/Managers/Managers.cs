@@ -3,6 +3,7 @@ using UnityEngine;
 public class Managers : Singleton<Managers>
 {
     public static CooldownManager Cooldown => Instance._cooldown;
+    public static GameManager Game => Instance._game;
     public static InputManager Input => Instance._input;
     public static PoolManager Pool => Instance._pool;
     public static QuestManager Quest => Instance._quest;
@@ -14,6 +15,7 @@ public class Managers : Singleton<Managers>
     private static bool s_init = false;
 
     private readonly CooldownManager _cooldown = new();
+    private readonly GameManager _game = new();
     private readonly InputManager _input = new();
     private readonly PoolManager _pool = new();
     private readonly QuestManager _quest = new();

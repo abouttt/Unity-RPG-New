@@ -21,10 +21,14 @@ public class GameScene : BaseScene
     {
         InstantiatePackage("GameUIPackage.prefab");
 
-        Managers.Quest.ReceiveReport(Category.Scene, SceneID, 1);
+        Managers.Game.IsDefaultSpawn = false;
+        Managers.Game.IsPortalSpawn = false;
         Managers.Input.CursorLocked = true;
+        Managers.Quest.ReceiveReport(Category.Scene, SceneID, 1);
+
         Player.Status.Gold += 10000;
         Player.Status.SkillPoint += 3;
+
         Managers.UI.Get<UI_TopCanvas>().FadeInitBG();
     }
 }

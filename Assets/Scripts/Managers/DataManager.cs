@@ -36,6 +36,7 @@ public class DataManager
             var saveData = new JObject()
             {
                 { SceneManagerEx.SaveKey, Managers.Scene.GetSaveData() },
+                { PlayerMovement.SaveKey, Player.Movement.GetSaveData() },
             };
 
             SaveToFile(SaveFilePath, saveData.ToString());

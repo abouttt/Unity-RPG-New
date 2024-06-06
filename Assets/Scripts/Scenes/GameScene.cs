@@ -15,7 +15,13 @@ public class GameScene : BaseScene
     {
         base.Init();
         Managers.Data.LoadSettings();
-        FindAnyObjectByType<Player>().Init();
+
+        if (!Managers.Data.HasSaveData)
+        {
+            Managers.Game.IsDefaultSpawn = true;
+        }
+
+        Player.Init();
     }
 
     private void Start()

@@ -1,8 +1,11 @@
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, ISavable
 {
+    public static string SaveKey => "SaveTransform";
+
     public bool Enabled
     {
         get => _enabled;
@@ -163,6 +166,15 @@ public class PlayerMovement : MonoBehaviour
         _isJumpLand = false;
         _isJumpWithSprint = false;
         _isRollMoving = false;
+    }
+
+    public JToken GetSaveData()
+    {
+        var saveData = new JArray();
+        var vector3SaveData = new Vector3SaveData(transform.position);
+        saveData.Add(JObject.FromObject(vector3SaveData));
+        saveData.Add(transform.rotation.eulerAngles.y);
+        return saveData;
     }
 
     private void CheckGrounded()

@@ -10,11 +10,11 @@ public abstract class BaseScene : MonoBehaviour
     private AudioClip _sceneBGM;
 
     [SerializeField]
-    private bool _sceneReload;
+    private bool _reloadScene;
 
     private void Awake()
     {
-        if (_sceneReload && Managers.Resource.ResourceCount == 0)
+        if (_reloadScene && Managers.Resource.ResourceCount == 0)
         {
             Managers.Scene.LoadScene(Managers.Scene.CurrentScene.SceneType);
         }

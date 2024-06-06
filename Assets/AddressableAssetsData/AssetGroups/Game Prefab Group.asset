@@ -47,6 +47,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Game_Prefab
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1f9876a9ca02ed47b6fd13d30fbf0e7
+    m_Address: PlayerPackage.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game_Prefab
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1a3acc2b854879f4a93375b096ee8843, type: 2}
   m_SchemaSet:

@@ -40,6 +40,8 @@ public class DataManager
 
             SaveToFile(SaveFilePath, saveData.ToString());
         }
+
+        SaveSettings();
     }
 
     public bool Load<T>(string saveKey, out T saveData) where T : class
@@ -56,6 +58,35 @@ public class DataManager
         }
 
         return saveData != null;
+    }
+
+    public void SaveSettings()
+    {
+        var settingsSaveData = new SettingsSaveData()
+        {
+            BGMVolume = Managers.Sound.GetAudioSource(SoundType.BGM).volume,
+            EffectVolume = Managers.Sound.GetAudioSource(SoundType.Effect).volume,
+            MSAA = QualitySettings.antiAliasing,
+            Frame = Application.targetFrameRate,
+            VSync = QualitySettings.vSyncCount
+        };
+
+        SaveToFile(SettingsSavePath, JsonUtility.ToJson(settingsSaveData));
+    }
+
+    public void LoadSettings()
+    {
+        if (!LoadFromFile(SettingsSavePath, out var json))
+        {
+            return;
+        }
+
+        var settingsSaveData = JsonUtility.FromJson<SettingsSaveData>(json);
+        Managers.Sound.GetAudioSource(SoundType.BGM).volume = settingsSaveData.BGMVolume;
+        Managers.Sound.GetAudioSource(SoundType.Effect).volume = settingsSaveData.BGMVolume;
+        QualitySettings.antiAliasing = settingsSaveData.MSAA;
+        Application.targetFrameRate = settingsSaveData.Frame;
+        QualitySettings.vSyncCount = settingsSaveData.VSync;
     }
 
     public void ClearSaveData()

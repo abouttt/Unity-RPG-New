@@ -14,6 +14,7 @@ public class GameScene : BaseScene
     protected override void Init()
     {
         base.Init();
+        Managers.Data.LoadSettings();
         FindAnyObjectByType<Player>().Init();
     }
 

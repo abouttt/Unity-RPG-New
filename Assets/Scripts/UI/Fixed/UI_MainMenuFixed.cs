@@ -19,11 +19,14 @@ public class UI_MainMenuFixed : UI_Base
 
         GetButton((int)Buttons.ContinueButton).onClick.AddListener(() =>
         {
-
+            Managers.Game.IsDefaultSpawn = false;
+            Managers.Scene.LoadScene(Managers.Scene.SaveScene);
         });
 
         GetButton((int)Buttons.NewGameButton).onClick.AddListener(() =>
         {
+            Managers.Data.ClearSaveData();
+            Managers.Game.IsDefaultSpawn = true;
             Managers.Scene.LoadScene(SceneType.VillageScene);
         });
 
@@ -33,6 +36,7 @@ public class UI_MainMenuFixed : UI_Base
 
         GetButton((int)Buttons.ExitButton).onClick.AddListener(() =>
         {
+            Managers.Data.Save();
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -57,7 +61,7 @@ public class UI_MainMenuFixed : UI_Base
             Managers.UI.Close<UI_GameOptionPopup>();
         }
 
-        GetButton((int)Buttons.ContinueButton).gameObject.SetActive(false);
+        GetButton((int)Buttons.ContinueButton).gameObject.SetActive(!active && Managers.Data.HasSaveData);
         GetButton((int)Buttons.NewGameButton).gameObject.SetActive(!active);
         GetButton((int)Buttons.OptionButton).gameObject.SetActive(!active);
         GetButton((int)Buttons.BackButton).gameObject.SetActive(active);

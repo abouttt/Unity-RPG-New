@@ -19,6 +19,17 @@ public struct Vector3SaveData
 }
 
 [Serializable]
+public struct StatusSaveData
+{
+    public int Level;
+    public int HP;
+    public int MP;
+    public int XP;
+    public int Gold;
+    public int SkillPoint;
+}
+
+[Serializable]
 public struct QuickSaveData
 {
     public ItemSaveData? ItemSaveData;

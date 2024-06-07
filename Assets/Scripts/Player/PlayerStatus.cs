@@ -1,8 +1,11 @@
+using Newtonsoft.Json.Linq;
 using System;
 using UnityEngine;
 
-public class PlayerStatus : MonoBehaviour
+public class PlayerStatus : MonoBehaviour, ISavable
 {
+    public static string SaveKey => "SaveStatus";
+
     public event Action LevelChanged;
     public event Action HPChanged;
     public event Action MPChanged;
@@ -153,8 +156,17 @@ public class PlayerStatus : MonoBehaviour
 
     private void Awake()
     {
+        Load();
         RefreshAllStats();
-        FillAllStats();
+        FillMeleeStats();
+        if (Managers.Data.HasSaveData)
+        {
+            SP = _maxStats.SP;
+        }
+        else
+        {
+            FillAbilityStats();
+        }
 
         Player.EquipmentInventory.InventoryChanged += equipmentType =>
         {
@@ -175,6 +187,25 @@ public class PlayerStatus : MonoBehaviour
     private void Update()
     {
         RecoverySP(Time.deltaTime);
+    }
+
+    public JToken GetSaveData()
+    {
+        var saveData = new JArray();
+
+        var statusSaveData = new StatusSaveData()
+        {
+            Level = Level,
+            HP = _currentStats.HP,
+            MP = _currentStats.MP,
+            XP = _currentStats.XP,
+            Gold = Gold,
+            SkillPoint = SkillPoint,
+        };
+
+        saveData.Add(JObject.FromObject(statusSaveData));
+
+        return saveData;
     }
 
     private void RefreshAllStats()
@@ -248,5 +279,22 @@ public class PlayerStatus : MonoBehaviour
                 SP += Mathf.Clamp(_recoverySPAmount * deltaTime, 0f, _maxStats.SP);
             }
         }
+    }
+
+    public void Load()
+    {
+        if (!Managers.Data.Load<JArray>(SaveKey, out var saveData))
+        {
+            return;
+        }
+
+        var statusSaveData = saveData[0].ToObject<StatusSaveData>();
+
+        Level = statusSaveData.Level;
+        _gold = statusSaveData.Gold;
+        _skillPoint = statusSaveData.SkillPoint;
+        _currentStats.HP = statusSaveData.HP;
+        _currentStats.MP = statusSaveData.MP;
+        _currentStats.XP = statusSaveData.XP;
     }
 }

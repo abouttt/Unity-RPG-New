@@ -1,9 +1,12 @@
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EquipmentInventory : MonoBehaviour, IInventory
+public class EquipmentInventory : MonoBehaviour, IInventory, ISavable
 {
+    public static string SaveKey => "SaveEquipmentInventory";
+
     public event Action<EquipmentType> InventoryChanged;
 
     private readonly Dictionary<EquipmentType, EquipmentItem> _items = new();
@@ -16,6 +19,8 @@ public class EquipmentInventory : MonoBehaviour, IInventory
         {
             _items.Add((EquipmentType)types.GetValue(i), null);
         }
+
+        Load();
     }
 
     public void Equip(EquipmentItemData equipmentItemData)
@@ -64,5 +69,41 @@ public class EquipmentInventory : MonoBehaviour, IInventory
             Damage = _stats.Damage,
             Defense = _stats.Defense,
         };
+    }
+
+    public JToken GetSaveData()
+    {
+        var saveData = new JArray();
+
+        foreach (var kvp in _items)
+        {
+            if (!IsEquipped(kvp.Key))
+            {
+                continue;
+            }
+
+            var itemSaveData = new ItemSaveData()
+            {
+                ItemId = kvp.Value.Data.ItemId,
+            };
+
+            saveData.Add(JObject.FromObject(itemSaveData));
+        }
+
+        return saveData;
+    }
+
+    private void Load()
+    {
+        if (!Managers.Data.Load<JArray>(SaveKey, out var saveData))
+        {
+            return;
+        }
+
+        foreach (var token in saveData)
+        {
+            var itemSaveData = token.ToObject<ItemSaveData>();
+            Equip(ItemDatabase.Instance.FindItemById(itemSaveData.ItemId) as EquipmentItemData);
+        }
     }
 }

@@ -70,17 +70,20 @@ public class PoolManager
 
         public void Clear()
         {
-            foreach (var go in _activePool)
+            if (Root != null)
             {
-                Object.Destroy(go);
-            }
+                foreach (var go in _activePool)
+                {
+                    Object.Destroy(go);
+                }
 
-            foreach (var go in _deactivePool)
-            {
-                Object.Destroy(go);
-            }
+                foreach (var go in _deactivePool)
+                {
+                    Object.Destroy(go);
+                }
 
-            Object.Destroy(Root.gameObject);
+                Object.Destroy(Root.gameObject);
+            }
 
             _activePool.Clear();
             _deactivePool.Clear();

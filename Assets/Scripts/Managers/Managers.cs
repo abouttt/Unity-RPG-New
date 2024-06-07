@@ -69,8 +69,10 @@ public class Managers : Singleton<Managers>
         _cooldown.Cooling();
     }
 
-    private void OnApplicationQuit()
+    protected override void OnApplicationQuit()
     {
+        base.OnApplicationQuit();
+
         Clear();
     }
 }

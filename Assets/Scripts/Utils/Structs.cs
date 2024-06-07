@@ -19,6 +19,21 @@ public struct Vector3SaveData
 }
 
 [Serializable]
+public struct QuickSaveData
+{
+    public ItemSaveData? ItemSaveData;
+    public SkillSaveData? SkillSaveData;
+    public int Index;
+}
+
+[Serializable]
+public struct SkillSaveData
+{
+    public string SkillId;
+    public int CurrentLevel;
+}
+
+[Serializable]
 public struct ItemSaveData
 {
     public string ItemId;

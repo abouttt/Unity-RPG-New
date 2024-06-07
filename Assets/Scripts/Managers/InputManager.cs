@@ -48,8 +48,12 @@ public class InputManager : GameControls.IPlayerActions
 
     public void Clear()
     {
+        if (_controls == null)
+        {
+            return;
+        }
+
         _controls.Disable();
-        _controls.Dispose();
         _controls = null;
     }
 

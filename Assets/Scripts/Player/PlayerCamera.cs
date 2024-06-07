@@ -100,8 +100,8 @@ public class PlayerCamera : MonoBehaviour
 
         if (IsLockOn)
         {
-            TrackingLockedTarget();
             CalcTrackedObjectOffset();
+            TrackingLockedTarget();
         }
     }
 

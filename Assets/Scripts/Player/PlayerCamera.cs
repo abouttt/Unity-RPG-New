@@ -1,9 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using Newtonsoft.Json.Linq;
 
-public class PlayerCamera : MonoBehaviour
+public class PlayerCamera : MonoBehaviour, ISavable
 {
+    public static string SaveKey => "SaveCamera";
+
     public Transform LockedTarget
     {
         get => _stateDrivenCamera.LookAt;
@@ -81,6 +84,11 @@ public class PlayerCamera : MonoBehaviour
                 break;
             }
         }
+
+        if (!Managers.Game.IsDefaultSpawn && !Managers.Game.IsPortalSpawn)
+        {
+            Load();
+        }
     }
 
     private void Start()
@@ -103,6 +111,14 @@ public class PlayerCamera : MonoBehaviour
             CalcTrackedObjectOffset();
             TrackingLockedTarget();
         }
+    }
+
+    public JToken GetSaveData()
+    {
+        var saveData = new JArray();
+        var vector3SaveData = new Vector3SaveData(_cinemachineCameraTarget.transform.rotation.eulerAngles);
+        saveData.Add(JObject.FromObject(vector3SaveData));
+        return saveData;
     }
 
     private void CameraRotation()
@@ -201,5 +217,16 @@ public class PlayerCamera : MonoBehaviour
         {
             FindLockableTarget();
         }
+    }
+
+    private void Load()
+    {
+        if (!Managers.Data.Load<JArray>(SaveKey, out var saveData))
+        {
+            return;
+        }
+
+        var vector3SaveData = saveData[0].ToObject<Vector3SaveData>();
+        _cinemachineCameraTarget.transform.rotation = Quaternion.Euler(vector3SaveData.ToVector3());
     }
 }

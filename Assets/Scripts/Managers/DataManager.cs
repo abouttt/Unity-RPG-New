@@ -37,6 +37,7 @@ public class DataManager
             {
                 { SceneManagerEx.SaveKey, Managers.Scene.GetSaveData() },
                 { PlayerMovement.SaveKey, Player.Movement.GetSaveData() },
+                { PlayerCamera.SaveKey, Player.Camera.GetSaveData() },
                 { ItemInventory.SaveKey, Player.ItemInventory.GetSaveData() },
                 { EquipmentInventory.SaveKey, Player.EquipmentInventory.GetSaveData() },
                 { QuickInventory.SaveKey, Player.QuickInventory.GetSaveData() },

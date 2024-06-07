@@ -43,6 +43,7 @@ public class DataManager
                 { SkillTree.SaveKey, Player.SkillTree.GetSaveData() },
                 { PlayerStatus.SaveKey, Player.Status.GetSaveData() },
                 { QuestManager.SaveKey, Managers.Quest.GetSaveData() },
+                { UI_QuestPopup.SaveKey, Managers.UI.Get<UI_QuestPopup>().GetSaveData() },
             };
 
             SaveToFile(SaveFilePath, saveData.ToString());

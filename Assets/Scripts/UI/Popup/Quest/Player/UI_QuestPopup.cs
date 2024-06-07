@@ -1,9 +1,12 @@
 using System.Text;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json.Linq;
 
-public class UI_QuestPopup : UI_Popup
+public class UI_QuestPopup : UI_Popup, ISavable
 {
+    public static string SaveKey => "SaveQuestUI";
+
     enum GameObjects
     {
         QuestInfo,
@@ -73,6 +76,8 @@ public class UI_QuestPopup : UI_Popup
                 }
             }
         }
+
+        Load();
     }
 
     public void SetQuest(Quest quest)
@@ -107,6 +112,23 @@ public class UI_QuestPopup : UI_Popup
         {
             subitem.SetActiveQuestTracker(active);
         }
+    }
+
+    public JToken GetSaveData()
+    {
+        var saveData = new JArray();
+
+        foreach (var kvp in _titleSubitems)
+        {
+            if (!kvp.Value.IsShowedTracker())
+            {
+                continue;
+            }
+
+            saveData.Add(kvp.Key.Data.QuestId);
+        }
+
+        return saveData;
     }
 
     private void OnQuestRegisterd(Quest quest)
@@ -222,6 +244,27 @@ public class UI_QuestPopup : UI_Popup
             }
 
             Managers.Resource.Destroy(slot.gameObject);
+        }
+    }
+
+    private void Load()
+    {
+        if (!Managers.Data.Load<JArray>(SaveKey, out var saveData))
+        {
+            return;
+        }
+
+        foreach (var token in saveData)
+        {
+            var questId = token.ToString();
+
+            foreach (var kvp in _titleSubitems)
+            {
+                if (kvp.Key.Data.QuestId.Equals(questId))
+                {
+                    kvp.Value.SetActiveQuestTracker(true);
+                }
+            }
         }
     }
 }

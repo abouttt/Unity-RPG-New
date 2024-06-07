@@ -14,20 +14,15 @@ public class GameScene : BaseScene
     protected override void Init()
     {
         base.Init();
+
         Managers.Data.LoadSettings();
-
-        if (!Managers.Data.HasSaveData)
-        {
-            Managers.Game.IsDefaultSpawn = true;
-        }
-
+        Managers.Game.IsDefaultSpawn = !Managers.Data.HasSaveData;
         Player.Init();
+        InstantiatePackage("GameUIPackage.prefab");
     }
 
     private void Start()
     {
-        InstantiatePackage("GameUIPackage.prefab");
-
         Managers.Game.IsDefaultSpawn = false;
         Managers.Game.IsPortalSpawn = false;
         Managers.Input.CursorLocked = true;

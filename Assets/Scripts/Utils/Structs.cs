@@ -19,6 +19,14 @@ public struct Vector3SaveData
 }
 
 [Serializable]
+public struct ItemSaveData
+{
+    public string ItemId;
+    public int Count;
+    public int Index;
+}
+
+[Serializable]
 public struct SettingsSaveData
 {
     public float BGMVolume;

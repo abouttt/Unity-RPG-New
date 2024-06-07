@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Newtonsoft.Json.Linq;
 using AYellowpaper.SerializedCollections;
 
-public class ItemInventory : MonoBehaviour, IInventory
+public class ItemInventory : MonoBehaviour, IInventory, ISavable
 {
     [Serializable]
     public class Inventory
@@ -14,6 +15,8 @@ public class ItemInventory : MonoBehaviour, IInventory
         [ReadOnly]
         public int Count;
     }
+
+    public static string SaveKey => "SaveItemInventory";
 
     public event Action<ItemType, int> InventoryChanged;
 
@@ -29,6 +32,8 @@ public class ItemInventory : MonoBehaviour, IInventory
         {
             kvp.Value.Items = Enumerable.Repeat<Item>(null, kvp.Value.Capacity).ToList();
         }
+
+        Load();
     }
 
     public int AddItem(ItemData itemData, int count = 1)
@@ -287,6 +292,39 @@ public class ItemInventory : MonoBehaviour, IInventory
         return _inventories[itemType].Items[index] == null;
     }
 
+    public JToken GetSaveData()
+    {
+        var saveData = new JArray();
+
+        foreach (var kvp in _inventories)
+        {
+            for (int i = 0; i < kvp.Value.Capacity; i++)
+            {
+                var item = kvp.Value.Items[i];
+                if (item == null)
+                {
+                    continue;
+                }
+
+                var itemSaveData = new ItemSaveData()
+                {
+                    ItemId = item.Data.ItemId,
+                    Count = 1,
+                    Index = i,
+                };
+
+                if (item is IStackableItem stackable)
+                {
+                    itemSaveData.Count = stackable.Count;
+                }
+
+                saveData.Add(JObject.FromObject(itemSaveData));
+            }
+        }
+
+        return saveData;
+    }
+
     private bool TryGetEmptyIndex(ItemType itemType, out int index)
     {
         index = _inventories[itemType].Items.FindIndex(item => item == null);
@@ -369,5 +407,30 @@ public class ItemInventory : MonoBehaviour, IInventory
         item.Destroy();
         _itemIndexes.Remove(item);
         Managers.Quest.ReceiveReport(Category.Item, item.Data.ItemId, -count);
+    }
+
+    private void Load()
+    {
+        if (!Managers.Data.Load<JArray>(SaveKey, out var saveData))
+        {
+            return;
+        }
+
+        foreach (var token in saveData)
+        {
+            var itemSaveData = token.ToObject<ItemSaveData>();
+            var itemData = ItemDatabase.Instance.FindItemById(itemSaveData.ItemId);
+            var inventory = _inventories[itemData.ItemType];
+            if (itemData is IStackableItemData stackableData)
+            {
+                inventory.Items[itemSaveData.Index] = stackableData.CreateItem(itemSaveData.Count);
+            }
+            else
+            {
+                inventory.Items[itemSaveData.Index] = itemData.CreateItem();
+            }
+            inventory.Count++;
+            _itemIndexes.Add(inventory.Items[itemSaveData.Index], itemSaveData.Index);
+        }
     }
 }

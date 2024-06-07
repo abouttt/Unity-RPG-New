@@ -40,6 +40,7 @@ public class DataManager
                 { ItemInventory.SaveKey, Player.ItemInventory.GetSaveData() },
                 { EquipmentInventory.SaveKey, Player.EquipmentInventory.GetSaveData() },
                 { QuickInventory.SaveKey, Player.QuickInventory.GetSaveData() },
+                { SkillTree.SaveKey, Player.SkillTree.GetSaveData() },
             };
 
             SaveToFile(SaveFilePath, saveData.ToString());

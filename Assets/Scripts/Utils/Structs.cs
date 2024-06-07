@@ -30,7 +30,7 @@ public struct QuickSaveData
 public struct SkillSaveData
 {
     public string SkillId;
-    public int CurrentLevel;
+    public int Level;
 }
 
 [Serializable]

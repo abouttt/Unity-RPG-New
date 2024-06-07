@@ -104,7 +104,7 @@ public class QuickInventory : MonoBehaviour, IInventory, ISavable
                 var skillSaveData = new SkillSaveData()
                 {
                     SkillId = skill.Data.SkillId,
-                    CurrentLevel = -1,
+                    Level = -1,
                 };
 
                 quickSaveData.SkillSaveData = skillSaveData;

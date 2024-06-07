@@ -36,6 +36,27 @@ public class Quest
         CheckCompletable();
     }
 
+    public Quest(QuestSaveData saveData)
+    {
+        Data = QuestDatabase.Instance.FindQuestById(saveData.QuestId);
+        State = saveData.State;
+
+        foreach (var target in Data.Targets)
+        {
+            foreach (var kvp in saveData.Targets)
+            {
+                if (target.TargetId.Equals(kvp.Key))
+                {
+                    _targets.Add(target, kvp.Value);
+                    saveData.Targets.Remove(kvp.Key);
+                    break;
+                }
+            }
+        }
+
+        CheckCompletable();
+    }
+
     public bool ReceiveReport(Category category, string id, int count)
     {
         if (State == QuestState.Inactive ||

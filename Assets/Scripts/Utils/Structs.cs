@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -16,6 +17,14 @@ public struct Vector3SaveData
     }
 
     public Vector3 ToVector3() => new(X, Y, Z);
+}
+
+[Serializable]
+public struct QuestSaveData
+{
+    public string QuestId;
+    public QuestState State;
+    public Dictionary<string, int> Targets;
 }
 
 [Serializable]

@@ -42,6 +42,7 @@ public class DataManager
                 { QuickInventory.SaveKey, Player.QuickInventory.GetSaveData() },
                 { SkillTree.SaveKey, Player.SkillTree.GetSaveData() },
                 { PlayerStatus.SaveKey, Player.Status.GetSaveData() },
+                { QuestManager.SaveKey, Managers.Quest.GetSaveData() },
             };
 
             SaveToFile(SaveFilePath, saveData.ToString());

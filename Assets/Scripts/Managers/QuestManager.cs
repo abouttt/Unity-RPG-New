@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json.Linq;
 
-public class QuestManager
+public class QuestManager : ISavable
 {
+    public static string SaveKey => "SaveQuest";
+
     public event Action<Quest> QuestRegistered;
     public event Action<Quest> QuestUnregistered;
     public event Action<Quest> QuestCompletabled;
@@ -12,6 +15,9 @@ public class QuestManager
 
     public IReadOnlyList<Quest> ActiveQuests => _activeQuests;
     public IReadOnlyList<Quest> CompletedQuests => _completedQuests;
+
+    private const string ACTIVE_QUEST_KEY = "SaveActiveQuest";
+    private const string COMPLETE_QUEST_KEY = "SaveCompleteQuest";
 
     private readonly List<Quest> _activeQuests = new();
     private readonly List<Quest> _completedQuests = new();
@@ -129,5 +135,74 @@ public class QuestManager
         QuestCompletabled = null;
         QuestCompletableCanceled = null;
         QuestCompleted = null;
+    }
+
+    public JToken GetSaveData()
+    {
+        var saveData = new JObject()
+        {
+            { ACTIVE_QUEST_KEY, CreateQuestsSaveData(_activeQuests) },
+            { COMPLETE_QUEST_KEY, CreateQuestsSaveData(_completedQuests) },
+        };
+
+        return saveData;
+    }
+
+    public void Load()
+    {
+        if (!Managers.Data.Load<JObject>(SaveKey, out var saveData))
+        {
+            return;
+        }
+
+        foreach (var kvp in saveData)
+        {
+            var quests = kvp.Value as JArray;
+            foreach (var token in quests)
+            {
+                var questSaveData = token.ToObject<QuestSaveData>();
+                var newQuest = new Quest(questSaveData);
+                NPC.TryRemoveQuestToNPC(newQuest.Data.OwnerId, newQuest.Data);
+
+                if (newQuest.State == QuestState.Complete)
+                {
+                    _completedQuests.Add(newQuest);
+                }
+                else
+                {
+                    _activeQuests.Add(newQuest);
+
+                    if (newQuest.State == QuestState.Completable)
+                    {
+                        NPC.TryAddQuestToNPC(newQuest.Data.CompleteOwnerId, newQuest.Data);
+                    }
+                }
+            }
+        }
+    }
+
+    private JArray CreateQuestsSaveData(List<Quest> quests)
+    {
+        var saveData = new JArray();
+
+        foreach (var quest in quests)
+        {
+            var targets = new Dictionary<string, int>();
+            foreach (var kvp in quest.Targets)
+            {
+                targets.Add(kvp.Key.TargetId, kvp.Value);
+            }
+
+            var questSaveData = new QuestSaveData()
+            {
+                QuestId = quest.Data.QuestId,
+                State = quest.State,
+                Targets = targets,
+            };
+
+            saveData.Add(JObject.FromObject(questSaveData));
+        }
+
+        return saveData;
     }
 }

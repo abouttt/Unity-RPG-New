@@ -21,7 +21,7 @@ MonoBehaviour:
   <Price>k__BackingField: 1000
   <LimitLevel>k__BackingField: 1
   <EquipmentType>k__BackingField: 4
-  <EquipmentPrefab>k__BackingField: {fileID: 0}
+  <EquipmentPrefab>k__BackingField: {fileID: 131468, guid: 07b522c421f5b3645b9d08d119fbcb23, type: 3}
   <Stats>k__BackingField:
     HP: 0
     MP: 0

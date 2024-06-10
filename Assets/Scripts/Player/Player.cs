@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public static QuickInventory QuickInventory { get; private set; }
     public static SkillTree SkillTree { get; private set; }
     public static PlayerInteraction Interaction { get; private set; }
+    public static PlayerRoot Root { get; private set; }
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class Player : MonoBehaviour
         QuickInventory = GetComponent<QuickInventory>();
         SkillTree = GetComponent<SkillTree>();
         Interaction = GetComponentInChildren<PlayerInteraction>();
+        Root = GetComponent<PlayerRoot>();
     }
 
     private void Start()

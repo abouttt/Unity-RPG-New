@@ -407,7 +407,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1023
+    m_Bits: 7167
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -670,6 +670,7 @@ GameObject:
   - component: {fileID: 6483168988529175682}
   - component: {fileID: 1297864950052957412}
   - component: {fileID: 3246931924070054526}
+  - component: {fileID: 5505160052973150141}
   - component: {fileID: 5593192143312987845}
   - component: {fileID: 1742620455320617123}
   - component: {fileID: 8361339500994357939}
@@ -853,6 +854,22 @@ MonoBehaviour:
   _obstacleMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &5505160052973150141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7921286558267762374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: febc8d32541fdc24ab49ff61acb90a7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defenseAngle: 45
+  _attackRequiredSP: 10
+  _parryRequiredSP: 10
+  _defenseDamagedRequiredSP: 10
 --- !u!114 &5593192143312987845
 MonoBehaviour:
   m_ObjectHideFlags: 0

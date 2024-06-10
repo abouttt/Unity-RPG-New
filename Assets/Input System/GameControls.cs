@@ -143,6 +143,33 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""28f30676-92a6-48b0-96d8-a71742e83016"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Parry"",
+                    ""type"": ""Button"",
+                    ""id"": ""99f0593f-25a9-43c5-8f3c-ede51ab5bae4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Defense"",
+                    ""type"": ""Button"",
+                    ""id"": ""16ea9636-86c8-40f3-b675-ae9a4a9e4b09"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -431,6 +458,39 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""action"": ""Quest"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""77f1dd01-dfaf-416c-b89d-8dbdb02a58e8"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard/Mouse"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""746a290c-e557-47ca-b37c-89a5c92671d1"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard/Mouse"",
+                    ""action"": ""Defense"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ff41651-dc76-47aa-9558-2b7aea046455"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard/Mouse"",
+                    ""action"": ""Parry"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -469,6 +529,9 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         m_Player_SkillTree = m_Player.FindAction("SkillTree", throwIfNotFound: true);
         m_Player_Quest = m_Player.FindAction("Quest", throwIfNotFound: true);
         m_Player_Cancel = m_Player.FindAction("Cancel", throwIfNotFound: true);
+        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+        m_Player_Parry = m_Player.FindAction("Parry", throwIfNotFound: true);
+        m_Player_Defense = m_Player.FindAction("Defense", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -543,6 +606,9 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SkillTree;
     private readonly InputAction m_Player_Quest;
     private readonly InputAction m_Player_Cancel;
+    private readonly InputAction m_Player_Attack;
+    private readonly InputAction m_Player_Parry;
+    private readonly InputAction m_Player_Defense;
     public struct PlayerActions
     {
         private @GameControls m_Wrapper;
@@ -560,6 +626,9 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         public InputAction @SkillTree => m_Wrapper.m_Player_SkillTree;
         public InputAction @Quest => m_Wrapper.m_Player_Quest;
         public InputAction @Cancel => m_Wrapper.m_Player_Cancel;
+        public InputAction @Attack => m_Wrapper.m_Player_Attack;
+        public InputAction @Parry => m_Wrapper.m_Player_Parry;
+        public InputAction @Defense => m_Wrapper.m_Player_Defense;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -608,6 +677,15 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @Cancel.started += instance.OnCancel;
             @Cancel.performed += instance.OnCancel;
             @Cancel.canceled += instance.OnCancel;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
+            @Parry.started += instance.OnParry;
+            @Parry.performed += instance.OnParry;
+            @Parry.canceled += instance.OnParry;
+            @Defense.started += instance.OnDefense;
+            @Defense.performed += instance.OnDefense;
+            @Defense.canceled += instance.OnDefense;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -651,6 +729,15 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @Cancel.started -= instance.OnCancel;
             @Cancel.performed -= instance.OnCancel;
             @Cancel.canceled -= instance.OnCancel;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
+            @Parry.started -= instance.OnParry;
+            @Parry.performed -= instance.OnParry;
+            @Parry.canceled -= instance.OnParry;
+            @Defense.started -= instance.OnDefense;
+            @Defense.performed -= instance.OnDefense;
+            @Defense.canceled -= instance.OnDefense;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -692,5 +779,8 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         void OnSkillTree(InputAction.CallbackContext context);
         void OnQuest(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
+        void OnParry(InputAction.CallbackContext context);
+        void OnDefense(InputAction.CallbackContext context);
     }
 }

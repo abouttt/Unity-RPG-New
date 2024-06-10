@@ -9,6 +9,9 @@ public class InputManager : GameControls.IPlayerActions
     public bool Jump { get; private set; }
     public bool LockOn { get; private set; }
     public bool Interaction { get; private set; }
+    public bool Attack { get; private set; }
+    public bool Parry { get; private set; }
+    public bool Defense { get; private set; }
 
     public bool CursorLocked
     {
@@ -155,6 +158,21 @@ public class InputManager : GameControls.IPlayerActions
                 Managers.UI.Show<UI_GameMenuPopup>();
             }
         }
+    }
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        Attack = context.ReadValueAsButton();
+    }
+
+    public void OnParry(InputAction.CallbackContext context)
+    {
+        Parry = context.ReadValueAsButton();
+    }
+
+    public void OnDefense(InputAction.CallbackContext context)
+    {
+        Defense = context.ReadValueAsButton();
     }
 
     private void SetCursorState(bool newState)

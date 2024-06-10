@@ -27,6 +27,7 @@ public class NPC : Interactive
     private GameObject _questPresenceNotifier;
     private GameObject _questCompletableNotifier;
     private bool _originCanInteraction;
+    private bool _isQuestChanged;
 
     protected override void Awake()
     {
@@ -41,7 +42,17 @@ public class NPC : Interactive
     private void Start()
     {
         Util.InstantiateMinimapIcon("NPCMinimapIcon.sprite", NPCName, transform);
+        Player.Status.LevelChanged += CheckQuests;
         CheckQuests();
+    }
+
+    private void LateUpdate()
+    {
+        if (_isQuestChanged)
+        {
+            CheckQuests();
+            _isQuestChanged = false;
+        }
     }
 
     public static bool TryAddQuestToNPC(string id, QuestData questData)
@@ -49,7 +60,7 @@ public class NPC : Interactive
         if (s_NPCs.TryGetValue(id, out var npc))
         {
             npc._quests.Add(questData);
-            npc.CheckQuests();
+            npc._isQuestChanged = true;
             return true;
         }
 
@@ -61,7 +72,7 @@ public class NPC : Interactive
         if (s_NPCs.TryGetValue(id, out var npc))
         {
             npc._quests.Remove(questData);
-            npc.CheckQuests();
+            npc._isQuestChanged = true;
             return true;
         }
 

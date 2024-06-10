@@ -58,8 +58,11 @@ public class Managers : Singleton<Managers>
         Input.Clear();
         Pool.Clear();
         Quest.Clear();
+        Resource.Clear();
         Sound.Clear();
         UI.Clear();
+
+        System.GC.Collect();
 
         s_init = false;
     }

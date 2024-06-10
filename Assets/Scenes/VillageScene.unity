@@ -19953,6 +19953,7 @@ MonoBehaviour:
   <SceneType>k__BackingField: 3
   _sceneBGM: {fileID: 0}
   _reloadScene: 1
+  _clearResourcesWhenDestory: 1
   <SceneID>k__BackingField: VILLAGE
   <DefaultSpawnPosition>k__BackingField: {x: -7.565907, y: 0.08138737, z: 14.14608}
   <DefaultSpawnYaw>k__BackingField: 180

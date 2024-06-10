@@ -26,7 +26,6 @@ public class LoadingScene : BaseScene
             _background.color = Color.black;
         }
 
-        Managers.Resource.Clear();
         LoadResourcesAsync(Managers.Scene.NextScene, () => StartCoroutine(LoadSceneAsync()));
     }
 

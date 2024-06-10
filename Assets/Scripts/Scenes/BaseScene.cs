@@ -12,6 +12,9 @@ public abstract class BaseScene : MonoBehaviour
     [SerializeField]
     private bool _reloadScene;
 
+    [SerializeField]
+    private bool _clearResourcesWhenDestory;
+
     private void Awake()
     {
         if (_reloadScene && Managers.Resource.ResourceCount == 0)
@@ -42,6 +45,9 @@ public abstract class BaseScene : MonoBehaviour
 
     protected void OnDestroy()
     {
-        Managers.Clear();
+        if (_clearResourcesWhenDestory)
+        {
+            Managers.Clear();
+        }
     }
 }

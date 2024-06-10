@@ -15143,6 +15143,7 @@ MonoBehaviour:
   <SceneType>k__BackingField: 2
   _sceneBGM: {fileID: 0}
   _reloadScene: 1
+  _clearResourcesWhenDestory: 1
 --- !u!1001 &1858290704
 PrefabInstance:
   m_ObjectHideFlags: 0

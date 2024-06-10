@@ -44,7 +44,7 @@ public class UI_StatusFixed : UI_Base
         RefreshXPImage();
     }
 
-    private void RefreshLevelText() => GetText((int)Texts.LevelText).text = $"Lev.{Player.Status.Level}";
+    private void RefreshLevelText() => GetText((int)Texts.LevelText).text = $"Lv.{Player.Status.Level}";
     private void RefreshHPImage() => GetImage((int)Images.HPBar).fillAmount = (float)Player.Status.HP / Player.Status.MaxHP;
     private void RefreshMPImage() => GetImage((int)Images.MPBar).fillAmount = (float)Player.Status.MP / Player.Status.MaxMP;
     private void RefreshSPImage() => GetImage((int)Images.SPBar).fillAmount = (float)Player.Status.SP / Player.Status.MaxSP;

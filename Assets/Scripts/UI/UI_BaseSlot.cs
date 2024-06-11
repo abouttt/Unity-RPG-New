@@ -24,6 +24,7 @@ public abstract class UI_BaseSlot : UI_Base,
     protected override void Init()
     {
         BindImage(typeof(Images));
+
         GetImage((int)Images.TempImage).gameObject.SetActive(false);
     }
 

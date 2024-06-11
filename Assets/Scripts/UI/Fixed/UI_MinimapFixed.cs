@@ -35,13 +35,13 @@ public class UI_MinimapFixed : UI_Base, IPointerMoveHandler, IPointerExitHandler
     {
         Managers.UI.Register<UI_MinimapFixed>(this);
 
+        _mainCamera = Camera.main.gameObject;
+        _rt = GetObject((int)GameObjects.MinimapIconName).GetComponent<RectTransform>();
+
         BindObject(typeof(GameObjects));
         BindText(typeof(Texts));
         Bind<RawImage>(typeof(RawImages));
         Bind<Camera>(typeof(Cameras));
-
-        _mainCamera = Camera.main.gameObject;
-        _rt = GetObject((int)GameObjects.MinimapIconName).GetComponent<RectTransform>();
     }
 
     private void Start()

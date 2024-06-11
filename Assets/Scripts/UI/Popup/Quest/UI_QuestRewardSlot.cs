@@ -13,6 +13,7 @@ public class UI_QuestRewardSlot : UI_BaseSlot
     protected override void Init()
     {
         base.Init();
+
         BindText(typeof(Texts));
     }
 

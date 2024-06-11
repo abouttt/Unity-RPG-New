@@ -32,8 +32,8 @@ public class UI_NPCQuestPopup : UI_Popup
     }
 
     private NPC _npcRef;
-    private QuestData _selectedQuestDataRef;
-    private readonly Dictionary<QuestData, UI_NPCQuestSubitem> _titleSubitems = new();
+    private QuestData _questDataRef;
+    private readonly Dictionary<QuestData, UI_NPCQuestSubitem> _subitems = new();
     private readonly StringBuilder _sb = new(50);
 
     protected override void Init()
@@ -49,10 +49,10 @@ public class UI_NPCQuestPopup : UI_Popup
 
         GetButton((int)Buttons.AcceptButton).onClick.AddListener(() =>
         {
-            var quest = Managers.Quest.Register(_selectedQuestDataRef);
+            var quest = Managers.Quest.Register(_questDataRef);
             if (quest.State == QuestState.Completable)
             {
-                _titleSubitems[_selectedQuestDataRef].SetActiveCompleteText(true);
+                _subitems[_questDataRef].SetActiveCompleteText(true);
                 Clear();
             }
             else
@@ -63,7 +63,7 @@ public class UI_NPCQuestPopup : UI_Popup
 
         GetButton((int)Buttons.CompleteButton).onClick.AddListener(() =>
         {
-            var quest = Managers.Quest.GetActiveQuest(_selectedQuestDataRef);
+            var quest = Managers.Quest.GetActiveQuest(_questDataRef);
             if (quest.State != QuestState.Completable)
             {
                 return;
@@ -96,13 +96,13 @@ public class UI_NPCQuestPopup : UI_Popup
 
         Closed += () =>
         {
-            foreach (var kvp in _titleSubitems)
+            foreach (var kvp in _subitems)
             {
                 Managers.Resource.Destroy(kvp.Value.gameObject);
             }
 
+            _subitems.Clear();
             _npcRef = null;
-            _titleSubitems.Clear();
             Clear();
             Managers.UI.Get<UI_NPCMenuPopup>().PopupRT.gameObject.SetActive(true);
         };
@@ -134,7 +134,7 @@ public class UI_NPCQuestPopup : UI_Popup
                 continue;
             }
 
-            if (_titleSubitems.TryGetValue(questData, out var _))
+            if (_subitems.TryGetValue(questData, out var _))
             {
                 continue;
             }
@@ -142,20 +142,20 @@ public class UI_NPCQuestPopup : UI_Popup
             var go = Managers.Resource.Instantiate("UI_NPCQuestSubitem.prefab", GetRT((int)RectTransforms.QuestTitleSubitems), true);
             var subitem = go.GetComponent<UI_NPCQuestSubitem>();
             subitem.SetQuestData(questData);
-            _titleSubitems.Add(questData, subitem);
+            _subitems.Add(questData, subitem);
         }
     }
 
     public void SetQuestDescription(QuestData questData)
     {
-        if (_selectedQuestDataRef != null && _selectedQuestDataRef.Equals(questData))
+        if (_questDataRef != null && _questDataRef.Equals(questData))
         {
             return;
         }
 
         Clear();
 
-        _selectedQuestDataRef = questData;
+        _questDataRef = questData;
         GetObject((int)GameObjects.QuestInfo).SetActive(true);
         GetText((int)Texts.QuestTitleText).text = questData.QuestName;
         GetText((int)Texts.QuestDescriptionText).text = questData.Description;
@@ -224,14 +224,14 @@ public class UI_NPCQuestPopup : UI_Popup
 
     private void ClearWithSelectedSubitem()
     {
-        Managers.Resource.Destroy(_titleSubitems[_selectedQuestDataRef].gameObject);
-        _titleSubitems.Remove(_selectedQuestDataRef);
+        Managers.Resource.Destroy(_subitems[_questDataRef].gameObject);
+        _subitems.Remove(_questDataRef);
         Clear();
     }
 
     private void Clear()
     {
-        _selectedQuestDataRef = null;
+        _questDataRef = null;
         GetObject((int)GameObjects.QuestInfo).SetActive(false);
         GetText((int)Texts.NOQuestText).gameObject.SetActive(true);
         GetButton((int)Buttons.AcceptButton).gameObject.SetActive(false);

@@ -35,7 +35,7 @@ public class UI_QuestPopup : UI_Popup, ISavable
     }
 
     private Quest _questRef;
-    private readonly Dictionary<Quest, UI_QuestSubitem> _titleSubitems = new();
+    private readonly Dictionary<Quest, UI_QuestSubitem> _subitems = new();
     private readonly StringBuilder _sb = new(50);
 
     protected override void Init()
@@ -69,7 +69,7 @@ public class UI_QuestPopup : UI_Popup, ISavable
             OnQuestRegisterd(quest);
             if (quest.State == QuestState.Completable)
             {
-                if (_titleSubitems.TryGetValue(quest, out var subitem))
+                if (_subitems.TryGetValue(quest, out var subitem))
                 {
                     subitem.SetActiveCompleteText(true);
                     SetActiveCompleteButton(quest, _questRef == quest);
@@ -108,7 +108,7 @@ public class UI_QuestPopup : UI_Popup, ISavable
 
     public void SetActiveQuestTracker(Quest quest, bool active)
     {
-        if (_titleSubitems.TryGetValue(quest, out var subitem))
+        if (_subitems.TryGetValue(quest, out var subitem))
         {
             subitem.SetActiveQuestTracker(active);
         }
@@ -118,7 +118,7 @@ public class UI_QuestPopup : UI_Popup, ISavable
     {
         var saveData = new JArray();
 
-        foreach (var kvp in _titleSubitems)
+        foreach (var kvp in _subitems)
         {
             if (!kvp.Value.IsShowedTracker())
             {
@@ -136,12 +136,12 @@ public class UI_QuestPopup : UI_Popup, ISavable
         var go = Managers.Resource.Instantiate("UI_QuestSubitem.prefab", GetRT((int)RectTransforms.QuestTitleSubitems), true);
         var subitem = go.GetComponent<UI_QuestSubitem>();
         subitem.SetQuest(quest);
-        _titleSubitems.Add(quest, subitem);
+        _subitems.Add(quest, subitem);
     }
 
     private void OnQuestCompletabled(Quest quest)
     {
-        if (_titleSubitems.TryGetValue(quest, out var subitem))
+        if (_subitems.TryGetValue(quest, out var subitem))
         {
             subitem.SetActiveCompleteText(true);
             SetActiveCompleteButton(quest, _questRef == quest);
@@ -150,7 +150,7 @@ public class UI_QuestPopup : UI_Popup, ISavable
 
     private void OnQuestCompletableCanceld(Quest quest)
     {
-        if (_titleSubitems.TryGetValue(quest, out var subitem))
+        if (_subitems.TryGetValue(quest, out var subitem))
         {
             subitem.SetActiveCompleteText(false);
             SetActiveCompleteButton(quest, !(_questRef == quest));
@@ -159,12 +159,12 @@ public class UI_QuestPopup : UI_Popup, ISavable
 
     private void OnQuestCompletedOrCanceled(Quest quest)
     {
-        if (_titleSubitems.TryGetValue(quest, out var subitem))
+        if (_subitems.TryGetValue(quest, out var subitem))
         {
             subitem.SetActiveCompleteText(false);
             subitem.SetActiveQuestTracker(false);
             Managers.Resource.Destroy(subitem.gameObject);
-            _titleSubitems.Remove(quest);
+            _subitems.Remove(quest);
             if (_questRef == quest)
             {
                 Clear();
@@ -258,7 +258,7 @@ public class UI_QuestPopup : UI_Popup, ISavable
         {
             var questId = token.ToString();
 
-            foreach (var kvp in _titleSubitems)
+            foreach (var kvp in _subitems)
             {
                 if (kvp.Key.Data.QuestId.Equals(questId))
                 {

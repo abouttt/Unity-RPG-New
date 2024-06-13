@@ -27,7 +27,7 @@ MonoBehaviour:
     <RemoveAfterCompletion>k__BackingField: 1
   <PrerequisiteQuests>k__BackingField: []
   RewardGold: 999
-  RewardXP: 50
+  RewardXP: 100
   RewardItems:
     _serializedList:
     - Key: {fileID: 11400000, guid: 46033adbba8005a4eaeade75c6ee4373, type: 2}

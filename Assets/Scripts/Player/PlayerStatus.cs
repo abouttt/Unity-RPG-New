@@ -258,6 +258,7 @@ public class PlayerStatus : MonoBehaviour, ISavable
         Level += level;
         RefreshAllStats();
         FillAllStats();
+        Managers.Resource.Instantiate("LevelupCylinderBlue.prefab", transform.position, transform, true);
         LevelChanged?.Invoke();
         StatChanged?.Invoke();
     }

@@ -53,6 +53,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - Game_Prefab
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 43275bcfcd118f64997cd7ced19911be
+    m_Address: HealOnceBurst.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game_Prefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b80979f99fe61e4a84dcec37ddcd16b
+    m_Address: LevelupCylinderBlue.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game_Prefab
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1a3acc2b854879f4a93375b096ee8843, type: 2}
   m_SchemaSet:

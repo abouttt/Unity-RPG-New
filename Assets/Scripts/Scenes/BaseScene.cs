@@ -45,9 +45,11 @@ public abstract class BaseScene : MonoBehaviour
 
     protected void OnDestroy()
     {
-        if (_clearResourcesWhenDestory)
+        if (_clearResourcesWhenDestory && Managers.Instance != null)
         {
-            Managers.Clear();
+            Managers.Resource.Clear();
         }
+
+        Managers.Clear();
     }
 }

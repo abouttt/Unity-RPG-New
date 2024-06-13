@@ -9,5 +9,6 @@ public class HealPotionData : ConsumableItemData
     public override void Use<T>(T inventory, Item item)
     {
         Player.Status.HP += _healAmount;
+        Managers.Resource.Instantiate("HealOnceBurst.prefab", Player.Collider.bounds.center, Player.Transform, true);
     }
 }

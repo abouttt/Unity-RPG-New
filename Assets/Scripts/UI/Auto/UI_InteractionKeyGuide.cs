@@ -20,11 +20,11 @@ public class UI_InteractionKeyGuide : UI_Auto
 
     protected override void Init()
     {
-        _followTarget = GetComponent<UI_FollowWorldObject>();
-
         BindImage(typeof(Images));
         BindText(typeof(Texts));
-        
+
+        _followTarget = GetComponent<UI_FollowWorldObject>();
+
         GetText((int)Texts.KeyText).text = Managers.Input.GetBindingPath("Interaction");
     }
 

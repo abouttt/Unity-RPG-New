@@ -12,23 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e8c65eecc04574429e1712ce8fc6e1c, type: 3}
   m_Name: SceneSettings
   m_EditorClassIdentifier: 
-  <LoadResourceLabels>k__BackingField:
+  _settings:
     _serializedList:
     - Key: 1
-      Value: 00000000
+      Value:
+        <ResourcesLoadLabels>k__BackingField: 00000000
+        <ReloadScene>k__BackingField: 0
+        <ClearResourcesWhenEndScene>k__BackingField: 0
+        <BackgroundImage>k__BackingField: {fileID: 0}
+        <SceneBGM>k__BackingField: {fileID: 0}
     - Key: 2
-      Value: 0000000001000000
+      Value:
+        <ResourcesLoadLabels>k__BackingField: 0000000001000000
+        <ReloadScene>k__BackingField: 1
+        <ClearResourcesWhenEndScene>k__BackingField: 1
+        <BackgroundImage>k__BackingField: {fileID: 0}
+        <SceneBGM>k__BackingField: {fileID: 0}
     - Key: 3
-      Value: 000000000200000003000000
+      Value:
+        <ResourcesLoadLabels>k__BackingField: 000000000200000003000000
+        <ReloadScene>k__BackingField: 1
+        <ClearResourcesWhenEndScene>k__BackingField: 1
+        <BackgroundImage>k__BackingField: {fileID: 0}
+        <SceneBGM>k__BackingField: {fileID: 0}
     - Key: 4
-      Value: 000000000200000003000000
-  <BackgroundImages>k__BackingField:
-    _serializedList:
-    - Key: 1
-      Value: {fileID: 0}
-    - Key: 3
-      Value: {fileID: 0}
-    - Key: 2
-      Value: {fileID: 0}
-    - Key: 4
-      Value: {fileID: 0}
+      Value:
+        <ResourcesLoadLabels>k__BackingField: 000000000200000003000000
+        <ReloadScene>k__BackingField: 1
+        <ClearResourcesWhenEndScene>k__BackingField: 1
+        <BackgroundImage>k__BackingField: {fileID: 0}
+        <SceneBGM>k__BackingField: {fileID: 0}

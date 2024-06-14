@@ -19,7 +19,7 @@ public class LoadingScene : BaseScene
         base.Init();
 
         _loadingBar.fillAmount = 0f;
-        _background.sprite = SceneSettings.Instance.BackgroundImages[Managers.Scene.NextScene];
+        _background.sprite = SceneSettings.Instance[Managers.Scene.NextScene].BackgroundImage;
         _background.color = Color.white;
         if (_background.sprite == null)
         {
@@ -62,7 +62,7 @@ public class LoadingScene : BaseScene
 
     protected void LoadResourcesAsync(SceneType sceneType, Action callback = null)
     {
-        var loadResourceLabels = SceneSettings.Instance.LoadResourceLabels[sceneType];
+        var loadResourceLabels = SceneSettings.Instance[sceneType].ResourcesLoadLabels;
         if (loadResourceLabels == null || loadResourceLabels.Length == 0)
         {
             return;

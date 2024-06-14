@@ -6,18 +6,9 @@ public abstract class BaseScene : MonoBehaviour
     [field: SerializeField]
     public SceneType SceneType { get; private set; } = SceneType.Unknown;
 
-    [SerializeField]
-    private AudioClip _sceneBGM;
-
-    [SerializeField]
-    private bool _reloadScene;
-
-    [SerializeField]
-    private bool _clearResourcesWhenDestory;
-
     private void Awake()
     {
-        if (_reloadScene && Managers.Resource.ResourceCount == 0)
+        if (SceneSettings.Instance[SceneType].ReloadScene && Managers.Resource.ResourceCount == 0)
         {
             Managers.Scene.LoadScene(Managers.Scene.CurrentScene.SceneType);
         }
@@ -45,7 +36,7 @@ public abstract class BaseScene : MonoBehaviour
 
     protected void OnDestroy()
     {
-        if (_clearResourcesWhenDestory && Managers.Instance != null)
+        if (SceneSettings.Instance[SceneType].ClearResourcesWhenEndScene && Managers.Instance != null)
         {
             Managers.Resource.Clear();
         }

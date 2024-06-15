@@ -264,8 +264,8 @@ public class PlayerMovement : MonoBehaviour, ISavable
             IsSprinting = false;
         }
 
-        var move = Managers.Input.Move;
-        bool isZeroMoveInput = move == Vector2.zero;
+        var moveInput = Managers.Input.Move;
+        bool isZeroMoveInput = moveInput == Vector2.zero;
 
         if (!_isRollMoving && (!CanMove || isZeroMoveInput))
         {
@@ -292,8 +292,8 @@ public class PlayerMovement : MonoBehaviour, ISavable
         }
 
         _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, currentSpeedChangeRate);
-        _posXBlend = Mathf.Lerp(_posXBlend, move.x, currentSpeedChangeRate);
-        _posYBlend = Mathf.Lerp(_posYBlend, move.y, currentSpeedChangeRate);
+        _posXBlend = Mathf.Lerp(_posXBlend, moveInput.x, currentSpeedChangeRate);
+        _posYBlend = Mathf.Lerp(_posYBlend, moveInput.y, currentSpeedChangeRate);
         if (_animationBlend < 0.01f)
         {
             _animationBlend = 0f;
@@ -303,7 +303,7 @@ public class PlayerMovement : MonoBehaviour, ISavable
 
         if (CanRotation && !isZeroMoveInput)
         {
-            var inputDirection = new Vector3(move.x, 0f, move.y).normalized;
+            var inputDirection = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
             _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
             _targetMove = _targetRotation;
         }
@@ -311,23 +311,15 @@ public class PlayerMovement : MonoBehaviour, ISavable
         bool isLockOn = Player.Camera.IsLockOn;
         bool isOnlyRun = !IsSprinting && !IsJumping && !IsRolling;
 
-        if (isLockOn)
+        if (isLockOn && !isZeroMoveInput)
         {
-            // 이동키를 안누르면 캐릭터가 바라보고 있는 방향으로 회전량 설정
-            if (isZeroMoveInput)
-            {
-                _targetMove = _targetRotation;
-            }
-            else
-            {
-                _targetRotation = _targetMove;
+            _targetRotation = _targetMove;
 
-                // 질주, 점프, 구르기는 락 온시에 인풋 방향으로 회전한다 아니면 타겟 방향으로 향하도록 회전.
-                if (isOnlyRun)
-                {
-                    var targetDirection = (Player.Camera.LockedTarget.position - transform.position).normalized;
-                    _targetRotation = Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg;
-                }
+            // 질주, 점프, 구르기는 락 온시에 인풋 방향으로 회전한다 아니면 타겟 방향으로 향하도록 회전.
+            if (isOnlyRun)
+            {
+                var targetDirection = (Player.Camera.LockedTarget.position - transform.position).normalized;
+                _targetRotation = Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg;
             }
         }
 
@@ -362,6 +354,11 @@ public class PlayerMovement : MonoBehaviour, ISavable
     {
         if (CanRoll && _sprintInputTime <= _rollTimeout && Player.Status.SP > 0f)
         {
+            if (Managers.Input.Move == Vector2.zero)
+            {
+                _targetMove = _targetRotation;
+            }
+
             IsRolling = true;
             CanRotation = true;
             Player.Animator.SetBool(_animIDRoll, true);

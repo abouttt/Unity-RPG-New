@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Cinemachine;
 using Newtonsoft.Json.Linq;
 
 public class PlayerCamera : MonoBehaviour, ISavable
@@ -9,7 +8,7 @@ public class PlayerCamera : MonoBehaviour, ISavable
 
     public Transform LockedTarget
     {
-        get => _stateDrivenCamera.LookAt;
+        get => _lockedTarget;
         set
         {
             if (IsLockOn && value == null)
@@ -18,8 +17,7 @@ public class PlayerCamera : MonoBehaviour, ISavable
             }
 
             IsLockOn = value != null;
-            _stateDrivenCamera.LookAt = value;
-            _cameraAnimator.SetBool(_animIDLockOn, IsLockOn);
+            _lockedTarget = value;
             _lockOnTargetImage.Target = value;
 
             if (IsLockOn)
@@ -33,7 +31,7 @@ public class PlayerCamera : MonoBehaviour, ISavable
 
     [Header("[Rotate]")]
     [SerializeField]
-    private GameObject _cinemachineCameraTarget;
+    private Transform _cinemachineCameraTarget;
 
     [SerializeField]
     private float _sensitivity;
@@ -46,7 +44,7 @@ public class PlayerCamera : MonoBehaviour, ISavable
 
     [Header("[Lock on target]")]
     [SerializeField]
-    private CinemachineStateDrivenCamera _stateDrivenCamera;
+    private float _lockOnRotationSpeed;
 
     [SerializeField]
     private float _viewRadius;
@@ -61,29 +59,18 @@ public class PlayerCamera : MonoBehaviour, ISavable
     [SerializeField]
     private LayerMask _obstacleMask;
 
+    private Transform _lockedTarget;
+
     private readonly float _threshold = 0.01f;
     private float _cinemachineTargetYaw;
     private float _cinemachineTargetPitch;
 
-    private readonly int _animIDLockOn = Animator.StringToHash("LockOn");
-
     private GameObject _mainCamera;
-    private Animator _cameraAnimator;
-    private CinemachineComposer _targetComposer;
     private UI_LockOnTarget _lockOnTargetImage;
 
     private void Awake()
     {
         _mainCamera = Camera.main.gameObject;
-        _cameraAnimator = _stateDrivenCamera.GetComponent<Animator>();
-        foreach (CinemachineVirtualCamera child in _stateDrivenCamera.ChildCameras)
-        {
-            _targetComposer = child.GetCinemachineComponent<CinemachineComposer>();
-            if (_targetComposer != null)
-            {
-                break;
-            }
-        }
 
         if (!Managers.Game.IsDefaultSpawn && !Managers.Game.IsPortalSpawn)
         {
@@ -96,8 +83,8 @@ public class PlayerCamera : MonoBehaviour, ISavable
         var go = Managers.Resource.Instantiate("UI_LockOnTarget.prefab");
         _lockOnTargetImage = go.GetComponent<UI_LockOnTarget>();
 
-        _cinemachineTargetPitch = _cinemachineCameraTarget.transform.rotation.eulerAngles.x;
-        _cinemachineTargetYaw = _cinemachineCameraTarget.transform.rotation.eulerAngles.y;
+        _cinemachineTargetPitch = _cinemachineCameraTarget.rotation.eulerAngles.x;
+        _cinemachineTargetYaw = _cinemachineCameraTarget.rotation.eulerAngles.y;
 
         Managers.Input.GetAction("LockOn").performed += FindTargetOrReset;
     }
@@ -108,7 +95,6 @@ public class PlayerCamera : MonoBehaviour, ISavable
 
         if (IsLockOn)
         {
-            CalcTrackedObjectOffset();
             TrackingLockedTarget();
         }
     }
@@ -116,7 +102,7 @@ public class PlayerCamera : MonoBehaviour, ISavable
     public JToken GetSaveData()
     {
         var saveData = new JArray();
-        var vector3SaveData = new Vector3SaveData(_cinemachineCameraTarget.transform.rotation.eulerAngles);
+        var vector3SaveData = new Vector3SaveData(_cinemachineCameraTarget.rotation.eulerAngles);
         saveData.Add(JObject.FromObject(vector3SaveData));
         return saveData;
     }
@@ -125,10 +111,14 @@ public class PlayerCamera : MonoBehaviour, ISavable
     {
         if (IsLockOn)
         {
-            _cinemachineCameraTarget.transform.rotation = _mainCamera.transform.rotation;
-            var eulerAngles = _cinemachineCameraTarget.transform.eulerAngles;
-            _cinemachineTargetPitch = eulerAngles.x;
-            _cinemachineTargetYaw = eulerAngles.y;
+            _cinemachineCameraTarget.rotation = Quaternion.Euler(_cinemachineTargetPitch, _cinemachineTargetYaw, 0f);
+
+            var direction = (_lockedTarget.position + transform.position) * 0.5f;
+            var targetRotation = Quaternion.LookRotation(direction - _cinemachineCameraTarget.position);
+            var rotation = Quaternion.Slerp(_cinemachineCameraTarget.rotation, targetRotation, _lockOnRotationSpeed * Time.deltaTime);
+            var euler = rotation.eulerAngles;
+            _cinemachineTargetPitch = euler.x;
+            _cinemachineTargetYaw = euler.y;
         }
         else
         {
@@ -138,11 +128,11 @@ public class PlayerCamera : MonoBehaviour, ISavable
                 _cinemachineTargetYaw += look.x * _sensitivity;
                 _cinemachineTargetPitch += look.y * _sensitivity;
             }
-
-            _cinemachineTargetYaw = Util.ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
-            _cinemachineTargetPitch = Util.ClampAngle(_cinemachineTargetPitch, _bottomClamp, _topClamp);
-            _cinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch, _cinemachineTargetYaw, 0f);
         }
+
+        _cinemachineTargetPitch = Util.ClampAngle(_cinemachineTargetPitch, _bottomClamp, _topClamp);
+        _cinemachineTargetYaw = Util.ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
+        _cinemachineCameraTarget.rotation = Quaternion.Euler(_cinemachineTargetPitch, _cinemachineTargetYaw, 0f);
     }
 
     private void FindLockableTarget()
@@ -201,12 +191,6 @@ public class PlayerCamera : MonoBehaviour, ISavable
         }
     }
 
-    private void CalcTrackedObjectOffset()
-    {
-        var lookAtPos = (LockedTarget.position + transform.position) * 0.5f;
-        _targetComposer.m_TrackedObjectOffset.y = -lookAtPos.y;
-    }
-
     private void FindTargetOrReset(InputAction.CallbackContext context)
     {
         if (IsLockOn)
@@ -227,6 +211,6 @@ public class PlayerCamera : MonoBehaviour, ISavable
         }
 
         var vector3SaveData = saveData[0].ToObject<Vector3SaveData>();
-        _cinemachineCameraTarget.transform.rotation = Quaternion.Euler(vector3SaveData.ToVector3());
+        _cinemachineCameraTarget.rotation = Quaternion.Euler(vector3SaveData.ToVector3());
     }
 }

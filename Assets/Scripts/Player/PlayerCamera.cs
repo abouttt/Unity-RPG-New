@@ -59,13 +59,12 @@ public class PlayerCamera : MonoBehaviour, ISavable
     [SerializeField]
     private LayerMask _obstacleMask;
 
-    private Transform _lockedTarget;
-
     private readonly float _threshold = 0.01f;
     private float _cinemachineTargetYaw;
     private float _cinemachineTargetPitch;
 
     private GameObject _mainCamera;
+    private Transform _lockedTarget;
     private UI_LockOnTarget _lockOnTargetImage;
 
     private void Awake()
@@ -111,11 +110,10 @@ public class PlayerCamera : MonoBehaviour, ISavable
     {
         if (IsLockOn)
         {
-            _cinemachineCameraTarget.rotation = Quaternion.Euler(_cinemachineTargetPitch, _cinemachineTargetYaw, 0f);
-
             var direction = (_lockedTarget.position + transform.position) * 0.5f;
+            var currentRotation = Quaternion.Euler(_cinemachineTargetPitch, _cinemachineTargetYaw, 0f);
             var targetRotation = Quaternion.LookRotation(direction - _cinemachineCameraTarget.position);
-            var rotation = Quaternion.Slerp(_cinemachineCameraTarget.rotation, targetRotation, _lockOnRotationSpeed * Time.deltaTime);
+            var rotation = Quaternion.Slerp(currentRotation, targetRotation, _lockOnRotationSpeed * Time.deltaTime);
             var euler = rotation.eulerAngles;
             _cinemachineTargetPitch = euler.x;
             _cinemachineTargetYaw = euler.y;

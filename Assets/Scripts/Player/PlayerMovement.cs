@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour, ISavable
     public bool IsJumping { get; private set; }
     public bool IsRolling { get; private set; }
 
+    [Header("[Move]")]
     [SerializeField]
     private float _runSpeed;
 
@@ -43,14 +44,14 @@ public class PlayerMovement : MonoBehaviour, ISavable
     [SerializeField]
     private float _speedChangeRate;
 
-    [Space(10)]
+    [Header("[Roll]")]
     [SerializeField]
     private float _rollSpeed;
 
     [SerializeField]
     private float _rollTimeout;
 
-    [Space(10)]
+    [Header("[Jump]")]
     [SerializeField]
     private float _jumpHeight;
 
@@ -66,7 +67,7 @@ public class PlayerMovement : MonoBehaviour, ISavable
     [SerializeField]
     private float _fallTimeout;
 
-    [Space(10)]
+    [Header("[Grounded]")]
     [SerializeField]
     private float _groundedOffset;
 
@@ -76,7 +77,7 @@ public class PlayerMovement : MonoBehaviour, ISavable
     [SerializeField]
     private LayerMask _groundLayers;
 
-    [Space(10)]
+    [Header("[Required SP]")]
     [SerializeField]
     private float _sprintRequiredSP;
 
@@ -143,15 +144,10 @@ public class PlayerMovement : MonoBehaviour, ISavable
         {
             _sprintInputTime += deltaTime;
         }
-        else
+        else if (!CanSprint)
         {
-            _sprintInputTime = 0f;
-
             // 질주로 인해 기력을 다 소비한 후 질주가 불가능 할 때 키를 때면 다시 가능하도록.
-            if (!CanSprint)
-            {
-                CanSprint = true;
-            }
+            CanSprint = true;
         }
 
         Gravity(deltaTime);
@@ -231,7 +227,7 @@ public class PlayerMovement : MonoBehaviour, ISavable
     private void Move(float deltaTime)
     {
         float targetSpeed = _runSpeed;
-        float requiredSP = 0f;
+        float targetSP = 0f;
 
         if (_isRollMoving)
         {
@@ -252,7 +248,7 @@ public class PlayerMovement : MonoBehaviour, ISavable
             {
                 IsSprinting = true;
                 targetSpeed = _sprintSpeed;
-                requiredSP = _sprintRequiredSP * deltaTime;
+                targetSP = _sprintRequiredSP * deltaTime;
             }
             else
             {
@@ -264,13 +260,13 @@ public class PlayerMovement : MonoBehaviour, ISavable
             IsSprinting = false;
         }
 
-        var moveInput = Managers.Input.Move;
-        bool isZeroMoveInput = moveInput == Vector2.zero;
+        var move = Managers.Input.Move;
+        bool isZeroMoveInput = move == Vector2.zero;
 
         if (!_isRollMoving && (!CanMove || isZeroMoveInput))
         {
             targetSpeed = 0f;
-            requiredSP = 0f;
+            targetSP = 0f;
         }
 
         float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0f, _controller.velocity.z).magnitude;
@@ -292,8 +288,8 @@ public class PlayerMovement : MonoBehaviour, ISavable
         }
 
         _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, currentSpeedChangeRate);
-        _posXBlend = Mathf.Lerp(_posXBlend, moveInput.x, currentSpeedChangeRate);
-        _posYBlend = Mathf.Lerp(_posYBlend, moveInput.y, currentSpeedChangeRate);
+        _posXBlend = Mathf.Lerp(_posXBlend, move.x, currentSpeedChangeRate);
+        _posYBlend = Mathf.Lerp(_posYBlend, move.y, currentSpeedChangeRate);
         if (_animationBlend < 0.01f)
         {
             _animationBlend = 0f;
@@ -301,15 +297,27 @@ public class PlayerMovement : MonoBehaviour, ISavable
             _posYBlend = 0f;
         }
 
-        if (CanRotation && !isZeroMoveInput)
-        {
-            var inputDirection = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
-            _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
-            _targetMove = _targetRotation;
-        }
-
         bool isLockOn = Player.Camera.IsLockOn;
         bool isOnlyRun = !IsSprinting && !IsJumping && !IsRolling;
+
+        if (CanRotation && !isZeroMoveInput)
+        {
+            var inputDirection = new Vector3(move.x, 0f, move.y).normalized;
+            float targetDirection;
+
+            if (isLockOn)
+            {
+                var lockedTargetDirection = Quaternion.LookRotation(Player.Camera.LockedTarget.position - transform.position);
+                targetDirection = lockedTargetDirection.eulerAngles.y;
+            }
+            else
+            {
+                targetDirection = _mainCamera.transform.eulerAngles.y;
+            }
+
+            _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + targetDirection;
+            _targetMove = _targetRotation;
+        }
 
         if (isLockOn && !isZeroMoveInput)
         {
@@ -330,7 +338,7 @@ public class PlayerMovement : MonoBehaviour, ISavable
         // 이동
         var moveDirection = Quaternion.Euler(0f, _targetMove, 0f) * Vector3.forward;
         _controller.Move(moveDirection.normalized * (_speed * deltaTime) + new Vector3(0f, _verticalVelocity, 0f) * deltaTime);
-        Player.Status.SP -= requiredSP;
+        Player.Status.SP -= targetSP;
 
         // 애니메이터 업데이트
         bool isLockMoving = isLockOn && isOnlyRun;
@@ -363,6 +371,8 @@ public class PlayerMovement : MonoBehaviour, ISavable
             CanRotation = true;
             Player.Animator.SetBool(_animIDRoll, true);
         }
+
+        _sprintInputTime = 0f;
     }
 
     private void OnBeginJump()

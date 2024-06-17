@@ -557,7 +557,7 @@ MonoBehaviour:
   _bottomClamp: -40
   _lockOnRotationSpeed: 5
   _viewRadius: 30
-  _viewAngle: 60
+  _viewAngle: 30
   _targetMask:
     serializedVersion: 2
     m_Bits: 128

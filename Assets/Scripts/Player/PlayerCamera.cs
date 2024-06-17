@@ -11,9 +11,16 @@ public class PlayerCamera : MonoBehaviour, ISavable
         get => _lockedTarget;
         set
         {
-            if (IsLockOn && value == null)
+            if (value == null)
             {
-                LockedTarget.GetComponent<Lockable>().IsLockOn = false;
+                if (IsLockOn)
+                {
+                    LockedTarget.GetComponent<Lockable>().IsLockOn = false;
+                }
+                else
+                {
+                    return;
+                }
             }
 
             IsLockOn = value != null;
@@ -62,6 +69,8 @@ public class PlayerCamera : MonoBehaviour, ISavable
     private readonly float _threshold = 0.01f;
     private float _cinemachineTargetYaw;
     private float _cinemachineTargetPitch;
+    private Quaternion _currentRotation;
+    private Quaternion _targetRotation;
 
     private GameObject _mainCamera;
     private Transform _lockedTarget;
@@ -100,9 +109,8 @@ public class PlayerCamera : MonoBehaviour, ISavable
 
     public JToken GetSaveData()
     {
-        var saveData = new JArray();
         var vector3SaveData = new Vector3SaveData(_cinemachineCameraTarget.rotation.eulerAngles);
-        saveData.Add(JObject.FromObject(vector3SaveData));
+        var saveData = new JArray(vector3SaveData);
         return saveData;
     }
 
@@ -111,9 +119,8 @@ public class PlayerCamera : MonoBehaviour, ISavable
         if (IsLockOn)
         {
             var direction = (_lockedTarget.position + transform.position) * 0.5f;
-            var currentRotation = Quaternion.Euler(_cinemachineTargetPitch, _cinemachineTargetYaw, 0f);
-            var targetRotation = Quaternion.LookRotation(direction - _cinemachineCameraTarget.position);
-            var rotation = Quaternion.Slerp(currentRotation, targetRotation, _lockOnRotationSpeed * Time.deltaTime);
+            _targetRotation = Quaternion.LookRotation(direction - _cinemachineCameraTarget.position);
+            var rotation = Quaternion.Slerp(_currentRotation, _targetRotation, _lockOnRotationSpeed * Time.deltaTime);
             var euler = rotation.eulerAngles;
             _cinemachineTargetPitch = euler.x;
             _cinemachineTargetYaw = euler.y;
@@ -130,7 +137,8 @@ public class PlayerCamera : MonoBehaviour, ISavable
 
         _cinemachineTargetPitch = Util.ClampAngle(_cinemachineTargetPitch, _bottomClamp, _topClamp);
         _cinemachineTargetYaw = Util.ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
-        _cinemachineCameraTarget.rotation = Quaternion.Euler(_cinemachineTargetPitch, _cinemachineTargetYaw, 0f);
+        _currentRotation = Quaternion.Euler(_cinemachineTargetPitch, _cinemachineTargetYaw, 0f);
+        _cinemachineCameraTarget.rotation = _currentRotation;
     }
 
     private void FindLockableTarget()
@@ -141,19 +149,17 @@ public class PlayerCamera : MonoBehaviour, ISavable
         var targets = Physics.OverlapSphere(_mainCamera.transform.position, _viewRadius, _targetMask);
         foreach (var target in targets)
         {
-            var dirToTarget = (target.transform.position - _mainCamera.transform.position).normalized;
-            float currentAngle = Vector3.Angle(_mainCamera.transform.forward, dirToTarget);
-            if (currentAngle < _viewAngle * 0.5f)
+            var directionToTarget = (target.transform.position - _mainCamera.transform.position).normalized;
+            float currentAngle = Vector3.Angle(_mainCamera.transform.forward, directionToTarget);
+            if (_viewAngle >= currentAngle && currentAngle < shortestAngle)
             {
-                if (currentAngle < shortestAngle)
+                if (Physics.Linecast(_mainCamera.transform.position, target.transform.position, _obstacleMask))
                 {
-                    float distToTarget = Vector3.Distance(_mainCamera.transform.position, target.transform.position);
-                    if (!Physics.Raycast(_mainCamera.transform.position, dirToTarget, distToTarget, _obstacleMask))
-                    {
-                        finalTarget = target.transform;
-                        shortestAngle = currentAngle;
-                    }
+                    continue;
                 }
+
+                finalTarget = target.transform;
+                shortestAngle = currentAngle;
             }
         }
 
@@ -162,28 +168,30 @@ public class PlayerCamera : MonoBehaviour, ISavable
 
     private void TrackingLockedTarget()
     {
-        if (!LockedTarget.gameObject.activeInHierarchy)
+        bool canTracking = true;
+
+        if (!_lockedTarget.gameObject.activeInHierarchy)
         {
-            LockedTarget = null;
-            return;
+            canTracking = false;
+        }
+        else if (Vector3.Distance(_mainCamera.transform.position, _lockedTarget.position) > _viewRadius)
+        {
+            canTracking = false;
+        }
+        else if (Physics.Linecast(_mainCamera.transform.position, _lockedTarget.position, _obstacleMask))
+        {
+            canTracking = false;
+        }
+        else
+        {
+            float pitch = Util.ClampAngle(_targetRotation.eulerAngles.x, _bottomClamp, _topClamp);
+            if (_bottomClamp > pitch || pitch > _topClamp)
+            {
+                canTracking = false;
+            }
         }
 
-        float targetDistance = Vector3.Distance(_mainCamera.transform.position, LockedTarget.position);
-        if (targetDistance > _viewRadius)
-        {
-            LockedTarget = null;
-            return;
-        }
-
-        var targetDirection = (LockedTarget.position - _mainCamera.transform.position).normalized;
-        if (Physics.Raycast(_mainCamera.transform.position, targetDirection, targetDistance, _obstacleMask))
-        {
-            LockedTarget = null;
-            return;
-        }
-
-        float pitch = Util.ClampAngle(_cinemachineTargetPitch, _bottomClamp, _topClamp);
-        if (_bottomClamp > pitch || pitch > _topClamp)
+        if (!canTracking)
         {
             LockedTarget = null;
         }

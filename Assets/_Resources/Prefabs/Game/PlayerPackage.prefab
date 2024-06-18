@@ -522,7 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _runSpeed: 5
   _sprintSpeed: 9
-  _rotationSmoothTime: 0.05
+  _rotationSmoothTime: 0.075
   _speedChangeRate: 10
   _rollSpeed: 5
   _rollTimeout: 0.2
@@ -556,7 +556,7 @@ MonoBehaviour:
   _topClamp: 40
   _bottomClamp: -40
   _lockOnRotationSpeed: 5
-  _forceForwardRotationSpeed: 40
+  _forceForwardRotationSpeed: 30
   _viewRadius: 30
   _viewAngle: 30
   _targetMask:

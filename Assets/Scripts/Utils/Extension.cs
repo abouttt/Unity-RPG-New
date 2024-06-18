@@ -26,4 +26,9 @@ public static class Extension
     {
         return Util.GetLastSlashString(str);
     }
+
+    public static bool Approximately(this Quaternion quatA, Quaternion value, float acceptableRange)
+    {
+        return 1 - Mathf.Abs(Quaternion.Dot(quatA, value)) < acceptableRange;
+    }
 }

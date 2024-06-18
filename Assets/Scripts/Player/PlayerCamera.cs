@@ -19,6 +19,7 @@ public class PlayerCamera : MonoBehaviour, ISavable
                 }
                 else
                 {
+                    ForceForwardRotation();
                     return;
                 }
             }
@@ -54,6 +55,9 @@ public class PlayerCamera : MonoBehaviour, ISavable
     private float _lockOnRotationSpeed;
 
     [SerializeField]
+    private float _forceForwardRotationSpeed;
+
+    [SerializeField]
     private float _viewRadius;
 
     [Range(0, 360)]
@@ -71,6 +75,7 @@ public class PlayerCamera : MonoBehaviour, ISavable
     private float _cinemachineTargetPitch;
     private Quaternion _currentRotation;
     private Quaternion _targetRotation;
+    public bool _isForceForwardRotation;
 
     private GameObject _mainCamera;
     private Transform _lockedTarget;
@@ -116,22 +121,31 @@ public class PlayerCamera : MonoBehaviour, ISavable
 
     private void CameraRotation()
     {
-        if (IsLockOn)
+        if (_isForceForwardRotation)
         {
-            var direction = (_lockedTarget.position + transform.position) * 0.5f;
-            _targetRotation = Quaternion.LookRotation(direction - _cinemachineCameraTarget.position);
-            var rotation = Quaternion.Slerp(_currentRotation, _targetRotation, _lockOnRotationSpeed * Time.deltaTime);
-            var euler = rotation.eulerAngles;
-            _cinemachineTargetPitch = euler.x;
-            _cinemachineTargetYaw = euler.y;
+            if (_targetRotation.Approximately(_currentRotation, float.Epsilon))
+            {
+                _isForceForwardRotation = false;
+            }
+
+            SlerpRotationCurrentToTarget(_forceForwardRotationSpeed);
         }
         else
         {
-            var look = Managers.Input.Look;
-            if (look.sqrMagnitude >= _threshold)
+            if (IsLockOn)
             {
-                _cinemachineTargetYaw += look.x * _sensitivity;
-                _cinemachineTargetPitch += look.y * _sensitivity;
+                var direction = (_lockedTarget.position + transform.position) * 0.5f;
+                _targetRotation = Quaternion.LookRotation(direction - _cinemachineCameraTarget.position);
+                SlerpRotationCurrentToTarget(_lockOnRotationSpeed);
+            }
+            else
+            {
+                var look = Managers.Input.Look;
+                if (look.sqrMagnitude >= _threshold)
+                {
+                    _cinemachineTargetYaw += look.x * _sensitivity;
+                    _cinemachineTargetPitch += look.y * _sensitivity;
+                }
             }
         }
 
@@ -195,6 +209,20 @@ public class PlayerCamera : MonoBehaviour, ISavable
         {
             LockedTarget = null;
         }
+    }
+
+    private void ForceForwardRotation()
+    {
+        _isForceForwardRotation = true;
+        _targetRotation = Quaternion.LookRotation(transform.forward);
+    }
+
+    private void SlerpRotationCurrentToTarget(float speed)
+    {
+        var rotation = Quaternion.Slerp(_currentRotation, _targetRotation, speed * Time.deltaTime);
+        var euler = rotation.eulerAngles;
+        _cinemachineTargetPitch = euler.x;
+        _cinemachineTargetYaw = euler.y;
     }
 
     private void FindTargetOrReset(InputAction.CallbackContext context)

@@ -556,6 +556,7 @@ MonoBehaviour:
   _topClamp: 40
   _bottomClamp: -40
   _lockOnRotationSpeed: 5
+  _forceForwardRotationSpeed: 40
   _viewRadius: 30
   _viewAngle: 30
   _targetMask:
@@ -564,6 +565,7 @@ MonoBehaviour:
   _obstacleMask:
     serializedVersion: 2
     m_Bits: 64
+  _isForceForwardRotation: 0
 --- !u!114 &5505160052973150141
 MonoBehaviour:
   m_ObjectHideFlags: 0

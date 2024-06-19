@@ -49,15 +49,10 @@ public class Player : MonoBehaviour
         }
 
         var playerPackagePrefab = Managers.Resource.Load<GameObject>("PlayerPackage.prefab");
-        var playerPrefab = playerPackagePrefab.FindChild("Player");
         GetPositionAndRotationYaw(out var position, out var yaw);
-        playerPrefab.transform.SetPositionAndRotation(position, Quaternion.Euler(0, yaw, 0));
-
-        var playerPackage = Instantiate(playerPackagePrefab);
+        var playerPackage = Instantiate(playerPackagePrefab, position, Quaternion.Euler(0, yaw, 0));
         playerPackage.transform.DetachChildren();
         Destroy(playerPackage);
-
-        playerPrefab.transform.SetPositionAndRotation(Vector3.zero, Quaternion.Euler(Vector3.zero));
     }
 
     private static void GetPositionAndRotationYaw(out Vector3 position, out float yaw)

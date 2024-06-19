@@ -60,7 +60,7 @@ MonoBehaviour:
     - Game_Prefab
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8b80979f99fe61e4a84dcec37ddcd16b
-    m_Address: LevelupCylinderBlue.prefab
+    m_Address: LevelUpCylinderBlue.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game_Prefab

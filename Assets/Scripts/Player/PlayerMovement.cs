@@ -166,11 +166,12 @@ public class PlayerMovement : MonoBehaviour, ISavable
 
     public JToken GetSaveData()
     {
-        var saveData = new JArray();
         var vector3SaveData = new Vector3SaveData(transform.position);
-        saveData.Add(JObject.FromObject(vector3SaveData));
-        saveData.Add(transform.rotation.eulerAngles.y);
-        return saveData;
+        return new JArray
+        {
+            JObject.FromObject(vector3SaveData),
+            transform.rotation.eulerAngles.y
+        };
     }
 
     private void CheckGrounded()
@@ -305,6 +306,7 @@ public class PlayerMovement : MonoBehaviour, ISavable
             var inputDirection = new Vector3(move.x, 0f, move.y).normalized;
             float targetDirection;
 
+            // 이동 방향 구하기.
             if (isLockOn)
             {
                 var lockedTargetDirection = Quaternion.LookRotation(Player.Camera.LockedTarget.position - transform.position);
@@ -315,19 +317,17 @@ public class PlayerMovement : MonoBehaviour, ISavable
                 targetDirection = _mainCamera.transform.eulerAngles.y;
             }
 
-            _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + targetDirection;
-            _targetMove = _targetRotation;
-        }
+            _targetMove = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + targetDirection;
 
-        if (isLockOn && !isZeroMoveInput)
-        {
-            _targetRotation = _targetMove;
-
-            // 질주, 점프, 구르기는 락 온시에 인풋 방향으로 회전한다 아니면 타겟 방향으로 향하도록 회전.
-            if (isOnlyRun)
+            // 회전 방향 구하기.
+            if (isLockOn && isOnlyRun)
             {
-                var targetDirection = (Player.Camera.LockedTarget.position - transform.position).normalized;
-                _targetRotation = Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg;
+                var directionToTarget = (Player.Camera.LockedTarget.position - transform.position).normalized;
+                _targetRotation = Mathf.Atan2(directionToTarget.x, directionToTarget.z) * Mathf.Rad2Deg;
+            }
+            else
+            {
+                _targetRotation = _targetMove;
             }
         }
 

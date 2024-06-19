@@ -1,6 +1,6 @@
-using Newtonsoft.Json.Linq;
 using System;
 using UnityEngine;
+using Newtonsoft.Json.Linq;
 
 public class PlayerStatus : MonoBehaviour, ISavable
 {
@@ -191,8 +191,6 @@ public class PlayerStatus : MonoBehaviour, ISavable
 
     public JToken GetSaveData()
     {
-        var saveData = new JArray();
-
         var statusSaveData = new StatusSaveData()
         {
             Level = Level,
@@ -203,9 +201,7 @@ public class PlayerStatus : MonoBehaviour, ISavable
             SkillPoint = SkillPoint,
         };
 
-        saveData.Add(JObject.FromObject(statusSaveData));
-
-        return saveData;
+        return new JArray(JObject.FromObject(statusSaveData));
     }
 
     private void RefreshAllStats()
@@ -258,7 +254,7 @@ public class PlayerStatus : MonoBehaviour, ISavable
         Level += level;
         RefreshAllStats();
         FillAllStats();
-        Managers.Resource.Instantiate("LevelupCylinderBlue.prefab", transform.position, transform, true);
+        Managers.Resource.Instantiate("LevelUpCylinderBlue.prefab", transform.position, transform, true);
         LevelChanged?.Invoke();
         StatChanged?.Invoke();
     }

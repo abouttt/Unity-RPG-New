@@ -71,10 +71,10 @@ public class PlayerCamera : MonoBehaviour, ISavable
     private LayerMask _obstacleMask;
 
     private readonly float _threshold = 0.01f;
-    private float _cinemachineTargetYaw;
-    private float _cinemachineTargetPitch;
     private Quaternion _currentRotation;
     private Quaternion _targetRotation;
+    private float _cinemachineTargetYaw;
+    private float _cinemachineTargetPitch;
     public bool _isForceForwardRotation;
 
     private GameObject _mainCamera;
@@ -115,20 +115,19 @@ public class PlayerCamera : MonoBehaviour, ISavable
     public JToken GetSaveData()
     {
         var vector3SaveData = new Vector3SaveData(_cinemachineCameraTarget.rotation.eulerAngles);
-        var saveData = new JArray(vector3SaveData);
-        return saveData;
+        return new JArray(JObject.FromObject(vector3SaveData));
     }
 
     private void CameraRotation()
     {
         if (_isForceForwardRotation)
         {
+            SlerpRotationCurrentToTarget(_forceForwardRotationSpeed);
+
             if (_targetRotation.Approximately(_currentRotation, float.Epsilon))
             {
                 _isForceForwardRotation = false;
             }
-
-            SlerpRotationCurrentToTarget(_forceForwardRotationSpeed);
         }
         else
         {
@@ -213,8 +212,8 @@ public class PlayerCamera : MonoBehaviour, ISavable
 
     private void ForceForwardRotation()
     {
-        _isForceForwardRotation = true;
         _targetRotation = Quaternion.LookRotation(transform.forward);
+        _isForceForwardRotation = true;
     }
 
     private void SlerpRotationCurrentToTarget(float speed)

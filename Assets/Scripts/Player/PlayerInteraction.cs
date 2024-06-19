@@ -78,7 +78,7 @@ public class PlayerInteraction : MonoBehaviour
             {
                 return;
             }
-            else if (!_keyGuide.gameObject.activeSelf)
+            else if (!IsShowedKeyGuide)
             {
                 _keyGuide.gameObject.SetActive(true);
             }
@@ -90,10 +90,10 @@ public class PlayerInteraction : MonoBehaviour
 
             if (_target.gameObject != other.gameObject)
             {
-                var cameraToTarget = _target.transform.position - _mainCamera.transform.position;
-                var cameraToOther = other.transform.position - _mainCamera.transform.position;
-                float targetAngle = Vector3.Angle(cameraToTarget, _mainCamera.transform.forward);
-                float otherAngle = Vector3.Angle(cameraToOther, _mainCamera.transform.forward);
+                var directionToTarget = (_target.transform.position - _mainCamera.transform.position).normalized;
+                var directionToOther = (other.transform.position - _mainCamera.transform.position).normalized;
+                float targetAngle = Vector3.Angle(_mainCamera.transform.forward, directionToTarget);
+                float otherAngle = Vector3.Angle(_mainCamera.transform.forward, directionToOther);
                 if (otherAngle < targetAngle)
                 {
                     SetTarget(other.GetComponent<Interactive>());

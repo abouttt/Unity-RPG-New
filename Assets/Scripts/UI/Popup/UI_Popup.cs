@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public abstract class UI_Popup : UI_Base
+public abstract class UI_Popup : UI_Base, IPointerDownHandler
 {
     public event Action Focused;
     public event Action Showed;

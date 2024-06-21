@@ -7,7 +7,7 @@ public class FieldItem : Interactive
     public IReadOnlyDictionary<ItemData, int> Items => _items;
 
     [SerializeField]
-    private bool _destroyWhenEmptyItems = true;
+    private bool _destroyWhenEmpty = true;
 
     [SerializeField]
     private SerializedDictionary<ItemData, int> _items;
@@ -16,7 +16,7 @@ public class FieldItem : Interactive
     {
         Util.InstantiateMinimapIcon("FieldItemMinimapIcon.sprite", "æ∆¿Ã≈€", transform);
 
-        if ((_items == null || _items.Count == 0) && _destroyWhenEmptyItems)
+        if ((_items == null || _items.Count == 0) && _destroyWhenEmpty)
         {
             Managers.Resource.Destroy(gameObject);
         }
@@ -65,7 +65,7 @@ public class FieldItem : Interactive
         {
             gameObject.layer = LayerMask.NameToLayer("Default");
 
-            if (_destroyWhenEmptyItems)
+            if (_destroyWhenEmpty)
             {
                 Managers.Resource.Destroy(gameObject);
             }

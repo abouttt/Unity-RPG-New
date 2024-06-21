@@ -212,7 +212,7 @@ MonoBehaviour:
   <InteractionKeyGuidePos>k__BackingField: {x: 0, y: 1.3, z: 0}
   <InteractionInputTime>k__BackingField: 1
   <CanInteraction>k__BackingField: 1
-  _destroyWhenEmptyItems: 0
+  _destroyWhenEmpty: 0
   _items:
     _serializedList:
     - Key: {fileID: 11400000, guid: 46033adbba8005a4eaeade75c6ee4373, type: 2}

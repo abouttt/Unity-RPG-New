@@ -24,7 +24,7 @@ public class Quest
             switch (target.Category)
             {
                 case Category.Item:
-                    count = Player.ItemInventory.GetSameItemCountById(target.TargetId);
+                    count = Player.ItemInventory.GetItemAllCountById(target.TargetId);
                     break;
                 default:
                     break;

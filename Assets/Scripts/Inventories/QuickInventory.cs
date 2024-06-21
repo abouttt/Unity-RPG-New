@@ -76,7 +76,7 @@ public class QuickInventory : MonoBehaviour, IInventory, ISavable
 
         foreach (var kvp in _quickables)
         {
-            var quickSaveData = new QuickSaveData()
+            var quickSaveData = new QuickSaveData
             {
                 ItemSaveData = null,
                 SkillSaveData = null,
@@ -85,7 +85,7 @@ public class QuickInventory : MonoBehaviour, IInventory, ISavable
 
             if (kvp.Value is Item item)
             {
-                var itemSaveData = new ItemSaveData()
+                var itemSaveData = new ItemSaveData
                 {
                     ItemId = item.Data.ItemId,
                     Count = 1,
@@ -101,7 +101,7 @@ public class QuickInventory : MonoBehaviour, IInventory, ISavable
             }
             else if (kvp.Value is Skill skill)
             {
-                var skillSaveData = new SkillSaveData()
+                var skillSaveData = new SkillSaveData
                 {
                     SkillId = skill.Data.SkillId,
                     Level = -1,

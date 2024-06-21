@@ -24,13 +24,14 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
 
     [SerializeField]
     private SerializedDictionary<ItemType, Inventory> _inventories;
+
     private readonly Dictionary<Item, int> _itemIndexes = new();
 
     private void Awake()
     {
         foreach (var kvp in _inventories)
         {
-            kvp.Value.Items = Enumerable.Repeat<Item>(null, kvp.Value.Capacity).ToList();
+            kvp.Value.Items = new List<Item>(Enumerable.Repeat<Item>(null, kvp.Value.Capacity));
         }
 
         Load();
@@ -211,6 +212,11 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
             return;
         }
 
+        if (count == 0)
+        {
+            return;
+        }
+
         if (IsEmpty(itemType, fromIndex) || !IsEmpty(itemType, toIndex))
         {
             return;
@@ -224,6 +230,7 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
         }
 
         int remainingCount = fromItem.Count - count;
+
         if (remainingCount < 0)
         {
             return;
@@ -257,7 +264,7 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
         return -1;
     }
 
-    public int GetSameItemCountById(string id)
+    public int GetItemAllCountById(string id)
     {
         var itemType = GetItemTypeById(id);
         int count = 0;
@@ -301,12 +308,13 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
             for (int i = 0; i < kvp.Value.Capacity; i++)
             {
                 var item = kvp.Value.Items[i];
+
                 if (item == null)
                 {
                     continue;
                 }
 
-                var itemSaveData = new ItemSaveData()
+                var itemSaveData = new ItemSaveData
                 {
                     ItemId = item.Data.ItemId,
                     Count = 1,
@@ -353,6 +361,7 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
 
         int excessCount = toItem.AddCountAndGetExcess(fromItem.Count);
         fromItem.SetCount(excessCount);
+
         if (fromItem.IsEmpty)
         {
             DestroyItem(itemType, fromIndex);
@@ -398,10 +407,12 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
         var inventory = _inventories[itemType];
         var item = inventory.Items[index];
         int count = 1;
+
         if (item is IStackableItem stackable)
         {
             count = stackable.Count;
         }
+
         inventory.Items[index] = null;
         inventory.Count--;
         item.Destroy();
@@ -421,6 +432,7 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
             var itemSaveData = token.ToObject<ItemSaveData>();
             var itemData = ItemDatabase.Instance.FindItemById(itemSaveData.ItemId);
             var inventory = _inventories[itemData.ItemType];
+
             if (itemData is IStackableItemData stackableData)
             {
                 inventory.Items[itemSaveData.Index] = stackableData.CreateItem(itemSaveData.Count);
@@ -429,6 +441,7 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
             {
                 inventory.Items[itemSaveData.Index] = itemData.CreateItem();
             }
+
             inventory.Count++;
             _itemIndexes.Add(inventory.Items[itemSaveData.Index], itemSaveData.Index);
         }

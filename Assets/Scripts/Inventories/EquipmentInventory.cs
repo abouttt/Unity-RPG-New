@@ -15,9 +15,9 @@ public class EquipmentInventory : MonoBehaviour, IInventory, ISavable
     private void Awake()
     {
         var types = Enum.GetValues(typeof(EquipmentType));
-        for (int i = 0; i < types.Length; i++)
+        foreach (EquipmentType type in types)
         {
-            _items.Add((EquipmentType)types.GetValue(i), null);
+            _items.Add(type, null);
         }
 
         Load();
@@ -26,6 +26,7 @@ public class EquipmentInventory : MonoBehaviour, IInventory, ISavable
     public void Equip(EquipmentItemData equipmentItemData)
     {
         var equipmentType = equipmentItemData.EquipmentType;
+
         if (IsEquipped(equipmentType))
         {
             Unequip(equipmentType);
@@ -82,7 +83,7 @@ public class EquipmentInventory : MonoBehaviour, IInventory, ISavable
                 continue;
             }
 
-            var itemSaveData = new ItemSaveData()
+            var itemSaveData = new ItemSaveData
             {
                 ItemId = kvp.Value.Data.ItemId,
             };

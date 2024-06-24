@@ -26,12 +26,12 @@ public class QuestManager : ISavable
     {
         var newQuest = new Quest(questData);
         _activeQuests.Add(newQuest);
-        NPC.TryRemoveQuestToNPC(questData.OwnerId, questData);
+        NPC.TryRemoveQuest(questData.OwnerId, questData);
         QuestRegistered?.Invoke(newQuest);
 
         if (newQuest.State == QuestState.Completable)
         {
-            NPC.TryAddQuestToNPC(questData.CompleteOwnerId, questData);
+            NPC.TryAddQuest(questData.CompleteOwnerId, questData);
             QuestCompletabled?.Invoke(newQuest);
         }
 
@@ -52,11 +52,11 @@ public class QuestManager : ISavable
 
             if (prevState == QuestState.Completable)
             {
-                NPC.TryRemoveQuestToNPC(quest.Data.CompleteOwnerId, quest.Data);
+                NPC.TryRemoveQuest(quest.Data.CompleteOwnerId, quest.Data);
                 QuestCompletableCanceled?.Invoke(quest);
             }
 
-            NPC.TryAddQuestToNPC(quest.Data.OwnerId, quest.Data);
+            NPC.TryAddQuest(quest.Data.OwnerId, quest.Data);
             QuestUnregistered?.Invoke(quest);
             ReceiveReport(Category.Quest, quest.Data.QuestId, -1);
         }
@@ -79,13 +79,13 @@ public class QuestManager : ISavable
                 {
                     if (prevState != QuestState.Completable)
                     {
-                        NPC.TryAddQuestToNPC(quest.Data.CompleteOwnerId, quest.Data);
+                        NPC.TryAddQuest(quest.Data.CompleteOwnerId, quest.Data);
                         QuestCompletabled?.Invoke(quest);
                     }
                 }
                 else if (prevState == QuestState.Completable)
                 {
-                    NPC.TryRemoveQuestToNPC(quest.Data.CompleteOwnerId, quest.Data);
+                    NPC.TryRemoveQuest(quest.Data.CompleteOwnerId, quest.Data);
                     QuestCompletableCanceled?.Invoke(quest);
                 }
             }
@@ -104,7 +104,7 @@ public class QuestManager : ISavable
             _activeQuests.Remove(quest);
             _completedQuests.Add(quest);
 
-            NPC.TryRemoveQuestToNPC(quest.Data.CompleteOwnerId, quest.Data);
+            NPC.TryRemoveQuest(quest.Data.CompleteOwnerId, quest.Data);
             QuestCompleted?.Invoke(quest);
             ReceiveReport(Category.Quest, quest.Data.QuestId, 1);
         }
@@ -162,7 +162,7 @@ public class QuestManager : ISavable
             {
                 var questSaveData = token.ToObject<QuestSaveData>();
                 var newQuest = new Quest(questSaveData);
-                NPC.TryRemoveQuestToNPC(newQuest.Data.OwnerId, newQuest.Data);
+                NPC.TryRemoveQuest(newQuest.Data.OwnerId, newQuest.Data);
 
                 if (newQuest.State == QuestState.Complete)
                 {
@@ -174,7 +174,7 @@ public class QuestManager : ISavable
 
                     if (newQuest.State == QuestState.Completable)
                     {
-                        NPC.TryAddQuestToNPC(newQuest.Data.CompleteOwnerId, newQuest.Data);
+                        NPC.TryAddQuest(newQuest.Data.CompleteOwnerId, newQuest.Data);
                     }
                 }
             }

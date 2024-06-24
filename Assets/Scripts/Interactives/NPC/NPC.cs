@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,38 +43,37 @@ public class NPC : Interactive
     private void Start()
     {
         Util.InstantiateMinimapIcon("NPCMinimapIcon.sprite", NPCName, transform);
-        Player.Status.LevelChanged += CheckQuests;
-        CheckQuests();
+
+        var pos = transform.position + _questNotifierPosition;
+        _questPresenceNotifier = Managers.Resource.Instantiate("QuestPresenceNotifier.prefab", pos, transform);
+        _questCompletableNotifier = Managers.Resource.Instantiate("QuestCompletableNotifier.prefab", pos, transform);
+
+        Player.Status.LevelChanged += StartCheckQuestsCoroutine;
+
+        StartCheckQuestsCoroutine();
     }
 
-    private void LateUpdate()
-    {
-        if (_isQuestChanged)
-        {
-            CheckQuests();
-            _isQuestChanged = false;
-        }
-    }
-
-    public static bool TryAddQuestToNPC(string id, QuestData questData)
+    public static bool TryAddQuest(string id, QuestData questData)
     {
         if (s_NPCs.TryGetValue(id, out var npc))
         {
             npc._quests.Add(questData);
-            npc._isQuestChanged = true;
+            npc.StartCheckQuestsCoroutine();
             return true;
         }
 
         return false;
     }
 
-    public static bool TryRemoveQuestToNPC(string id, QuestData questData)
+    public static bool TryRemoveQuest(string id, QuestData questData)
     {
         if (s_NPCs.TryGetValue(id, out var npc))
         {
-            npc._quests.Remove(questData);
-            npc._isQuestChanged = true;
-            return true;
+            if (npc._quests.Remove(questData))
+            {
+                npc.StartCheckQuestsCoroutine();
+                return true;
+            }
         }
 
         return false;
@@ -87,9 +87,18 @@ public class NPC : Interactive
         Managers.Quest.ReceiveReport(Category.NPC, NPCId, 1);
     }
 
-    private void CheckQuests()
+    private void StartCheckQuestsCoroutine()
     {
-        InstantiateQuestNotifier();
+        if (!_isQuestChanged)
+        {
+            StartCoroutine(CheckQuests());
+            _isQuestChanged = true;
+        }
+    }
+
+    private IEnumerator CheckQuests()
+    {
+        yield return YieldCache.WaitForEndOfFrame;
 
         _questPresenceNotifier.SetActive(false);
         _questCompletableNotifier.SetActive(false);
@@ -140,24 +149,23 @@ public class NPC : Interactive
             _questCompletableNotifier.SetActive(hasCompletableQuest);
         }
 
-        if (!CanInteraction && (_questPresenceNotifier.activeSelf || _questCompletableNotifier.activeSelf))
+        // 상호작용 가능여부.
+        if (CanInteraction)
         {
-            CanInteraction = true;
+            if (!_originCanInteraction)
+            {
+                CanInteraction = false;
+            }
         }
-        else if (CanInteraction && !_originCanInteraction)
+        else
         {
-            CanInteraction = false;
+            if (_questPresenceNotifier.activeSelf || _questCompletableNotifier.activeSelf)
+            {
+                CanInteraction = true;
+            }
         }
-    }
 
-    private void InstantiateQuestNotifier()
-    {
-        if (_questPresenceNotifier == null && _questCompletableNotifier == null)
-        {
-            var pos = transform.position + _questNotifierPosition;
-            _questPresenceNotifier = Managers.Resource.Instantiate("QuestPresenceNotifier.prefab", pos, transform);
-            _questCompletableNotifier = Managers.Resource.Instantiate("QuestCompletableNotifier.prefab", pos, transform);
-        }
+        _isQuestChanged = false;
     }
 
     private void OnTriggerStay(Collider other)

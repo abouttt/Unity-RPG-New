@@ -40,6 +40,8 @@ public class CooldownDatabase : SingletonScriptableObject<CooldownDatabase>
     private void FindCooldown<T>() where T : ICooldownable
     {
         _cooldownItems = new();
+        _cooldownSkills = new();
+
         foreach (var itemData in ItemDatabase.Instance.Items)
         {
             if (itemData is ICooldownable)
@@ -48,7 +50,6 @@ public class CooldownDatabase : SingletonScriptableObject<CooldownDatabase>
             }
         }
 
-        _cooldownSkills = new();
         foreach (var skillData in SkillDatabase.Instance.Skills)
         {
             if (skillData is ICooldownable)

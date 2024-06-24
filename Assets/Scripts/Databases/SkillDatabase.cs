@@ -35,7 +35,6 @@ public class SkillDatabase : SingletonScriptableObject<SkillDatabase>
         {
             var assetPath = AssetDatabase.GUIDToAssetPath(guid);
             T skill = AssetDatabase.LoadAssetAtPath<T>(assetPath);
-
             _skills.Add(skill);
         }
 

@@ -55,18 +55,14 @@ public class QuestDatabase : SingletonScriptableObject<QuestDatabase>
         {
             var assetPath = AssetDatabase.GUIDToAssetPath(guid);
             T quest = AssetDatabase.LoadAssetAtPath<T>(assetPath);
+            _quests.Add(quest);
 
-            if (quest.GetType() == typeof(T))
+            if (!_ownerQuests.ContainsKey(quest.OwnerId))
             {
-                _quests.Add(quest);
-
-                if (!_ownerQuests.ContainsKey(quest.OwnerId))
-                {
-                    _ownerQuests.Add(quest.OwnerId, new());
-                }
-
-                _ownerQuests[quest.OwnerId].Add(quest);
+                _ownerQuests.Add(quest.OwnerId, new());
             }
+
+            _ownerQuests[quest.OwnerId].Add(quest);
         }
 
         EditorUtility.SetDirty(this);

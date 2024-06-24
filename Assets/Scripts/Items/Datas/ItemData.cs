@@ -21,7 +21,13 @@ public abstract class ItemData : ScriptableObject
     public string Description { get; private set; }
 
     [field: SerializeField]
-    public int Price { get; private set; }
+    public bool CanSell { get; private set; } = true;
+
+    [field: SerializeField]
+    public int BuyPrice { get; private set; }
+
+    [field: SerializeField]
+    public int SellPrice { get; private set; }
 
     public abstract Item CreateItem();
 

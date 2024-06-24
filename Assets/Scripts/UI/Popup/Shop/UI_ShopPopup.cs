@@ -14,11 +14,9 @@ public class UI_ShopPopup : UI_Popup, IDropHandler
         CloseButton,
     }
 
-    [field: SerializeField, Range(0f, 1f)]
-    public float ItemSellPercentage { get; private set; }
-
     [SerializeField]
     private Vector3 _itemInventoryPos;
+
     private Vector3 _prevItemInventoryPos;
 
     private readonly List<GameObject> _shopSlots = new();
@@ -68,7 +66,7 @@ public class UI_ShopPopup : UI_Popup, IDropHandler
 
     public void BuyItem(UI_ShopSlot slot, int count)
     {
-        int price = slot.ItemData.Price * count;
+        int price = slot.ItemData.BuyPrice * count;
         if (Player.Status.Gold < price)
         {
             return;
@@ -88,7 +86,7 @@ public class UI_ShopPopup : UI_Popup, IDropHandler
             count = stackable.Count;
         }
 
-        Player.Status.Gold += Mathf.RoundToInt(item.Data.Price * count * ItemSellPercentage);
+        Player.Status.Gold += Mathf.RoundToInt(item.Data.SellPrice * count);
         Player.ItemInventory.RemoveItem(itemType, index);
     }
 

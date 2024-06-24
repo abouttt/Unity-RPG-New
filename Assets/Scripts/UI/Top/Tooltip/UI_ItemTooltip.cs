@@ -120,7 +120,14 @@ public class UI_ItemTooltip : UI_BaseTooltip
 
         if (Managers.UI.IsShowed<UI_ShopPopup>() && SlotRef is UI_ItemSlot)
         {
-            SB.Append($"가격 : {Mathf.RoundToInt(itemData.Price * Managers.UI.Get<UI_ShopPopup>().ItemSellPercentage)}\n\n");
+            if (itemData.CanSell)
+            {
+                SB.Append($"판매 가격 : {Mathf.RoundToInt(itemData.SellPrice)}\n\n");
+            }
+            else
+            {
+                SB.Append("판매 불가능\n\n");
+            }
         }
 
         GetText((int)Texts.ItemDescText).text = SB.ToString();

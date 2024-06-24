@@ -18,7 +18,9 @@ MonoBehaviour:
   <ItemType>k__BackingField: 1
   <ItemQuality>k__BackingField: 1
   <Description>k__BackingField: "\uCCB4\uB825\uC744 \uD68C\uBCF5\uD55C\uB2E4."
-  <Price>k__BackingField: 100
+  <CanSell>k__BackingField: 1
+  <BuyPrice>k__BackingField: 100
+  <SellPrice>k__BackingField: 50
   <MaxCount>k__BackingField: 99
   <LimitLevel>k__BackingField: 1
   <RequiredCount>k__BackingField: 1

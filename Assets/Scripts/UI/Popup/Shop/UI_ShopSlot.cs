@@ -22,7 +22,7 @@ public class UI_ShopSlot : UI_BaseSlot, IPointerEnterHandler, IPointerExitHandle
     {
         SetObject(itemData, itemData.ItemImage);
         GetText((int)Texts.ItemNameText).text = itemData.ItemName;
-        GetText((int)Texts.PriceText).text = itemData.Price.ToString();
+        GetText((int)Texts.PriceText).text = itemData.BuyPrice.ToString();
     }
 
     public override void OnPointerUp(PointerEventData eventData)
@@ -37,7 +37,7 @@ public class UI_ShopSlot : UI_BaseSlot, IPointerEnterHandler, IPointerExitHandle
             var splitPopup = Managers.UI.Show<UI_ItemSplitPopup>();
             splitPopup.SetEvent(() =>
                 Managers.UI.Get<UI_ShopPopup>().BuyItem(this, splitPopup.Count),
-                $"[{ItemData.ItemName}] 구매수량", 1, stackableData.MaxCount, ItemData.Price, true);
+                $"[{ItemData.ItemName}] 구매수량", 1, stackableData.MaxCount, ItemData.BuyPrice, true);
         }
         else
         {

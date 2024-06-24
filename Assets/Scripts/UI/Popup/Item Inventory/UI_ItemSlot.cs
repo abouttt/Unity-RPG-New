@@ -126,7 +126,11 @@ public class UI_ItemSlot : UI_BaseSlot, IDropHandler
 
         if (Managers.UI.IsShowed<UI_ShopPopup>())
         {
-            Managers.UI.Get<UI_ShopPopup>().SellItem(ItemType, Index);
+            var item = ObjectRef as Item;
+            if (item.Data.CanSell)
+            {
+                Managers.UI.Get<UI_ShopPopup>().SellItem(ItemType, Index);
+            }
         }
         else
         {

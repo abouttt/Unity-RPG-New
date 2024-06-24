@@ -18,7 +18,9 @@ MonoBehaviour:
   <ItemType>k__BackingField: 0
   <ItemQuality>k__BackingField: 1
   <Description>k__BackingField: "\uD3C9\uBC94\uD55C \uAC15\uCCA0\uAC80\uC774\uB2E4."
-  <Price>k__BackingField: 1000
+  <CanSell>k__BackingField: 1
+  <BuyPrice>k__BackingField: 1000
+  <SellPrice>k__BackingField: 500
   <LimitLevel>k__BackingField: 1
   <EquipmentType>k__BackingField: 4
   <EquipmentPrefab>k__BackingField: {fileID: 131468, guid: 07b522c421f5b3645b9d08d119fbcb23, type: 3}

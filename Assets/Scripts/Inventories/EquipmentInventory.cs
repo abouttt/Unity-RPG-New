@@ -10,7 +10,8 @@ public class EquipmentInventory : MonoBehaviour, IInventory, ISavable
     public event Action<EquipmentType> InventoryChanged;
 
     private readonly Dictionary<EquipmentType, EquipmentItem> _items = new();
-    private BasicStats _stats = new();
+    private BasicStats _fixedStats = new();
+    private BasicStats _percentageStats = new();
 
     private void Awake()
     {
@@ -34,7 +35,8 @@ public class EquipmentInventory : MonoBehaviour, IInventory, ISavable
 
         var equipmentItem = equipmentItemData.CreateItem() as EquipmentItem;
         _items[equipmentType] = equipmentItem;
-        _stats += equipmentItemData.Stats;
+        _fixedStats += equipmentItemData.FixedStats;
+        _percentageStats += equipmentItemData.PercentageStats;
         InventoryChanged?.Invoke(equipmentType);
     }
 
@@ -45,7 +47,8 @@ public class EquipmentInventory : MonoBehaviour, IInventory, ISavable
             return;
         }
 
-        _stats -= _items[equipmentType].EquipmentData.Stats;
+        _fixedStats -= _items[equipmentType].EquipmentData.FixedStats;
+        _percentageStats -= _items[equipmentType].EquipmentData.PercentageStats;
         _items[equipmentType] = null;
         InventoryChanged?.Invoke(equipmentType);
     }
@@ -60,15 +63,27 @@ public class EquipmentInventory : MonoBehaviour, IInventory, ISavable
         return _items[equipmentType] != null;
     }
 
-    public BasicStats GetStats()
+    public BasicStats GetFixedStats()
     {
         return new BasicStats
         {
-            HP = _stats.HP,
-            MP = _stats.MP,
-            SP = _stats.SP,
-            Damage = _stats.Damage,
-            Defense = _stats.Defense,
+            HP = _fixedStats.HP,
+            MP = _fixedStats.MP,
+            SP = _fixedStats.SP,
+            Damage = _fixedStats.Damage,
+            Defense = _fixedStats.Defense,
+        };
+    }
+
+    public BasicStats GetPercentageStats()
+    {
+        return new BasicStats
+        {
+            HP = _percentageStats.HP,
+            MP = _percentageStats.MP,
+            SP = _percentageStats.SP,
+            Damage = _percentageStats.Damage,
+            Defense = _percentageStats.Defense,
         };
     }
 

@@ -22,9 +22,15 @@ MonoBehaviour:
   <LimitLevel>k__BackingField: 1
   <EquipmentType>k__BackingField: 5
   <EquipmentPrefab>k__BackingField: {fileID: 134266, guid: 92d4c6c0ea1b7394a99f6d1d7bb23c07, type: 3}
-  <Stats>k__BackingField:
+  <FixedStats>k__BackingField:
     HP: 0
     MP: 0
     SP: 0
     Damage: 0
     Defense: 10
+  <PercentageStats>k__BackingField:
+    HP: 0
+    MP: 0
+    SP: 0
+    Damage: 0
+    Defense: 0

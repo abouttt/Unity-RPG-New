@@ -16,9 +16,9 @@ public class QuickInventory : MonoBehaviour, IInventory, ISavable
 
     private void Awake()
     {
-        for (int i = 0; i < Capacity; i++)
+        for (int index = 0; index < Capacity; index++)
         {
-            _quickables.Add(i, null);
+            _quickables.Add(index, null);
         }
 
         Load();

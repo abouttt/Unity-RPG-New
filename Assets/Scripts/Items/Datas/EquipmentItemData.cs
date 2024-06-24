@@ -13,7 +13,10 @@ public class EquipmentItemData : ItemData, IUsableItemData
     public GameObject EquipmentPrefab { get; private set; }
 
     [field: SerializeField]
-    public BasicStats Stats { get; private set; }
+    public BasicStats FixedStats { get; private set; }
+
+    [field: SerializeField]
+    public BasicStats PercentageStats { get; private set; }
 
     public EquipmentItemData()
     {

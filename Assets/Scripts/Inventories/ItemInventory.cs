@@ -62,8 +62,8 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
 
                 if (sameItemIndex != -1)
                 {
-                    var otherStackable = items[sameItemIndex] as IStackableItem;
                     int prevCount = count;
+                    var otherStackable = items[sameItemIndex] as IStackableItem;
                     count = otherStackable.AddCountAndGetExcess(count);
                     Managers.Quest.ReceiveReport(Category.Item, itemData.ItemId, prevCount - count);
                 }
@@ -121,6 +121,11 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
 
     public void RemoveItem(string id, int count)
     {
+        if (count <= 0)
+        {
+            return;
+        }
+
         var itemType = GetItemTypeById(id);
 
         for (int index = 0; index < _inventories[itemType].Capacity; index++)
@@ -212,7 +217,7 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
             return;
         }
 
-        if (count == 0)
+        if (count <= 0)
         {
             return;
         }
@@ -305,9 +310,9 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
 
         foreach (var kvp in _inventories)
         {
-            for (int i = 0; i < kvp.Value.Capacity; i++)
+            for (int index = 0; index < kvp.Value.Capacity; index++)
             {
-                var item = kvp.Value.Items[i];
+                var item = kvp.Value.Items[index];
 
                 if (item == null)
                 {
@@ -318,7 +323,7 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
                 {
                     ItemId = item.Data.ItemId,
                     Count = 1,
-                    Index = i,
+                    Index = index,
                 };
 
                 if (item is IStackableItem stackable)

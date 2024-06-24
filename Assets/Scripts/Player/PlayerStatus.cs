@@ -216,13 +216,9 @@ public class PlayerStatus : MonoBehaviour, ISavable
         _maxStats.Defense = _playerStatsTable.StatsTable[level].Defense;
 
         _maxStats.BasicStats += _fixedStats;
-        _maxStats.BasicStats += Player.EquipmentInventory.GetStats();
-
-        _maxStats.HP = Util.CalcIncreasePercentage(_maxStats.HP, _percentageStats.HP);
-        _maxStats.MP = Util.CalcIncreasePercentage(_maxStats.MP, _percentageStats.MP);
-        _maxStats.SP = Util.CalcIncreasePercentage((int)_maxStats.SP, (int)_percentageStats.SP);
-        _maxStats.Damage = Util.CalcIncreasePercentage(_maxStats.Damage, _percentageStats.Damage);
-        _maxStats.Defense = Util.CalcIncreasePercentage(_maxStats.Defense, _percentageStats.Defense);
+        _maxStats.BasicStats += Player.EquipmentInventory.GetFixedStats();
+        _maxStats.CalcPercentageStats(_percentageStats);
+        _maxStats.CalcPercentageStats(Player.EquipmentInventory.GetPercentageStats());
     }
 
     private void FillAllStats()

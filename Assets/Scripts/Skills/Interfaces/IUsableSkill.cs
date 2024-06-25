@@ -11,9 +11,7 @@ public interface IUsableSkill
             return false;
         }
 
-        UsableData.Use(skill);
-
-        return true;
+        return UsableData.Use(skill);
     }
 
     public bool CanUse();

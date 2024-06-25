@@ -8,8 +8,15 @@ public class PunchData : ActiveSkillData
         return new ActiveSkill(this, level);
     }
 
-    public override void Use(Skill skill)
+    public override bool Use(Skill skill)
     {
+        if (!base.Use(skill))
+        {
+            return false;
+        }
+
         Debug.Log("Punch");
+
+        return true;
     }
 }

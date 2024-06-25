@@ -26,5 +26,28 @@ public abstract class ConsumableItemData : StackableItemData, IUsableItemData, I
         return new ConsumableItem(this, count);
     }
 
-    public abstract void Use<T>(T inventory, Item item) where T : IInventory;
+    public virtual bool Use<T>(T inventory, Item item) where T : IInventory
+    {
+        if (item == null)
+        {
+            return false;
+        }
+
+        if (item.Data != this)
+        {
+            return false;
+        }
+
+        var consumable = item as ConsumableItem;
+        consumable.SetCount(consumable.Count - RequiredCount);
+        if (consumable.IsEmpty)
+        {
+            Player.ItemInventory.RemoveItem(item);
+        }
+
+        Cooldown.OnCooldowned();
+        Managers.Quest.ReceiveReport(Category.Item, ItemId, -RequiredCount);
+
+        return true;
+    }
 }

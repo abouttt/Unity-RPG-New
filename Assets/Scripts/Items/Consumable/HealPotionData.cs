@@ -6,9 +6,16 @@ public class HealPotionData : ConsumableItemData
     [SerializeField]
     private int _healAmount;
 
-    public override void Use<T>(T inventory, Item item)
+    public override bool Use<T>(T inventory, Item item)
     {
+        if (!base.Use(inventory, item))
+        {
+            return false;
+        }
+
         Player.Status.HP += _healAmount;
         Managers.Resource.Instantiate("HealOnceBurst.prefab", Player.Collider.bounds.center, Player.Transform, true);
+
+        return true;
     }
 }

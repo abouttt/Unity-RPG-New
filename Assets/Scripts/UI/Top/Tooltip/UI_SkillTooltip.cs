@@ -58,7 +58,7 @@ public class UI_SkillTooltip : UI_BaseTooltip
         SB.Append($"{skillData.Description}\n\n");
         SB.Append("°ÿΩ¿µÊ¡∂∞«°ÿ\n");
 
-        var skill = Player.SkillTree.GetSkillByData(skillData);
+        var skill = Player.SkillTree.GetSkill(skillData);
 
         foreach (var parent in skill.Parents)
         {

@@ -47,7 +47,7 @@ public class UI_SkillSlot : UI_BaseSlot
         });
 
         CanDrag = SkillData.SkillType == SkillType.Active;
-        SetObject(Player.SkillTree.GetSkillByData(SkillData), SkillData.SkillImage);
+        SetObject(Player.SkillTree.GetSkill(SkillData), SkillData.SkillImage);
 
         if (SkillData is ICooldownable cooldownable)
         {

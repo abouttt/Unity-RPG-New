@@ -28,11 +28,16 @@ public class EquipmentItemData : ItemData, IUsableItemData
         return new EquipmentItem(this);
     }
 
-    public void Use<T>(T inventory, Item item) where T : IInventory
+    public bool Use<T>(T inventory, Item item) where T : IInventory
     {
         if (item == null)
         {
-            return;
+            return false;
+        }
+
+        if (item.Data != this)
+        {
+            return false;
         }
 
         switch (inventory)
@@ -40,7 +45,6 @@ public class EquipmentItemData : ItemData, IUsableItemData
             case ItemInventory:
                 var equippedItem = Player.EquipmentInventory.GetItem(EquipmentType);
                 var index = Player.ItemInventory.GetItemIndex(item);
-
                 if (equippedItem != null)
                 {
                     Player.ItemInventory.SetItem(equippedItem.EquipmentData, index);
@@ -49,17 +53,16 @@ public class EquipmentItemData : ItemData, IUsableItemData
                 {
                     Player.ItemInventory.RemoveItem(ItemType, index);
                 }
-
                 Player.EquipmentInventory.Equip(this);
                 break;
-
             case EquipmentInventory:
                 Player.ItemInventory.AddItem(this);
                 Player.EquipmentInventory.Unequip(EquipmentType);
                 break;
-
             default:
-                break;
+                return false;
         }
+
+        return true;
     }
 }

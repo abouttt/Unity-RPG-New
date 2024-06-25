@@ -53,7 +53,7 @@ public class SkillTree : MonoBehaviour, ISavable
         }
     }
 
-    public Skill GetSkillByData(SkillData skillData)
+    public Skill GetSkill(SkillData skillData)
     {
         if (_skills.TryGetValue(skillData, out var skill))
         {

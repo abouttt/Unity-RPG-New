@@ -11,15 +11,6 @@ public class ActiveSkill : Skill, IUsableSkill, IQuickable
         ActiveData = data;
     }
 
-    public void SubRequired()
-    {
-        Player.Status.HP -= ActiveData.RequiredHP;
-        Player.Status.MP -= ActiveData.RequiredMP;
-        Player.Status.SP -= ActiveData.RequiredSP;
-
-        ActiveData.Cooldown.OnCooldowned();
-    }
-
     public bool CanUse()
     {
         if (ActiveData.Cooldown.Time > 0f)
@@ -27,14 +18,12 @@ public class ActiveSkill : Skill, IUsableSkill, IQuickable
             return false;
         }
 
-        if (Player.Status.HP < 0 ||
-            Player.Status.MP < 0 ||
+        if (Player.Status.HP < ActiveData.RequiredHP ||
+            Player.Status.MP < ActiveData.RequiredMP ||
             Player.Status.SP < 0f)
         {
             return false;
         }
-
-        SubRequired();
 
         return true;
     }
@@ -46,8 +35,6 @@ public class ActiveSkill : Skill, IUsableSkill, IQuickable
             return false;
         }
 
-        ActiveData.Use(this);
-
-        return true;
+        return ActiveData.Use(this);
     }
 }

@@ -15,8 +15,7 @@ public class EquipmentInventory : MonoBehaviour, IInventory, ISavable
 
     private void Awake()
     {
-        var types = Enum.GetValues(typeof(EquipmentType));
-        foreach (EquipmentType type in types)
+        foreach (EquipmentType type in Enum.GetValues(typeof(EquipmentType)))
         {
             _items.Add(type, null);
         }
@@ -47,8 +46,9 @@ public class EquipmentInventory : MonoBehaviour, IInventory, ISavable
             return;
         }
 
-        _fixedStats -= _items[equipmentType].EquipmentData.FixedStats;
-        _percentageStats -= _items[equipmentType].EquipmentData.PercentageStats;
+        var equipmentData = _items[equipmentType].EquipmentData;
+        _fixedStats -= equipmentData.FixedStats;
+        _percentageStats -= equipmentData.PercentageStats;
         _items[equipmentType] = null;
         InventoryChanged?.Invoke(equipmentType);
     }
@@ -119,7 +119,8 @@ public class EquipmentInventory : MonoBehaviour, IInventory, ISavable
         foreach (var token in saveData)
         {
             var itemSaveData = token.ToObject<ItemSaveData>();
-            Equip(ItemDatabase.Instance.FindItemById(itemSaveData.ItemId) as EquipmentItemData);
+            var itemData = ItemDatabase.Instance.FindItemById(itemSaveData.ItemId);
+            Equip(itemData as EquipmentItemData);
         }
     }
 }

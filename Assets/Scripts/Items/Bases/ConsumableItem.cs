@@ -33,16 +33,6 @@ public class ConsumableItem : StackableItem, IUsableItem, IQuickable
             return false;
         }
 
-        SetCount(Count - ConsumableData.RequiredCount);
-
-        if (IsEmpty)
-        {
-            Player.ItemInventory.RemoveItem(this);
-        }
-
-        ConsumableData.Cooldown.OnCooldowned();
-        Managers.Quest.ReceiveReport(Category.Item, Data.ItemId, -ConsumableData.RequiredCount);
-
         return true;
     }
 
@@ -53,8 +43,6 @@ public class ConsumableItem : StackableItem, IUsableItem, IQuickable
             return false;
         }
 
-        ConsumableData.Use(Player.QuickInventory, this);
-
-        return true;
+        return ConsumableData.Use(Player.QuickInventory, this);
     }
 }

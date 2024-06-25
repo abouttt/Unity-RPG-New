@@ -31,7 +31,8 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
     {
         foreach (var kvp in _inventories)
         {
-            kvp.Value.Items = new List<Item>(Enumerable.Repeat<Item>(null, kvp.Value.Capacity));
+            var nullItems = Enumerable.Repeat<Item>(null, kvp.Value.Capacity);
+            kvp.Value.Items = new List<Item>(nullItems);
         }
 
         Load();
@@ -39,7 +40,8 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
 
     public int AddItem(ItemData itemData, int count = 1)
     {
-        var items = _inventories[itemData.ItemType].Items;
+        var itemType = itemData.ItemType;
+        var items = _inventories[itemType].Items;
 
         while (count > 0)
         {
@@ -69,7 +71,7 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
                 }
                 else
                 {
-                    if (TryGetEmptyIndex(itemData.ItemType, out var emptyIndex))
+                    if (TryGetEmptyIndex(itemType, out var emptyIndex))
                     {
                         SetItem(itemData, emptyIndex, count);
                         count = Mathf.Max(0, count - stackableData.MaxCount);
@@ -82,7 +84,7 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
             }
             else
             {
-                if (TryGetEmptyIndex(itemData.ItemType, out var emptyIndex))
+                if (TryGetEmptyIndex(itemType, out var emptyIndex))
                 {
                     SetItem(itemData, emptyIndex);
                     count--;
@@ -109,9 +111,10 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
             return;
         }
 
+        var itemType = item.Data.ItemType;
         int index = _itemIndexes[item];
-        DestroyItem(item.Data.ItemType, index);
-        InventoryChanged?.Invoke(item.Data.ItemType, index);
+        DestroyItem(itemType, index);
+        InventoryChanged?.Invoke(itemType, index);
     }
 
     public void RemoveItem(ItemType itemType, int index)
@@ -121,16 +124,22 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
 
     public void RemoveItem(string id, int count)
     {
+        if (string.IsNullOrEmpty(id))
+        {
+            return;
+        }
+
         if (count <= 0)
         {
             return;
         }
 
         var itemType = GetItemTypeById(id);
+        var inventory = _inventories[itemType];
 
-        for (int index = 0; index < _inventories[itemType].Capacity; index++)
+        for (int index = 0; index < inventory.Capacity; index++)
         {
-            var item = _inventories[itemType].Items[index];
+            var item = inventory.Items[index];
 
             if (item == null)
             {
@@ -159,7 +168,7 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
                 count--;
             }
 
-            RemoveItem(_inventories[itemType].Items[index]);
+            RemoveItem(item);
 
             if (count <= 0)
             {
@@ -175,26 +184,27 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
             return;
         }
 
-        var inventory = _inventories[itemData.ItemType];
-
-        if (!IsEmpty(itemData.ItemType, index))
+        if (count <= 0)
         {
-            DestroyItem(itemData.ItemType, index);
+            return;
         }
 
-        if (itemData is IStackableItemData stackableData)
+        var itemType = itemData.ItemType;
+        var inventory = _inventories[itemType];
+        var items = inventory.Items;
+
+        if (!IsEmpty(itemType, index))
         {
-            inventory.Items[index] = stackableData.CreateItem(count);
-        }
-        else
-        {
-            inventory.Items[index] = itemData.CreateItem();
+            DestroyItem(itemType, index);
         }
 
+        items[index] = itemData is IStackableItemData stackableData
+            ? stackableData.CreateItem(count)
+            : itemData.CreateItem();
         inventory.Count++;
-        _itemIndexes.Add(inventory.Items[index], index);
+        _itemIndexes.Add(items[index], index);
         Managers.Quest.ReceiveReport(Category.Item, itemData.ItemId, count);
-        InventoryChanged?.Invoke(itemData.ItemType, index);
+        InventoryChanged?.Invoke(itemType, index);
     }
 
     public void MoveItem(ItemType itemType, int fromIndex, int toIndex)
@@ -235,7 +245,6 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
         }
 
         int remainingCount = fromItem.Count - count;
-
         if (remainingCount < 0)
         {
             return;
@@ -286,14 +295,7 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
                 continue;
             }
 
-            if (item is IStackableItem stackable)
-            {
-                count += stackable.Count;
-            }
-            else
-            {
-                count++;
-            }
+            count += item is IStackableItem stackable ? stackable.Count : 1;
         }
 
         return count;
@@ -322,14 +324,9 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
                 var itemSaveData = new ItemSaveData
                 {
                     ItemId = item.Data.ItemId,
-                    Count = 1,
+                    Count = item is IStackableItem stackable ? stackable.Count : 1,
                     Index = index,
                 };
-
-                if (item is IStackableItem stackable)
-                {
-                    itemSaveData.Count = stackable.Count;
-                }
 
                 saveData.Add(JObject.FromObject(itemSaveData));
             }
@@ -346,10 +343,9 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
 
     private bool AddItemCountFromTo(ItemType itemType, int fromIndex, int toIndex)
     {
-        var inventory = _inventories[itemType];
-
-        if (inventory.Items[fromIndex] is not IStackableItem fromItem ||
-            inventory.Items[toIndex] is not IStackableItem toItem)
+        var items = _inventories[itemType].Items;
+        if (items[fromIndex] is not IStackableItem fromItem ||
+            items[toIndex] is not IStackableItem toItem)
         {
             return false;
         }
@@ -366,7 +362,6 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
 
         int excessCount = toItem.AddCountAndGetExcess(fromItem.Count);
         fromItem.SetCount(excessCount);
-
         if (fromItem.IsEmpty)
         {
             DestroyItem(itemType, fromIndex);
@@ -411,13 +406,7 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
     {
         var inventory = _inventories[itemType];
         var item = inventory.Items[index];
-        int count = 1;
-
-        if (item is IStackableItem stackable)
-        {
-            count = stackable.Count;
-        }
-
+        int count = item is IStackableItem stackable ? stackable.Count : 1;
         inventory.Items[index] = null;
         inventory.Count--;
         item.Destroy();
@@ -437,18 +426,13 @@ public class ItemInventory : MonoBehaviour, IInventory, ISavable
             var itemSaveData = token.ToObject<ItemSaveData>();
             var itemData = ItemDatabase.Instance.FindItemById(itemSaveData.ItemId);
             var inventory = _inventories[itemData.ItemType];
+            var items = inventory.Items;
 
-            if (itemData is IStackableItemData stackableData)
-            {
-                inventory.Items[itemSaveData.Index] = stackableData.CreateItem(itemSaveData.Count);
-            }
-            else
-            {
-                inventory.Items[itemSaveData.Index] = itemData.CreateItem();
-            }
-
+            items[itemSaveData.Index] = itemData is IStackableItemData stackableData
+                ? stackableData.CreateItem(itemSaveData.Count)
+                : itemData.CreateItem();
             inventory.Count++;
-            _itemIndexes.Add(inventory.Items[itemSaveData.Index], itemSaveData.Index);
+            _itemIndexes.Add(items[itemSaveData.Index], itemSaveData.Index);
         }
     }
 }

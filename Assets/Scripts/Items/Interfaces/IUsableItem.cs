@@ -11,9 +11,7 @@ public interface IUsableItem
             return false;
         }
 
-        UsableData.Use(inventory, item);
-
-        return true;
+        return UsableData.Use(inventory, item);
     }
 
     public bool CanUse();

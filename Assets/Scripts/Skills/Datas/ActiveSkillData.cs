@@ -19,5 +19,24 @@ public abstract class ActiveSkillData : SkillData, IUsableSkillData, ICooldownab
         SkillType = SkillType.Active;
     }
 
-    public abstract void Use(Skill skill);
+    public virtual bool Use(Skill skill)
+    {
+        if (skill == null)
+        {
+            return false;
+        }
+
+        if (skill.Data != this)
+        {
+            return false;
+        }
+
+        Player.Status.HP -= RequiredHP;
+        Player.Status.MP -= RequiredMP;
+        Player.Status.SP -= RequiredSP;
+
+        Cooldown.OnCooldowned();
+
+        return true;
+    }
 }

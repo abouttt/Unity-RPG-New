@@ -88,14 +88,8 @@ public class QuickInventory : MonoBehaviour, IInventory, ISavable
                 var itemSaveData = new ItemSaveData
                 {
                     ItemId = item.Data.ItemId,
-                    Count = 1,
                     Index = Player.ItemInventory.GetItemIndex(item),
                 };
-
-                if (item is IStackableItem stackable)
-                {
-                    itemSaveData.Count = stackable.Count;
-                }
 
                 quickSaveData.ItemSaveData = itemSaveData;
             }
@@ -139,7 +133,7 @@ public class QuickInventory : MonoBehaviour, IInventory, ISavable
             {
                 var skillSaveData = quickSaveData.SkillSaveData.Value;
                 var skillData = SkillDatabase.Instance.FindSkillById(skillSaveData.SkillId);
-                var skill = Player.SkillTree.GetSkillByData(skillData);
+                var skill = Player.SkillTree.GetSkill(skillData);
                 quickable = skill as IQuickable;
             }
 

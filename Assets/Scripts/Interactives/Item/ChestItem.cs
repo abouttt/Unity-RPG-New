@@ -40,6 +40,7 @@ public class ChestItem : FieldItem
 
         if (Items.Count == 0)
         {
+            CanInteraction = false;
             _hasItemParticle.Stop();
         }
     }

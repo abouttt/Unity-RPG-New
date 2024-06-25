@@ -40,7 +40,14 @@ public class PlayerInteraction : MonoBehaviour
         {
             return;
         }
-        else if (_isRangeOutTarget)
+
+        if (!_target.CanInteraction)
+        {
+            SetTarget(null);
+            return;
+        }
+
+        if (_isRangeOutTarget)
         {
             SetTarget(null);
             return;
@@ -48,7 +55,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Managers.Input.Interaction)
         {
-            if (_canInteraction && _target.CanInteraction)
+            if (_canInteraction)
             {
                 InputTime += Time.deltaTime;
                 if (InputTime >= _target.InteractionInputTime)
@@ -126,6 +133,11 @@ public class PlayerInteraction : MonoBehaviour
 
     private void SetTarget(Interactive target)
     {
+        if (target != null && !target.CanInteraction)
+        {
+            return;
+        }
+
         if (_target != null)
         {
             _target.IsDetected = false;

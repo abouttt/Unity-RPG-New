@@ -17,19 +17,6 @@ public class CooldownDatabase : SingletonScriptableObject<CooldownDatabase>
     [SerializeField]
     private List<SkillData> _cooldownSkills;
 
-    public void ClearCooldown()
-    {
-        foreach (var itemData in _cooldownItems)
-        {
-            (itemData as ICooldownable).Cooldown.Clear();
-        }
-
-        foreach (var skillData in _cooldownSkills)
-        {
-            (skillData as ICooldownable).Cooldown.Clear();
-        }
-    }
-
 #if UNITY_EDITOR
     [ContextMenu("Find Cooldown")]
     public void FindCooldownable()
@@ -40,8 +27,6 @@ public class CooldownDatabase : SingletonScriptableObject<CooldownDatabase>
     private void FindCooldown<T>() where T : ICooldownable
     {
         _cooldownItems = new();
-        _cooldownSkills = new();
-
         foreach (var itemData in ItemDatabase.Instance.Items)
         {
             if (itemData is ICooldownable)
@@ -50,6 +35,7 @@ public class CooldownDatabase : SingletonScriptableObject<CooldownDatabase>
             }
         }
 
+        _cooldownSkills = new();
         foreach (var skillData in SkillDatabase.Instance.Skills)
         {
             if (skillData is ICooldownable)

@@ -32,7 +32,16 @@ public class CooldownManager
 
     public void Clear()
     {
-        CooldownDatabase.Instance.ClearCooldown();
+        foreach (var itemData in CooldownDatabase.Instance.CooldownItems)
+        {
+            (itemData as ICooldownable).Cooldown.Clear();
+        }
+
+        foreach (var skillData in CooldownDatabase.Instance.CooldownSkills)
+        {
+            (skillData as ICooldownable).Cooldown.Clear();
+        }
+
         _cooldowns.Clear();
         _completedCooldownQueue.Clear();
     }

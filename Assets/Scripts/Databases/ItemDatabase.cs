@@ -29,9 +29,7 @@ public class ItemDatabase : SingletonScriptableObject<ItemDatabase>
     private void FindItemsBy<T>() where T : ItemData
     {
         _items = new();
-
-        var guids = AssetDatabase.FindAssets($"t:{typeof(T)}");
-        foreach (var guid in guids)
+        foreach (var guid in AssetDatabase.FindAssets($"t:{typeof(T)}"))
         {
             var assetPath = AssetDatabase.GUIDToAssetPath(guid);
             T item = AssetDatabase.LoadAssetAtPath<T>(assetPath);

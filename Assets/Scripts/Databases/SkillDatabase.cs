@@ -29,9 +29,7 @@ public class SkillDatabase : SingletonScriptableObject<SkillDatabase>
     private void FindSkillsBy<T>() where T : SkillData
     {
         _skills = new();
-
-        var guids = AssetDatabase.FindAssets($"t:{typeof(T)}");
-        foreach (var guid in guids)
+        foreach (var guid in AssetDatabase.FindAssets($"t:{typeof(T)}"))
         {
             var assetPath = AssetDatabase.GUIDToAssetPath(guid);
             T skill = AssetDatabase.LoadAssetAtPath<T>(assetPath);

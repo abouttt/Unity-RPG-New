@@ -34,6 +34,7 @@ public class UI_ItemSplitPopup : UI_Popup
     private int _price;
     private int _minCount;
     private int _maxCount;
+    private bool _isShowedPrice;
 
     private DOTweenAnimation _dotween;
 
@@ -78,11 +79,13 @@ public class UI_ItemSplitPopup : UI_Popup
         _maxCount = maxCount;
         _minCount = minCount;
         _price = price;
+        _isShowedPrice = showPrice;
 
         GetText((int)Texts.GuideText).text = text;
         Get<TMP_InputField>((int)InputFields.InputField).text = Count.ToString();
         Get<TMP_InputField>((int)InputFields.InputField).ActivateInputField();
-        GetObject((int)GameObjects.ItemPrice).SetActive(showPrice);
+        GetObject((int)GameObjects.ItemPrice).SetActive(_isShowedPrice);
+        RefreshPriceText();
     }
 
     private void OnValueChanged(string value)
@@ -97,12 +100,7 @@ public class UI_ItemSplitPopup : UI_Popup
             Get<TMP_InputField>((int)InputFields.InputField).text = Count.ToString();
         }
 
-        if (GetText((int)Texts.PriceText).gameObject.activeSelf)
-        {
-            int totalPrice = _price * Count;
-            GetText((int)Texts.PriceText).text = totalPrice.ToString();
-            GetText((int)Texts.PriceText).color = (_price * Count) <= Player.Status.Gold ? Color.white : Color.red;
-        }
+        RefreshPriceText();
     }
 
     private void OnEndEdit(string value)
@@ -117,5 +115,17 @@ public class UI_ItemSplitPopup : UI_Popup
     {
         Count = Mathf.Clamp(Count + count, _minCount, _maxCount);
         Get<TMP_InputField>((int)InputFields.InputField).text = Count.ToString();
+    }
+
+    private void RefreshPriceText()
+    {
+        if (!_isShowedPrice)
+        {
+            return;
+        }
+
+        int totalPrice = _price * Count;
+        GetText((int)Texts.PriceText).text = totalPrice.ToString();
+        GetText((int)Texts.PriceText).color = _price * Count <= Player.Status.Gold ? Color.white : Color.red;
     }
 }

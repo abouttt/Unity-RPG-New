@@ -10,6 +10,7 @@ public class UI_ShopSlot : UI_BaseSlot, IPointerEnterHandler, IPointerExitHandle
     }
 
     public ItemData ItemData => ObjectRef as ItemData;
+    public int Index { get; private set; }
 
     protected override void Init()
     {
@@ -18,8 +19,9 @@ public class UI_ShopSlot : UI_BaseSlot, IPointerEnterHandler, IPointerExitHandle
         BindText(typeof(Texts));
     }
 
-    public void SetItem(ItemData itemData)
+    public void SetItem(ItemData itemData, int index)
     {
+        Index = index;
         SetObject(itemData, itemData.ItemImage);
         GetText((int)Texts.ItemNameText).text = itemData.ItemName;
         GetText((int)Texts.PriceText).text = itemData.BuyPrice.ToString();
@@ -35,8 +37,7 @@ public class UI_ShopSlot : UI_BaseSlot, IPointerEnterHandler, IPointerExitHandle
         if (Managers.Input.Sprint && ItemData is IStackableItemData stackableData)
         {
             var splitPopup = Managers.UI.Show<UI_ItemSplitPopup>();
-            splitPopup.SetEvent(() =>
-                Managers.UI.Get<UI_ShopPopup>().BuyItem(this, splitPopup.Count),
+            splitPopup.SetEvent(() => Managers.UI.Get<UI_ShopPopup>().BuyItem(this, splitPopup.Count),
                 $"[{ItemData.ItemName}] 구매수량", 1, stackableData.MaxCount, ItemData.BuyPrice, true);
         }
         else

@@ -19,6 +19,7 @@ public class UI_ShopPopup : UI_Popup, IDropHandler
 
     private Vector3 _prevItemInventoryPos;
 
+    private NPCShop _shopRef;
     private readonly List<GameObject> _shopSlots = new();
 
     protected override void Init()
@@ -56,44 +57,28 @@ public class UI_ShopPopup : UI_Popup, IDropHandler
         };
     }
 
-    public void SetNPCShop(NPCShop npcShop)
+    public void SetNPCShop(NPCShop shop)
     {
-        foreach (var itemData in npcShop.SaleItems)
+        _shopRef = shop;
+
+        for (int index = 0; index < shop.SaleItems.Count; index++)
         {
-            CreateShopSlot(itemData);
+            CreateShopSlot(shop.SaleItems[index], index);
         }
     }
 
     public void BuyItem(UI_ShopSlot slot, int count)
     {
-        int price = slot.ItemData.BuyPrice * count;
-        if (Player.Status.Gold < price)
+        if (_shopRef.BuyItem(slot.Index, count))
         {
-            return;
+            Managers.UI.Get<UI_ItemInventoryPopup>().ShowItemSlots(slot.ItemData.ItemType);
         }
-
-        Player.Status.Gold -= price;
-        Player.ItemInventory.AddItem(slot.ItemData, count);
-        Managers.UI.Get<UI_ItemInventoryPopup>().ShowItemSlots(slot.ItemData.ItemType);
     }
 
-    public void SellItem(ItemType itemType, int index)
-    {
-        var item = Player.ItemInventory.GetItem<Item>(itemType, index);
-        int count = 1;
-        if (item is IStackableItem stackable)
-        {
-            count = stackable.Count;
-        }
-
-        Player.Status.Gold += Mathf.RoundToInt(item.Data.SellPrice * count);
-        Player.ItemInventory.RemoveItem(itemType, index);
-    }
-
-    private void CreateShopSlot(ItemData itemData)
+    private void CreateShopSlot(ItemData itemData, int index)
     {
         var go = Managers.Resource.Instantiate("UI_ShopSlot.prefab", GetObject((int)GameObjects.ShopSlots).transform, true);
-        go.GetComponent<UI_ShopSlot>().SetItem(itemData);
+        go.GetComponent<UI_ShopSlot>().SetItem(itemData, index);
         _shopSlots.Add(go);
     }
 
@@ -104,6 +89,7 @@ public class UI_ShopPopup : UI_Popup, IDropHandler
             Managers.Resource.Destroy(slot);
         }
 
+        _shopRef = null;
         _shopSlots.Clear();
     }
 
@@ -111,7 +97,7 @@ public class UI_ShopPopup : UI_Popup, IDropHandler
     {
         if (eventData.pointerDrag.TryGetComponent<UI_ItemSlot>(out var itemSlot))
         {
-            SellItem(itemSlot.ItemType, itemSlot.Index);
+            NPCShop.SellItem(itemSlot.ItemType, itemSlot.Index);
         }
     }
 }
